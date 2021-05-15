@@ -1,7 +1,7 @@
 var router = require("express").Router();
 
-router.get("/", (req, res) => {
-  res.send("Đây là trang Admin");
+router.get("/home", (req, res) => {
+  res.render("index");
 });
 
 module.exports = router;
