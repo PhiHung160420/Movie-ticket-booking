@@ -2,15 +2,14 @@ const express = require("express");
 
 const app = express();
 
-//const expressLayouts = require("express-ejs-layouts");
+const expressLayouts = require("express-ejs-layouts");
 
 const bodyParser = require("body-parser");
 
 app.use(express.json());
 
 //express ejs-layouts
-//app.use(expressLayouts);
-//app.set("layout", "./users/layouts/layout");
+app.use(expressLayouts);
 
 //use ejs
 app.set("view engine", "ejs");
@@ -22,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //khai báo static file
-app.use("/User", express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/public"));
 
 //use router for admin
 app.use("/admin", require("./src/admin/routes/router"));

@@ -1,8 +1,13 @@
+const { request, response } = require("express");
 var router = require("express").Router();
-const layoutAdmin = "users/layouts/layout";
+
+router.use((request, response, next) => {
+  response.locals.layout = "users/layouts/layout";
+  next();
+});
 
 router.get("/sign-in", (req, res) => {
-  res.render(layoutAdmin, { path: "../sign-in" });
+  res.render("users/sign-in");
 });
 
 module.exports = router;
