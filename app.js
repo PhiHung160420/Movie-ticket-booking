@@ -24,7 +24,12 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + "/public"));
 
 //use router for admin
-app.use("/admin", require("./src/admin/routes/router"));
+app.use("/admin", require("./src/admin/routes/login"));
+app.use("/admin", require("./src/admin/routes/home"));
+app.use("/admin", require("./src/admin/routes/theater_clusters"));
+app.use("/admin", require("./src/admin/routes/theater"));
+app.use("/admin", require("./src/admin/routes/movie"));
+app.use("/admin", require("./src/admin/routes/shows"));
 
 //use router for user
 app.use("/user", require("./src/users/routes/home"));

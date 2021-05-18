@@ -1,1 +1,334 @@
-<h2>Home admin</h2>
+<div class="content container-fluid">
+    <div class="row align-items-center mb-3">
+        <div class="col-sm mb-2 mb-sm-0">
+          <h1 class="page-header-title">Thống Kê Doanh Thu Theo Cụm Rạp</h1>     
+        </div>
+
+      </div>
+<div class="card mb-3 mb-lg-5" data-select2-id="8">
+    <!-- Header -->
+    <div class="card-header" data-select2-id="7">
+      <div class="row align-items-center flex-grow-1">
+        <div class="col-sm mb-2 mb-sm-0">
+          <h4 class="card-header-title">Cụm Rạp 
+              <i class="tio-help-outlined text-body ml-1" data-toggle="tooltip" data-placement="top" title="" data-original-title=""></i>
+          </h4>
+        </div>
+
+        <div class="col-sm-auto">
+
+            <!-- Daterangepicker -->
+            <button id="js-daterangepicker-predefined" class="btn btn-sm btn-white dropdown-toggle mb-2 mb-sm-0">
+              <i class="tio-date-range"></i>
+              <span class="js-daterangepicker-predefined-preview ml-1"></span>
+            </button>
+            <!-- End Daterangepicker -->
+          </div>
+
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Header -->
+
+    <!-- Body -->
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-9 mb-5 mb-md-0">
+          <!-- Bar Chart -->
+          <div class="chartjs-custom mb-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+            <canvas class="js-chart chartjs-render-monitor" style="height: 288px; display: block; width: 856px;" data-hs-chartjs-options='{
+                      "type": "bar",
+                      "data": {
+                        "labels": ["CGV","Cinestar","Lotte","Galaxy","BHD"],
+                        "datasets": [{
+                          "data": [200, 300, 290, 350, 150],
+                          "backgroundColor": "#377dff",
+                          "hoverBackgroundColor": "#377dff",
+                          "borderColor": "#377dff"
+                        },
+                        {
+                          "data": [150, 230, 382, 204, 169],
+                          "backgroundColor": "#e7eaf3",
+                          "borderColor": "#e7eaf3"
+                        }]
+                      },
+                      "options": {
+                        "scales": {
+                          "yAxes": [{
+                            "gridLines": {
+                              "color": "#e7eaf3",
+                              "drawBorder": false,
+                              "zeroLineColor": "#e7eaf3"
+                            },
+                            "ticks": {
+                              "beginAtZero": true,
+                              "stepSize": 100,
+                              "fontSize": 12,
+                              "fontColor": "#97a4af",
+                              "fontFamily": "Open Sans, sans-serif",
+                              "padding": 10
+                            }
+                          }],
+                          "xAxes": [{
+                            "gridLines": {
+                              "display": false,
+                              "drawBorder": false
+                            },
+                            "ticks": {
+                              "fontSize": 12,
+                              "fontColor": "#97a4af",
+                              "fontFamily": "Open Sans, sans-serif",
+                              "padding": 5
+                            },
+                            "categoryPercentage": 0.5,
+                            "maxBarThickness": "10"
+                          }]
+                        },
+                        "cornerRadius": 2,
+                        "tooltips": {
+                          "hasIndicator": true,
+                          "mode": "index",
+                          "intersect": false
+                        },
+                        "hover": {
+                          "mode": "nearest",
+                          "intersect": true
+                        }
+                      }
+                    }' width="1070" height="360"></canvas>
+          </div>
+          <!-- End Bar Chart -->
+
+          <!-- Legend Indicators -->
+          <div class="row justify-content-center">
+            <div class="col-auto">
+              <span class="legend-indicator"></span> Doanh Thu
+            </div>
+            <div class="col-auto">
+              <span class="legend-indicator bg-primary"></span> Số Vé Bán Được
+            </div>
+          </div>
+          <!-- End Legend Indicators -->
+        </div>
+
+        <div class="col-md-3 column-divider-md">
+          <div class="row">
+            <div class="col-sm-6 col-md-12">
+              <!-- Stats -->
+              <div class="d-flex justify-content-center flex-column" style="min-height: 10.5rem;">
+                <h6 class="card-subtitle">Doanh Thu</h6>
+                <span class="d-block display-4 text-dark mb-1 mr-3">20.000.000.000</span>
+                <span class="d-block text-success">
+                  <i class="tio-trending-up mr-1"></i> $2,401.02 (3.7%)
+                </span>
+              </div>
+              <!-- End Stats -->
+
+              <div class="d-sm-none">
+                <hr class="my-0">
+              </div>
+
+              <div class="d-none d-md-block">
+                <hr class="my-0">
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md-12">
+              <!-- Stats -->
+              <div class="d-flex justify-content-center flex-column" style="min-height: 10.5rem;">
+                <h6 class="card-subtitle">Số Vé Bán Được</h6>
+                <span class="d-block display-4 text-dark mb-1 mr-3">80 000</span>
+                <span class="d-block text-danger">
+                  <i class="tio-trending-down mr-1"></i> +3,301 (1.2%)
+                </span>
+              </div>
+              <!-- End Stats -->
+            </div>
+          </div>
+          <!-- End Row -->
+        </div>
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Body -->
+  </div>
+
+
+  <div class="row align-items-center mb-3">
+    <div class="col-sm mb-2 mb-sm-0">
+      <h1 class="page-header-title">Thống Kê Doanh Thu Theo Phim</h1>     
+    </div>
+  </div>
+
+
+
+<div class="card mb-3 mb-lg-5" data-select2-id="8">
+<!-- Header -->
+<div class="card-header" data-select2-id="7">
+  <div class="row align-items-center flex-grow-1">
+    <div class="col-sm mb-2 mb-sm-0">
+
+      <div class="row align-items-center">
+                <div class="col-auto">
+                    <h4 class="card-header-title">Chọn Phim</h4>
+                </div>
+                <div class="col-auto" >
+                    <select class="js-select2-custom js-datatable-filter custom-select" size="1" style="opacity: 0;"
+                    data-target-column-index="1"
+                    data-hs-select2-options='{
+                      "minimumResultsForSearch": "Infinity",
+                      "customClass": "custom-select custom-select-sm custom-select-borderless",
+                      "dropdownAutoWidth": true,
+                      "width": true
+                    }'>
+              <option value="">Bất Kỳ</option>
+              <option value="Accountant">CGV</option>
+              <option value="Co-founder">Cinestar</option>
+              <option value="Designer">Lotte</option>
+              <option value="Developer">Galaxy</option>
+              <option value="Director">BHD</option>
+            </select>
+                </div>
+            </div>
+    </div>
+
+    <div class="col-sm-auto">
+        <!-- Daterangepicker -->
+        <button id="js-daterangepicker-predefined" class="btn btn-sm btn-white dropdown-toggle mb-2 mb-sm-0">
+          <i class="tio-date-range"></i>
+          <span class="js-daterangepicker-predefined-preview ml-1"></span>
+        </button>
+        <!-- End Daterangepicker -->
+      </div>
+
+  </div>
+  <!-- End Row -->
+</div>
+<!-- End Header -->
+
+<!-- Body -->
+<div class="card-body">
+  <div class="row">
+    <div class="col-md-9 mb-5 mb-md-0">
+      <!-- Bar Chart -->
+      <div class="chartjs-custom mb-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+        <canvas class="js-chart chartjs-render-monitor" style="height: 288px; display: block; width: 856px;" data-hs-chartjs-options='{
+                  "type": "bar",
+                  "data": {
+                    "labels": ["CGV","Cinestar","Lotte","Galaxy","BHD"],
+                    "datasets": [{
+                      "data": [200, 300, 290, 350, 150],
+                      "backgroundColor": "#377dff",
+                      "hoverBackgroundColor": "#377dff",
+                      "borderColor": "#377dff"
+                    },
+                    {
+                      "data": [150, 230, 382, 204, 169],
+                      "backgroundColor": "#e7eaf3",
+                      "borderColor": "#e7eaf3"
+                    }]
+                  },
+                  "options": {
+                    "scales": {
+                      "yAxes": [{
+                        "gridLines": {
+                          "color": "#e7eaf3",
+                          "drawBorder": false,
+                          "zeroLineColor": "#e7eaf3"
+                        },
+                        "ticks": {
+                          "beginAtZero": true,
+                          "stepSize": 100,
+                          "fontSize": 12,
+                          "fontColor": "#97a4af",
+                          "fontFamily": "Open Sans, sans-serif",
+                          "padding": 10
+                        }
+                      }],
+                      "xAxes": [{
+                        "gridLines": {
+                          "display": false,
+                          "drawBorder": false
+                        },
+                        "ticks": {
+                          "fontSize": 12,
+                          "fontColor": "#97a4af",
+                          "fontFamily": "Open Sans, sans-serif",
+                          "padding": 5
+                        },
+                        "categoryPercentage": 0.5,
+                        "maxBarThickness": "10"
+                      }]
+                    },
+                    "cornerRadius": 2,
+                    "tooltips": {
+                      "hasIndicator": true,
+                      "mode": "index",
+                      "intersect": false
+                    },
+                    "hover": {
+                      "mode": "nearest",
+                      "intersect": true
+                    }
+                  }
+                }' width="1070" height="360"></canvas>
+      </div>
+      <!-- End Bar Chart -->
+
+      <!-- Legend Indicators -->
+      <div class="row justify-content-center">
+        <div class="col-auto">
+          <span class="legend-indicator"></span> Doanh Thu
+        </div>
+        <div class="col-auto">
+          <span class="legend-indicator bg-primary"></span> Số Vé Bán Được
+        </div>
+      </div>
+      <!-- End Legend Indicators -->
+    </div>
+
+    <div class="col-md-3 column-divider-md">
+      <div class="row">
+        <div class="col-sm-6 col-md-12">
+          <!-- Stats -->
+          <div class="d-flex justify-content-center flex-column" style="min-height: 10.5rem;">
+            <h6 class="card-subtitle">Doanh Thu</h6>
+            <span class="d-block display-4 text-dark mb-1 mr-3">20.000.000.000</span>
+            <span class="d-block text-success">
+              <i class="tio-trending-up mr-1"></i> $2,401.02 (3.7%)
+            </span>
+          </div>
+          <!-- End Stats -->
+
+          <div class="d-sm-none">
+            <hr class="my-0">
+          </div>
+
+          <div class="d-none d-md-block">
+            <hr class="my-0">
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-12">
+          <!-- Stats -->
+          <div class="d-flex justify-content-center flex-column" style="min-height: 10.5rem;">
+            <h6 class="card-subtitle">Số Vé Bán Được</h6>
+            <span class="d-block display-4 text-dark mb-1 mr-3">80 000</span>
+            <span class="d-block text-danger">
+              <i class="tio-trending-down mr-1"></i> +3,301 (1.2%)
+            </span>
+          </div>
+          <!-- End Stats -->
+        </div>
+      </div>
+      <!-- End Row -->
+    </div>
+  </div>
+  <!-- End Row -->
+</div>
+<!-- End Body -->
+</div>
+
+</div>
+
+
