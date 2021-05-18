@@ -20,13 +20,23 @@ app.set("views", "./views");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use("/public", express.static("public"));
+//khai báo static file
+app.use(express.static(__dirname + "/public"));
 
-//use router admin
-app.use("/admin", require("./server/routes/router"));
+//use router for admin
+app.use("/admin", require("./src/admin/routes/router"));
 
-//use router client
-app.use("/home", require("./client/routes/router"));
+//use router for user
+app.use("/user", require("./src/users/routes/home"));
+app.use("/user", require("./src/users/routes/movie-checkout"));
+app.use("/user", require("./src/users/routes/movie-customer"));
+app.use("/user", require("./src/users/routes/movie-detail"));
+app.use("/user", require("./src/users/routes/movie-list"));
+app.use("/user", require("./src/users/routes/movie-seat-plan"));
+app.use("/user", require("./src/users/routes/movie-ticket-plan"));
+app.use("/user", require("./src/users/routes/movie-contact"));
+app.use("/user", require("./src/users/routes/sign-in"));
+app.use("/user", require("./src/users/routes/sign-up"));
 
 app.listen(process.env.PORT || 3000, function () {
   console.log(
