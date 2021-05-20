@@ -6,7 +6,7 @@ router.use((request, response, next) => {
   next();
 });
 
-router.get("/home", (req, res) => {
+router.get("/", (req, res) => {
   res.render("users/home");
 });
 
