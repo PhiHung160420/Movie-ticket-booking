@@ -6,6 +6,9 @@ const expressLayouts = require("express-ejs-layouts");
 
 const bodyParser = require("body-parser");
 
+//get connection database
+const db = require("./config/database/db");
+
 app.use(express.json());
 
 //express ejs-layouts
@@ -43,10 +46,9 @@ app.use("/user", require("./src/users/routes/movie-contact"));
 app.use("/user", require("./src/users/routes/sign-in"));
 app.use("/user", require("./src/users/routes/sign-up"));
 
-app.listen(process.env.PORT || 3000, function () {
-  console.log(
-    "Express server listening on port %d in %s mode",
-    this.address().port,
-    app.settings.env
-  );
-});
+//connect to postgres
+db.sync().then(function(){
+  app.listen(process.env.PORT || 3000, function(){
+      console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+    });
+}).catch(console.error);
