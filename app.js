@@ -1,12 +1,11 @@
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
-const cookieSession = require('cookie-session');
+const cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
 
-const db = require('./src/config/database/db');
-const setLayoutMiddleware = require('./src/admin/middlewares/set_layout');
+const setLayoutMiddleware = require("./src/admin/middlewares/set_layout");
 
-const theaterClustersRouter = require('./src/admin/routes/theater_clusters');
+const theaterClustersRouter = require("./src/admin/routes/theater_clusters");
 
 const app = express();
 
@@ -14,14 +13,17 @@ const app = express();
 const db = require("./src/config/database/db");
 
 app.use(express.json());
-//Session
-app.use(cookieSession({
-  name: 'session',
-  keys: [process.env.COOKIE_KEY || 'secret'],
 
-  // Cookie Options
-  maxAge: 24 * 60 * 60 * 1000 // 24 hours
-}));
+//Session
+app.use(
+  cookieSession({
+    name: "session",
+    keys: [process.env.COOKIE_KEY || "secret"],
+
+    // Cookie Options
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  })
+);
 
 //express ejs-layouts
 app.use(expressLayouts);
@@ -71,4 +73,3 @@ db.sync()
     });
   })
   .catch(console.error);
-
