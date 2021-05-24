@@ -1,24 +1,27 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Theater_clusters extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
+const { DataTypes } = require("sequelize");
+const db = require("../config/database/db");
+
+const TheaterClusters = db.define(
+  'theater_clusters', {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      allowNull:false
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull:false
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull:false
     }
-  };
-  Theater_clusters.init({
-    Theater_clusters_id: {type:DataTypes.INTEGER,primaryKey:true,allowNull:false},
-    Theater_clusters_name: DataTypes.STRING,
-    Theater_clusters_Adddresss: DataTypes.STRING
   }, {
-    sequelize,
-    modelName: 'Theater_clusters',
-  });
-  return Theater_clusters;
-};
+    timestamps: false
+  }
+);
+
+module.exports = TheaterClusters;
+
+

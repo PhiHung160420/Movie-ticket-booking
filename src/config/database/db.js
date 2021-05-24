@@ -1,14 +1,15 @@
-const { Sequelize, Model, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:1234@localhost:5432/Movie-ticket-booking');
-(async function(){
-    try {
-        await sequelize.authenticate();
-        console.log('Connection has been established successfully.');
-                    
-          
-          await sequelize.sync();      
-        } 
-      catch (error) {
-        console.error('Unable to connect to the database:', error);
-      }
-})().catch(console.error);
+const { Sequelize } = require("sequelize");
+
+module.exports = new Sequelize( process.env.DATABASE_URL ||  "postgres://postgres:0373829264@localhost:5432/movie-ticket-booking"
+  // process.env.DATABASE_URL ||  "postgres://postgres:0373829264@localhost:5432/todo", {
+  //   dialect: 'postgres',
+  //   dialectOptions: {
+  //     ssl: {
+  //       require: true,
+  //       rejectUnauthorized: false
+  //     }
+  //   }
+  // }
+);
+
+
