@@ -180,7 +180,6 @@
                                     <select class="select-bar">
                                         <option value="showing">Ngày ra mắt</option>
                                         <option value="exclusive">Lượt xem</option>
-                                        <option value="trending">Đánh giá</option>
                                         <option value="most-view">Yêu thích</option>
                                     </select>
                                 </div>
@@ -198,1090 +197,113 @@
                     <div class="tab-area">
                         <div class="tab-item">
                             <div class="row mb-10 justify-content-center">
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="movie-grid">
-                                        <div class="movie-thumb c-thumb">
-                                            <a href="/user/movie-detail">
-                                                <img src="/user/images/movie/movie01.jpg" alt="movie">
-                                            </a>
-                                        </div>
-                                        <div class="movie-content bg-one">
-                                            <h5 class="title m-0">
-                                                <a href="/user/movie-detail">alone</a>
-                                            </h5>
-                                            <ul class="movie-rating-percent">
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/tomato.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/cake.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="movie-grid">
-                                        <div class="movie-thumb c-thumb">
-                                            <a href="/user/movie-detail">
-                                                <img src="/user/images/movie/movie02.jpg" alt="movie">
-                                            </a>
-                                        </div>
-                                        <div class="movie-content bg-one">
-                                            <h5 class="title m-0">
-                                                <a href="/user/movie-detail">mars</a>
-                                            </h5>
-                                            <ul class="movie-rating-percent">
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/tomato.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/cake.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                            </ul>
+                                <% movies.forEach(function(movie) { %>
+                                    <div class="col-sm-6 col-lg-4">
+                                        <div class="movie-grid">
+                                            <div class="movie-thumb c-thumb">
+                                                <a href="/user/movie-detail/<%= movie.movie_id %>">
+                                                    <img src="/user/images/movie/movie01.jpg" alt="movie">
+                                                </a>
+                                            </div>
+                                            <div class="movie-content bg-one">
+                                                <h5 class="title m-0">
+                                                    <a href="/user/movie-detail/<%= movie.movie_id %>">
+                                                        <%= movie.movie_name %>
+                                                    </a>
+                                                </h5>
+                                                <ul class="movie-rating-percent">
+                                                    <li>
+                                                        <div class="thumb">
+                                                            <img src="/user/images/movie/view.png" alt="movie">
+                                                        </div>
+                                                        <span class="content"><%= movie.movie_viewed %></span>
+                                                    </li>
+                                                    <li>
+                                                        <div class="thumb">
+                                                            <img src="/user/images/movie/heart.png" alt="movie">
+                                                        </div>
+                                                        <span class="content"><%= movie.movie_liked %></span>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="movie-grid">
-                                        <div class="movie-thumb c-thumb">
-                                            <a href="/user/movie-detail">
-                                                <img src="/user/images/movie/movie03.jpg" alt="movie">
-                                            </a>
-                                        </div>
-                                        <div class="movie-content bg-one">
-                                            <h5 class="title m-0">
-                                                <a href="/user/movie-detail">venus</a>
-                                            </h5>
-                                            <ul class="movie-rating-percent">
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/tomato.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/cake.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="movie-grid">
-                                        <div class="movie-thumb c-thumb">
-                                            <a href="/user/movie-detail">
-                                                <img src="/user/images/movie/movie04.jpg" alt="movie">
-                                            </a>
-                                        </div>
-                                        <div class="movie-content bg-one">
-                                            <h5 class="title m-0">
-                                                <a href="/user/movie-detail">on watch</a>
-                                            </h5>
-                                            <ul class="movie-rating-percent">
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/tomato.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/cake.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="movie-grid">
-                                        <div class="movie-thumb c-thumb">
-                                            <a href="/user/movie-detail">
-                                                <img src="/user/images/movie/movie05.jpg" alt="movie">
-                                            </a>
-                                        </div>
-                                        <div class="movie-content bg-one">
-                                            <h5 class="title m-0">
-                                                <a href="/user/movie-detail">fury</a>
-                                            </h5>
-                                            <ul class="movie-rating-percent">
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/tomato.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/cake.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="movie-grid">
-                                        <div class="movie-thumb c-thumb">
-                                            <a href="/user/movie-detail">
-                                                <img src="/user/images/movie/movie06.jpg" alt="movie">
-                                            </a>
-                                        </div>
-                                        <div class="movie-content bg-one">
-                                            <h5 class="title m-0">
-                                                <a href="/user/movie-detail">trooper</a>
-                                            </h5>
-                                            <ul class="movie-rating-percent">
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/tomato.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/cake.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="movie-grid">
-                                        <div class="movie-thumb c-thumb">
-                                            <a href="/user/movie-detail">
-                                                <img src="/user/images/movie/movie07.jpg" alt="movie">
-                                            </a>
-                                        </div>
-                                        <div class="movie-content bg-one">
-                                            <h5 class="title m-0">
-                                                <a href="/user/movie-detail">horror night</a>
-                                            </h5>
-                                            <ul class="movie-rating-percent">
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/tomato.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/cake.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="movie-grid">
-                                        <div class="movie-thumb c-thumb">
-                                            <a href="/user/movie-detail">
-                                                <img src="/user/images/movie/movie08.jpg" alt="movie">
-                                            </a>
-                                        </div>
-                                        <div class="movie-content bg-one">
-                                            <h5 class="title m-0">
-                                                <a href="/user/movie-detail">the lost name</a>
-                                            </h5>
-                                            <ul class="movie-rating-percent">
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/tomato.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/cake.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="movie-grid">
-                                        <div class="movie-thumb c-thumb">
-                                            <a href="/user/movie-detail">
-                                                <img src="/user/images/movie/movie09.jpg" alt="movie">
-                                            </a>
-                                        </div>
-                                        <div class="movie-content bg-one">
-                                            <h5 class="title m-0">
-                                                <a href="/user/movie-detail">calm stedfast</a>
-                                            </h5>
-                                            <ul class="movie-rating-percent">
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/tomato.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/cake.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="movie-grid">
-                                        <div class="movie-thumb c-thumb">
-                                            <a href="/user/movie-detail">
-                                                <img src="/user/images/movie/movie10.jpg" alt="movie">
-                                            </a>
-                                        </div>
-                                        <div class="movie-content bg-one">
-                                            <h5 class="title m-0">
-                                                <a href="/user/movie-detail">criminal on party</a>
-                                            </h5>
-                                            <ul class="movie-rating-percent">
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/tomato.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/cake.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="movie-grid">
-                                        <div class="movie-thumb c-thumb">
-                                            <a href="/user/movie-detail">
-                                                <img src="/user/images/movie/movie11.jpg" alt="movie">
-                                            </a>
-                                        </div>
-                                        <div class="movie-content bg-one">
-                                            <h5 class="title m-0">
-                                                <a href="/user/movie-detail">halloween party</a>
-                                            </h5>
-                                            <ul class="movie-rating-percent">
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/tomato.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/cake.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="movie-grid">
-                                        <div class="movie-thumb c-thumb">
-                                            <a href="/user/movie-detail">
-                                                <img src="/user/images/movie/movie12.jpg" alt="movie">
-                                            </a>
-                                        </div>
-                                        <div class="movie-content bg-one">
-                                            <h5 class="title m-0">
-                                                <a href="/user/movie-detail">the most wanted</a>
-                                            </h5>
-                                            <ul class="movie-rating-percent">
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/tomato.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/user/images/movie/cake.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                                    <% }) %>
                             </div>
                         </div>
                         <div class="tab-item active">
                             <div class="movie-area mb-10">
-                                <div class="movie-list">
-                                    <div class="movie-thumb c-thumb">
-                                        <a href="/user/movie-detail" class="w-100 bg_img h-100" data-background="/user/images/movie/movie01.jpg">
-                                            <img class="d-sm-none" src="/user/images/movie/movie01.jpg" alt="movie">
-                                        </a>
-                                    </div>
-                                    <div class="movie-content bg-one">
-                                        <h5 class="title">
-                                            <a href="/user/movie-detail">alone</a>
-                                        </h5>
-                                        <p class="duration">2hrs 50 min</p>
-                                        <div class="movie-tags">
-                                            <a href="#0">action</a>
-                                            <a href="#0">adventure</a>
-                                            <a href="#0">fantasy</a>
+                                <% movies.forEach(function(movie) { %>
+                                    <div class="movie-list">
+                                        <div class="movie-thumb c-thumb">
+                                            <a href="/user/movie-detail/<%= movie.movie_id %>" class="w-100 bg_img h-100" data-background="/user/images/movie/movie01.jpg">
+                                                <img class="d-sm-none" src="/user/images/movie/movie01.jpg" alt="movie">
+                                            </a>
                                         </div>
-                                        <div class="release">
-                                            <span>Release Date : </span> <a href="#0"> November 8 , 2020</a>
-                                        </div>
-                                        <ul class="movie-rating-percent">
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/tomato.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/cake.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                        </ul>
-                                        <div class="book-area">
-                                            <div class="book-ticket">
-                                                <div class="react-item">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/heart.png" alt="icons">
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item mr-auto">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/book.png" alt="icons">
-                                                        </div>
-                                                        <span>book ticket</span>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item">
-                                                    <a href="#0" class="popup-video">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/play-button.png" alt="icons">
-                                                        </div>
-                                                        <span>watch trailer</span>
-                                                    </a>
+                                        <div class="movie-content bg-one">
+                                            <h5 class="title">
+                                                <a href="/user/movie-detail/<%= movie.movie_id %>">
+                                                    <%= movie.movie_name %>
+                                                </a>
+                                            </h5>
+                                            <p class="duration"><span>Thời lượng: </span>
+                                                <%= movie.movie_duration %>
+                                            </p>
+                                            <div class="movie-tags">
+                                                <a href="#0">action</a>
+                                                <a href="#0">adventure</a>
+                                                <a href="#0">fantasy</a>
+                                            </div>
+                                            <div class="release">
+                                                <span>Ngày ra mắt: </span>
+                                                <a href="#0">
+                                                    <%= moment(movie.movie_releaseDate).format( 'DD-MM-YYYY')%>
+                                                </a>
+                                            </div>
+                                            <ul class="movie-rating-percent">
+                                                <li>
+                                                    <div class="thumb">
+                                                        <img src="/user/images/movie/view.png" alt="movie">
+                                                    </div>
+                                                    <span class="content">lượt xem: <%= movie.movie_viewed %></span>
+                                                </li>
+                                                <li>
+                                                    <div class="thumb">
+                                                        <img src="/user/images/movie/heart.png" alt="movie">
+                                                    </div>
+                                                    <span class="content">yêu thích: <%= movie.movie_liked %></span>
+                                                </li>
+                                            </ul>
+                                            <div class="book-area">
+                                                <div class="book-ticket">
+                                                    <div class="react-item">
+                                                        <a href="#0">
+                                                            <div class="thumb">
+                                                                <img src="/user/images/icons/heart.png" alt="icons">
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="react-item mr-auto">
+                                                        <a href="#0">
+                                                            <div class="thumb">
+                                                                <img src="/user/images/icons/book.png" alt="icons">
+                                                            </div>
+                                                            <span>Đặt vé</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="react-item">
+                                                        <a href="#0" class="popup-video">
+                                                            <div class="thumb">
+                                                                <img src="/user/images/icons/play-button.png" alt="icons">
+                                                            </div>
+                                                            <span>Xem trailer</span>
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="movie-list">
-                                    <div class="movie-thumb c-thumb">
-                                        <a href="/user/movie-detail" class="w-100 bg_img h-100" data-background="/user/images/movie/movie02.jpg">
-                                            <img class="d-sm-none" src="/user/images/movie/movie02.jpg" alt="movie">
-                                        </a>
-                                    </div>
-                                    <div class="movie-content bg-one">
-                                        <h5 class="title">
-                                            <a href="/user/movie-detail">mars</a>
-                                        </h5>
-                                        <p class="duration">2hrs 50 min</p>
-                                        <div class="movie-tags">
-                                            <a href="#0">action</a>
-                                            <a href="#0">adventure</a>
-                                            <a href="#0">fantasy</a>
-                                        </div>
-                                        <div class="release">
-                                            <span>Release Date : </span> <a href="#0"> November 8 , 2020</a>
-                                        </div>
-                                        <ul class="movie-rating-percent">
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/tomato.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/cake.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                        </ul>
-                                        <div class="book-area">
-                                            <div class="book-ticket">
-                                                <div class="react-item">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/heart.png" alt="icons">
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item mr-auto">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/book.png" alt="icons">
-                                                        </div>
-                                                        <span>book ticket</span>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item">
-                                                    <a href="#0" class="popup-video">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/play-button.png" alt="icons">
-                                                        </div>
-                                                        <span>watch trailer</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="movie-list">
-                                    <div class="movie-thumb c-thumb">
-                                        <a href="/user/movie-detail" class="w-100 bg_img h-100" data-background="/user/images/movie/movie03.jpg">
-                                            <img class="d-sm-none" src="/user/images/movie/movie03.jpg" alt="movie">
-                                        </a>
-                                    </div>
-                                    <div class="movie-content bg-one">
-                                        <h5 class="title">
-                                            <a href="/user/movie-detail">venus</a>
-                                        </h5>
-                                        <p class="duration">2hrs 50 min</p>
-                                        <div class="movie-tags">
-                                            <a href="#0">action</a>
-                                            <a href="#0">adventure</a>
-                                            <a href="#0">fantasy</a>
-                                        </div>
-                                        <div class="release">
-                                            <span>Release Date : </span> <a href="#0"> November 8 , 2020</a>
-                                        </div>
-                                        <ul class="movie-rating-percent">
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/tomato.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/cake.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                        </ul>
-                                        <div class="book-area">
-                                            <div class="book-ticket">
-                                                <div class="react-item">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/heart.png" alt="icons">
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item mr-auto">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/book.png" alt="icons">
-                                                        </div>
-                                                        <span>book ticket</span>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item">
-                                                    <a href="#0" class="popup-video">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/play-button.png" alt="icons">
-                                                        </div>
-                                                        <span>watch trailer</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="movie-list">
-                                    <div class="movie-thumb c-thumb">
-                                        <a href="/user/movie-detail" class="w-100 bg_img h-100" data-background="/user/images/movie/movie04.jpg">
-                                            <img class="d-sm-none" src="/user/images/movie/movie04.jpg" alt="movie">
-                                        </a>
-                                    </div>
-                                    <div class="movie-content bg-one">
-                                        <h5 class="title">
-                                            <a href="/user/movie-detail">on watch</a>
-                                        </h5>
-                                        <p class="duration">2hrs 50 min</p>
-                                        <div class="movie-tags">
-                                            <a href="#0">action</a>
-                                            <a href="#0">adventure</a>
-                                            <a href="#0">fantasy</a>
-                                        </div>
-                                        <div class="release">
-                                            <span>Release Date : </span> <a href="#0"> November 8 , 2020</a>
-                                        </div>
-                                        <ul class="movie-rating-percent">
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/tomato.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/cake.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                        </ul>
-                                        <div class="book-area">
-                                            <div class="book-ticket">
-                                                <div class="react-item">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/heart.png" alt="icons">
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item mr-auto">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/book.png" alt="icons">
-                                                        </div>
-                                                        <span>book ticket</span>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item">
-                                                    <a href="#0" class="popup-video">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/play-button.png" alt="icons">
-                                                        </div>
-                                                        <span>watch trailer</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="movie-list">
-                                    <div class="movie-thumb c-thumb">
-                                        <a href="/user/movie-detail" class="w-100 bg_img h-100" data-background="/user/images/movie/movie05.jpg">
-                                            <img class="d-sm-none" src="/user/images/movie/movie05.jpg" alt="movie">
-                                        </a>
-                                    </div>
-                                    <div class="movie-content bg-one">
-                                        <h5 class="title">
-                                            <a href="/user/movie-detail">fury</a>
-                                        </h5>
-                                        <p class="duration">2hrs 50 min</p>
-                                        <div class="movie-tags">
-                                            <a href="#0">action</a>
-                                            <a href="#0">adventure</a>
-                                            <a href="#0">fantasy</a>
-                                        </div>
-                                        <div class="release">
-                                            <span>Release Date : </span> <a href="#0"> November 8 , 2020</a>
-                                        </div>
-                                        <ul class="movie-rating-percent">
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/tomato.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/cake.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                        </ul>
-                                        <div class="book-area">
-                                            <div class="book-ticket">
-                                                <div class="react-item">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/heart.png" alt="icons">
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item mr-auto">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/book.png" alt="icons">
-                                                        </div>
-                                                        <span>book ticket</span>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item">
-                                                    <a href="#0" class="popup-video">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/play-button.png" alt="icons">
-                                                        </div>
-                                                        <span>watch trailer</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="movie-list">
-                                    <div class="movie-thumb c-thumb">
-                                        <a href="/user/movie-detail" class="w-100 bg_img h-100" data-background="/user/images/movie/movie06.jpg">
-                                            <img class="d-sm-none" src="/user/images/movie/movie06.jpg" alt="movie">
-                                        </a>
-                                    </div>
-                                    <div class="movie-content bg-one">
-                                        <h5 class="title">
-                                            <a href="/user/movie-detail">trooper</a>
-                                        </h5>
-                                        <p class="duration">2hrs 50 min</p>
-                                        <div class="movie-tags">
-                                            <a href="#0">action</a>
-                                            <a href="#0">adventure</a>
-                                            <a href="#0">fantasy</a>
-                                        </div>
-                                        <div class="release">
-                                            <span>Release Date : </span> <a href="#0"> November 8 , 2020</a>
-                                        </div>
-                                        <ul class="movie-rating-percent">
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/tomato.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/cake.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                        </ul>
-                                        <div class="book-area">
-                                            <div class="book-ticket">
-                                                <div class="react-item">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/heart.png" alt="icons">
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item mr-auto">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/book.png" alt="icons">
-                                                        </div>
-                                                        <span>book ticket</span>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item">
-                                                    <a href="#0" class="popup-video">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/play-button.png" alt="icons">
-                                                        </div>
-                                                        <span>watch trailer</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="movie-list">
-                                    <div class="movie-thumb c-thumb">
-                                        <a href="/user/movie-detail" class="w-100 bg_img h-100" data-background="/user/images/movie/movie07.jpg">
-                                            <img class="d-sm-none" src="/user/images/movie/movie07.jpg" alt="movie">
-                                        </a>
-                                    </div>
-                                    <div class="movie-content bg-one">
-                                        <h5 class="title">
-                                            <a href="/user/movie-detail">horror night</a>
-                                        </h5>
-                                        <p class="duration">2hrs 50 min</p>
-                                        <div class="movie-tags">
-                                            <a href="#0">action</a>
-                                            <a href="#0">adventure</a>
-                                            <a href="#0">fantasy</a>
-                                        </div>
-                                        <div class="release">
-                                            <span>Release Date : </span> <a href="#0"> November 8 , 2020</a>
-                                        </div>
-                                        <ul class="movie-rating-percent">
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/tomato.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/cake.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                        </ul>
-                                        <div class="book-area">
-                                            <div class="book-ticket">
-                                                <div class="react-item">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/heart.png" alt="icons">
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item mr-auto">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/book.png" alt="icons">
-                                                        </div>
-                                                        <span>book ticket</span>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item">
-                                                    <a href="#0" class="popup-video">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/play-button.png" alt="icons">
-                                                        </div>
-                                                        <span>watch trailer</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="movie-list">
-                                    <div class="movie-thumb c-thumb">
-                                        <a href="/user/movie-detail" class="w-100 bg_img h-100" data-background="/user/images/movie/movie08.jpg">
-                                            <img class="d-sm-none" src="/user/images/movie/movie08.jpg" alt="movie">
-                                        </a>
-                                    </div>
-                                    <div class="movie-content bg-one">
-                                        <h5 class="title">
-                                            <a href="/user/movie-detail">the lost name</a>
-                                        </h5>
-                                        <p class="duration">2hrs 50 min</p>
-                                        <div class="movie-tags">
-                                            <a href="#0">action</a>
-                                            <a href="#0">adventure</a>
-                                            <a href="#0">fantasy</a>
-                                        </div>
-                                        <div class="release">
-                                            <span>Release Date : </span> <a href="#0"> November 8 , 2020</a>
-                                        </div>
-                                        <ul class="movie-rating-percent">
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/tomato.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/cake.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                        </ul>
-                                        <div class="book-area">
-                                            <div class="book-ticket">
-                                                <div class="react-item">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/heart.png" alt="icons">
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item mr-auto">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/book.png" alt="icons">
-                                                        </div>
-                                                        <span>book ticket</span>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item">
-                                                    <a href="#0" class="popup-video">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/play-button.png" alt="icons">
-                                                        </div>
-                                                        <span>watch trailer</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="movie-list">
-                                    <div class="movie-thumb c-thumb">
-                                        <a href="/user/movie-detail" class="w-100 bg_img h-100" data-background="/user/images/movie/movie09.jpg">
-                                            <img class="d-sm-none" src="/user/images/movie/movie09.jpg" alt="movie">
-                                        </a>
-                                    </div>
-                                    <div class="movie-content bg-one">
-                                        <h5 class="title">
-                                            <a href="/user/movie-detail">calm stedfast</a>
-                                        </h5>
-                                        <p class="duration">2hrs 50 min</p>
-                                        <div class="movie-tags">
-                                            <a href="#0">action</a>
-                                            <a href="#0">adventure</a>
-                                            <a href="#0">fantasy</a>
-                                        </div>
-                                        <div class="release">
-                                            <span>Release Date : </span> <a href="#0"> November 8 , 2020</a>
-                                        </div>
-                                        <ul class="movie-rating-percent">
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/tomato.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/cake.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                        </ul>
-                                        <div class="book-area">
-                                            <div class="book-ticket">
-                                                <div class="react-item">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/heart.png" alt="icons">
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item mr-auto">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/book.png" alt="icons">
-                                                        </div>
-                                                        <span>book ticket</span>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item">
-                                                    <a href="#0" class="popup-video">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/play-button.png" alt="icons">
-                                                        </div>
-                                                        <span>watch trailer</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="movie-list">
-                                    <div class="movie-thumb c-thumb">
-                                        <a href="/user/movie-detail" class="w-100 bg_img h-100" data-background="/user/images/movie/movie10.jpg">
-                                            <img class="d-sm-none" src="/user/images/movie/movie10.jpg" alt="movie">
-                                        </a>
-                                    </div>
-                                    <div class="movie-content bg-one">
-                                        <h5 class="title">
-                                            <a href="/user/movie-detail">criminal on party</a>
-                                        </h5>
-                                        <p class="duration">2hrs 50 min</p>
-                                        <div class="movie-tags">
-                                            <a href="#0">action</a>
-                                            <a href="#0">adventure</a>
-                                            <a href="#0">fantasy</a>
-                                        </div>
-                                        <div class="release">
-                                            <span>Release Date : </span> <a href="#0"> November 8 , 2020</a>
-                                        </div>
-                                        <ul class="movie-rating-percent">
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/tomato.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/cake.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                        </ul>
-                                        <div class="book-area">
-                                            <div class="book-ticket">
-                                                <div class="react-item">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/heart.png" alt="icons">
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item mr-auto">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/book.png" alt="icons">
-                                                        </div>
-                                                        <span>book ticket</span>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item">
-                                                    <a href="#0" class="popup-video">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/play-button.png" alt="icons">
-                                                        </div>
-                                                        <span>watch trailer</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="movie-list">
-                                    <div class="movie-thumb c-thumb">
-                                        <a href="/user/movie-detail" class="w-100 bg_img h-100" data-background="/user/images/movie/movie11.jpg">
-                                            <img class="d-sm-none" src="/user/images/movie/movie11.jpg" alt="movie">
-                                        </a>
-                                    </div>
-                                    <div class="movie-content bg-one">
-                                        <h5 class="title">
-                                            <a href="/user/movie-detail">halloween party</a>
-                                        </h5>
-                                        <p class="duration">2hrs 50 min</p>
-                                        <div class="movie-tags">
-                                            <a href="#0">action</a>
-                                            <a href="#0">adventure</a>
-                                            <a href="#0">fantasy</a>
-                                        </div>
-                                        <div class="release">
-                                            <span>Release Date : </span> <a href="#0"> November 8 , 2020</a>
-                                        </div>
-                                        <ul class="movie-rating-percent">
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/tomato.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/cake.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                        </ul>
-                                        <div class="book-area">
-                                            <div class="book-ticket">
-                                                <div class="react-item">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/heart.png" alt="icons">
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item mr-auto">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/book.png" alt="icons">
-                                                        </div>
-                                                        <span>book ticket</span>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item">
-                                                    <a href="#0" class="popup-video">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/play-button.png" alt="icons">
-                                                        </div>
-                                                        <span>watch trailer</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="movie-list">
-                                    <div class="movie-thumb c-thumb">
-                                        <a href="/user/movie-detail" class="w-100 bg_img h-100" data-background="/user/images/movie/movie12.jpg">
-                                            <img class="d-sm-none" src="/user/images/movie/movie12.jpg" alt="movie">
-                                        </a>
-                                    </div>
-                                    <div class="movie-content bg-one">
-                                        <h5 class="title">
-                                            <a href="/user/movie-detail">the most wanted</a>
-                                        </h5>
-                                        <p class="duration">2hrs 50 min</p>
-                                        <div class="movie-tags">
-                                            <a href="#0">action</a>
-                                            <a href="#0">adventure</a>
-                                            <a href="#0">fantasy</a>
-                                        </div>
-                                        <div class="release">
-                                            <span>Release Date : </span> <a href="#0"> November 8 , 2020</a>
-                                        </div>
-                                        <ul class="movie-rating-percent">
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/tomato.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/user/images/movie/cake.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                        </ul>
-                                        <div class="book-area">
-                                            <div class="book-ticket">
-                                                <div class="react-item">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/heart.png" alt="icons">
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item mr-auto">
-                                                    <a href="#0">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/book.png" alt="icons">
-                                                        </div>
-                                                        <span>book ticket</span>
-                                                    </a>
-                                                </div>
-                                                <div class="react-item">
-                                                    <a href="#0" class="popup-video">
-                                                        <div class="thumb">
-                                                            <img src="/user/images/icons/play-button.png" alt="icons">
-                                                        </div>
-                                                        <span>watch trailer</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                    <% }) %>
                             </div>
                         </div>
                     </div>

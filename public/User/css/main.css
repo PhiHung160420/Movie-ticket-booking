@@ -2297,9 +2297,7 @@ input[type="submit"] {
     font-weight: 600;
 }
 
-.book-wrapper .left-side .item .item-header .counter-item.odometer::after {
-    content: "%";
-}
+.book-wrapper .left-side .item .item-header .counter-item.odometer::after {}
 
 .book-wrapper .left-side .item .item-header .title {
     margin: 0;

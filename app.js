@@ -10,6 +10,9 @@ const theaterClustersRouter = require('./src/admin/routes/theater_clusters');
 
 const app = express();
 
+//get connection database
+const db = require("./src/config/database/db");
+
 app.use(express.json());
 //Session
 app.use(cookieSession({
@@ -56,13 +59,16 @@ app.use("/user", require("./src/users/routes/movie-contact"));
 app.use("/user", require("./src/users/routes/sign-in"));
 app.use("/user", require("./src/users/routes/sign-up"));
 
+//connect to postgres
+db.sync()
+  .then(function () {
+    app.listen(process.env.PORT || 3000, function () {
+      console.log(
+        "Express server listening on port %d in %s mode",
+        this.address().port,
+        app.settings.env
+      );
+    });
+  })
+  .catch(console.error);
 
-db.sync().then(function () {
-  app.listen(process.env.PORT || 3000, function () {
-    console.log(
-      "Express server listening on port %d in %s mode",
-      this.address().port,
-      app.settings.env
-    );
-  });
-}).catch(console.error);
