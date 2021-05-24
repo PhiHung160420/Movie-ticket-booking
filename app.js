@@ -56,13 +56,6 @@ app.use("/user", require("./src/users/routes/movie-contact"));
 app.use("/user", require("./src/users/routes/sign-in"));
 app.use("/user", require("./src/users/routes/sign-up"));
 
-// app.listen(process.env.PORT || 3000, function () {
-//   console.log(
-//     "Express server listening on port %d in %s mode",
-//     this.address().port,
-//     app.settings.env
-//   );
-// });
 
 db.sync().then(function () {
   app.listen(process.env.PORT || 3000, function () {

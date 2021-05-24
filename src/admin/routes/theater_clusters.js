@@ -12,7 +12,6 @@ router.post("/theater-clusters/add", theaterClustersController.postAdd);
 router.get("/theater-clusters/detail/:id", theaterClustersController.getDetail);
 router.post("/theater-clusters/detail/:id", theaterClustersController.postDetail);
 
-// DETAIL
 router.get("/theater-clusters/delete/:id", theaterClustersController.getDelete);
 
 module.exports = router;
