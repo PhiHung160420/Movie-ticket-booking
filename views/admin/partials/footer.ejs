@@ -266,8 +266,62 @@
     $('.js-clipboard').each(function() {
       var clipboard = $.HSCore.components.HSClipboard.init(this);
     });
+
+    $('a.btn.btn-sm.btn-danger').click(function() {
+      var href = $(this).attr('href');
+      $('#btnConfirm').attr('href', href);
+    });
+
   });
+
+  function toast() {
+      $('#toast').toast({
+        delay: 2000
+      });
+
+      $('#toast').toast('show');
+    }
+
 </script>
+
+     
+
+<% 
+      if(toastMessage) { %>
+        <!-- Toast -->
+        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="position: fixed; top: 70px; right: 30px; z-index: 9999;">
+          
+          <% if(toastMessage.title == "Thành Công") { %> 
+            <div class="toast-header" style="border-bottom:3px solid green;">             
+                <i class="fas fa-check-circle" style="padding-right: 10px; color: green;"></i>
+                <h5 class="mb-0">Thành Công</h5>
+                <button type="button" class="close ml-3" data-dismiss="toast" aria-label="Close">
+                  <i class="tio-clear" aria-hidden="true"></i>
+                </button>
+            </div>
+
+          <% } else { %>
+            <div class="toast-header" style="border-bottom:3px solid red;">             
+              <i class="fas fa-exclamation-circle" style="padding-right: 10px; color: red;"></i>
+              <h5 class="mb-0">Thất Bại</h5>
+              <button type="button" class="close ml-3" data-dismiss="toast" aria-label="Close">
+                <i class="tio-clear" aria-hidden="true"></i>
+              </button>
+            </div>
+            
+          <% } %> 
+
+          <div class="toast-body">
+            <%= toastMessage.msg %>
+          </div>
+
+        </div>
+      <!-- End Toast -->
+      <script>
+        toast();
+      </script> 
+  <%  } %>
+
 
 </body>
 

@@ -1,15 +1,27 @@
 const express = require("express");
+const expressLayouts = require("express-ejs-layouts");
+const cookieSession = require('cookie-session');
+const bodyParser = require("body-parser");
+
+const db = require('./src/config/database/db');
+const setLayoutMiddleware = require('./src/admin/middlewares/set_layout');
+
+const theaterClustersRouter = require('./src/admin/routes/theater_clusters');
 
 const app = express();
-
-const expressLayouts = require("express-ejs-layouts");
-
-const bodyParser = require("body-parser");
 
 //get connection database
 const db = require("./src/config/database/db");
 
 app.use(express.json());
+//Session
+app.use(cookieSession({
+  name: 'session',
+  keys: [process.env.COOKIE_KEY || 'secret'],
+
+  // Cookie Options
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}));
 
 //express ejs-layouts
 app.use(expressLayouts);
@@ -27,9 +39,10 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + "/public"));
 
 //use router for admin
+app.use("/admin", setLayoutMiddleware);
 app.use("/admin", require("./src/admin/routes/login"));
 app.use("/admin", require("./src/admin/routes/home"));
-app.use("/admin", require("./src/admin/routes/theater_clusters"));
+app.use("/admin", theaterClustersRouter);
 app.use("/admin", require("./src/admin/routes/theater"));
 app.use("/admin", require("./src/admin/routes/movie"));
 app.use("/admin", require("./src/admin/routes/shows"));
@@ -58,3 +71,4 @@ db.sync()
     });
   })
   .catch(console.error);
+
