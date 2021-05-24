@@ -23,3 +23,5 @@ const TheaterClusters = db.define(
 );
 
 module.exports = TheaterClusters;
+
+

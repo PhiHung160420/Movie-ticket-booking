@@ -1,6 +1,6 @@
 const { Sequelize } = require("sequelize");
 
-module.exports = new Sequelize( process.env.DATABASE_URL ||  "postgres://postgres:0373829264@localhost:5432/cinema"
+module.exports = new Sequelize( process.env.DATABASE_URL ||  "postgres://postgres:0373829264@localhost:5432/movie-ticket-booking"
   // process.env.DATABASE_URL ||  "postgres://postgres:0373829264@localhost:5432/todo", {
   //   dialect: 'postgres',
   //   dialectOptions: {
@@ -11,3 +11,5 @@ module.exports = new Sequelize( process.env.DATABASE_URL ||  "postgres://postgre
   //   }
   // }
 );
+
+
