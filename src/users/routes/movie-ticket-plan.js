@@ -1,13 +1,8 @@
 const { request, response } = require("express");
 var router = require("express").Router();
+const movieTicketPlanController = require('../controllers/movie-ticket-plan');
 
-router.use((request, response, next) => {
-  response.locals.layout = "users/layouts/layout";
-  next();
-});
-
-router.get("/movie-ticket-plan", (req, res) => {
-  res.render("users/movie-ticket-plan");
-});
+router.get("/movie-ticket-plan", movieTicketPlanController.getShowTimes);
+router.post("/movie-ticket-plan", movieTicketPlanController.postShowTimes);
 
 module.exports = router;

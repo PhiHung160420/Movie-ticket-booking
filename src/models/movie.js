@@ -49,7 +49,11 @@ const Movies = db.define("movies", {
   movie_liked: {
     type: DataTypes.FLOAT,
     allowNull: true
-  }
-});
+  },
+  createdAt: {
+    field: 'created_at',
+    type: DataTypes.DATE,
+  },
+}, {timestamps: false, createdAt: false, updatedAt: false});
 
 module.exports = Movies;

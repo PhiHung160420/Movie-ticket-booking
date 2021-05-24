@@ -3903,6 +3903,13 @@ input[type="submit"] {
     padding-right: 50px;
 }
 
+.ticket-search-form .btn-search {
+    position: relative;
+    z-index: 1;
+    outline: none;
+    width: 10rem;
+}
+
 .ticket-search-form .form-group input::-webkit-input-placeholder {
     color: #90a5e8;
 }
@@ -4660,7 +4667,7 @@ input[type="submit"] {
 .seat-plan-wrapper li .movie-schedule .item {
     color: #ffffff;
     padding: 5px;
-    width: 70px;
+    width: 150px;
     background: #162f5f;
     position: relative;
     mask-position: center center;

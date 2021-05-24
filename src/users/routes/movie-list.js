@@ -1,6 +1,6 @@
 const { request, response } = require("express");
 const asyncHandler = require('express-async-handler');
-const Movies = require('../../../models/movie');
+const Movies = require('../../models/movie');
 const moment = require("moment");
 var router = require("express").Router();
 

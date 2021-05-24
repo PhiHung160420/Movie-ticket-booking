@@ -2,14 +2,26 @@ const express = require("express");
 
 const app = express();
 
+const cookieSession = require("cookie-session");
+
 const expressLayouts = require("express-ejs-layouts");
 
 const bodyParser = require("body-parser");
 
 //get connection database
-const db = require("./config/database/db");
+const db = require("./src/config/database/db");
 
 app.use(express.json());
+
+//session 
+app.use(cookieSession({
+  name: 'session',
+  keys: [process.env.COOKIE_KEY || 'secret'],
+  maxAge: 24*60*60*1000
+}));
+
+//get middlewares 
+const getMiddlewares = require('./src/users/middlewares/middleware');
 
 //express ejs-layouts
 app.use(expressLayouts);
@@ -35,6 +47,7 @@ app.use("/admin", require("./src/admin/routes/movie"));
 app.use("/admin", require("./src/admin/routes/shows"));
 
 //use router for user
+app.use("/user", getMiddlewares);
 app.use("/user", require("./src/users/routes/home"));
 app.use("/user", require("./src/users/routes/movie-checkout"));
 app.use("/user", require("./src/users/routes/movie-customer"));
