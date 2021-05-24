@@ -6,6 +6,7 @@ const Booking = require('../../models/booking');
 const Movie = require('../../models/movie');
 const Theater_Clusters_Movies = require('../../models/theater_clusters_movies');
 const Showtimes = require('../../models/showtimes');
+
 //INDEX
 exports.getIndex = async (req, res, next) => {
     res.locals.theaterClusterList = await TheaterClusters.findAll({order: [['id', 'ASC']]});

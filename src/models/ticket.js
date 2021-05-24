@@ -37,4 +37,3 @@ Booking.hasOne(Ticket, {foreignKey: "ticket_booking_id"});
 Ticket.belongsTo(Booking, {foreignKey: "ticket_booking_id"});
 
 module.exports = Ticket;
-

@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const theaterClustersController = require('../controllers/theater_clusters');
+
 // INDEX
 router.get("/theater-clusters", theaterClustersController.getIndex);
 
@@ -11,7 +12,6 @@ router.post("/theater-clusters/add", theaterClustersController.postAdd);
 router.get("/theater-clusters/detail/:id", theaterClustersController.getDetail);
 router.post("/theater-clusters/detail/:id", theaterClustersController.postDetail);
 
-// DELETE
 router.get("/theater-clusters/delete/:id", theaterClustersController.getDelete);
 
 module.exports = router;

@@ -31,4 +31,3 @@ const User=db.define("user",{
 }, {timestamps: false, createdAt: false, updatedAt: false});
 
 module.exports = User;
-
