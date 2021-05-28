@@ -383,25 +383,24 @@
         },
       },
     });
-    var book = 0;
+
     $(".seat-free img").on("click", function (e) {
-      if (book == 0) {
-        $(this).attr("src", "/user/images/movie/seat01-free.png");
-        book = 1;
-      } else if (book == 1) {
-        $(this).attr("src", "/user/images/movie/seat01.png");
-        book = 0;
-      }
+		const srcImg = $(this).attr("src");
+		if(srcImg == "/user/images/movie/seat01-free.png") {
+			$(this).attr("src", "/user/images/movie/seat01-booked.png");
+		} else {
+			$(this).attr("src", "/user/images/movie/seat01-free.png");
+		}
+
     });
-    var bookTwo = 1;
+
     $(".seat-free-two img").on("click", function (e) {
-      if (bookTwo == 0) {
-        $(this).attr("src", "/user/images/movie/seat02-free.png");
-        bookTwo = 1;
-      } else if (bookTwo == 1) {
-        $(this).attr("src", "/user/images/movie/seat02-booked.png");
-        bookTwo = 0;
-      }
+		const srcImg = $(this).attr("src");
+		if(srcImg == "/user/images/movie/seat02-free.png") {
+			$(this).attr("src", "/user/images/movie/seat02-booked.png");
+		} else {
+			$(this).attr("src", "/user/images/movie/seat02-free.png");
+		}
     });
     // shop cart + - start here
     var CartPlusMinus = $(".cart-plus-minus");
