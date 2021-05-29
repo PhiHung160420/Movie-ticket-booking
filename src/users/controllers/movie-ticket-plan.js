@@ -6,6 +6,9 @@ const Showtimes = require("../../models/showtimes");
 const Theater = require("../../models/theater");
 const Theater_clusters = require("../../models/theater_clusters");
 const Theater_clusters_movie = require("../../models/theater_clusters_movies");
+const Booking = require('../../models/booking');
+const Ticket = require('../../models/ticket');
+const User = require('../../models/user');
 
 exports.getShowTimes = asyncHandler(async (req, res) => {
     res.locals.moment = moment;

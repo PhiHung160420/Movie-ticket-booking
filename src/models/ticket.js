@@ -1,28 +1,39 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Ticket extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
-  };
-  Ticket.init({
-    Ticket_id: DataTypes.INTEGER,
-    Booking_id: DataTypes.INTEGER,
-    Seatcode: DataTypes.STRING,
-    HorizontalAddress: DataTypes.STRING,
-    VerticalAddress: DataTypes.STRING,
-    Price: DataTypes.FLOAT
-  }, {
-    sequelize,
-    modelName: 'Ticket',
-  });
-  return Ticket;
-};
+const { DataTypes} = require("sequelize");
+const db = require("../config/database/db");
+const Booking = require("./booking");
+
+const Ticket = db.define("ticket",{
+  ticket_id: {
+    type: DataTypes.UUID,
+    defaultValue:DataTypes.UUIDV1,
+    allowNull:false,
+    primaryKey:true,
+  },
+  ticket_booking_id: {
+    type: DataTypes.UUID,
+    defaultValue:DataTypes.UUIDV1,
+    primaryKey: true,
+    allowNull: false,
+  },
+  ticket_seat_code: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  horizontal_address : {
+    type: DataTypes.STRING,
+    allowNull:false,
+  },
+  vertical_address: {
+    type: DataTypes.STRING,
+    allowNull:false,
+  },
+  ticket_price: {
+    type: DataTypes.FLOAT,
+    allowNull:false,
+  },
+}, {timestamps: false, createdAt: false, updatedAt: false});
+
+Booking.hasOne(Ticket, {foreignKey: "ticket_booking_id"}); 
+Ticket.belongsTo(Booking, {foreignKey: "ticket_booking_id"});
+
+module.exports = Ticket;

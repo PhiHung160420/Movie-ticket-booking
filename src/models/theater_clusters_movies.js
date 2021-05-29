@@ -4,12 +4,12 @@ const Movies = require("./movie");
 const Theater_clusters = require("./theater_clusters");
 
 const Theater_clusters_movies = db.define("theater_clusters_movies", {
-  theater_cluster_id: {
+  theater_clusters_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
   },
   theater_movies_id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     primaryKey: true,
   },
   theater_clusters_movies_date: {
@@ -18,7 +18,7 @@ const Theater_clusters_movies = db.define("theater_clusters_movies", {
   },
 }, {timestamps: false, createdAt: false, updatedAt: false});
 
-Theater_clusters.belongsToMany(Movies, { through: Theater_clusters_movies, foreignKey: 'theater_cluster_id' });
-Movies.belongsToMany(Theater_clusters, { through: Theater_clusters_movies, foreignKey: 'theater_movies_id' });
+Movies.belongsToMany(Theater_clusters, { through: Theater_clusters_movies, foreignKey: 'theater_movies_id', sourceKey: 'movie_id' });
+Theater_clusters.belongsToMany(Movies, { through: Theater_clusters_movies, foreignKey: 'theater_clusters_id', sourceKey: 'theater_clusters_id' });
 
 module.exports = Theater_clusters_movies;

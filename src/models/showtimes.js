@@ -1,25 +1,3 @@
-/* 'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Showtimes extends Model {
-    static associate(models) {
-    }
-  };
-  Showtimes.init({
-    Movie_id: DataTypes.INTEGER,
-    Theater_id: DataTypes.INTEGER,
-    Showtimes_start: DataTypes.TIME,  
-    Showtimnes_end: DataTypes.TIME,
-    Showtime_money: DataTypes.FLOAT
-  }, {
-    sequelize,
-    modelName: 'Showtimes',
-  });
-  return Showtimes;
-}; */
-
 const { DataTypes } = require("sequelize");
 const db = require("../config/database/db");
 const Movies = require('./movie');
@@ -42,7 +20,7 @@ const Showtimes = db.define("showtimes", {
     primaryKey: true,
   },
   showtimes_date: {
-    type: DataTypes.DATE
+    type: DataTypes.DATE,
   },
   showtimes_start: {
     type: DataTypes.TIME,
