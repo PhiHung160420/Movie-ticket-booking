@@ -22,6 +22,7 @@ app.use(cookieSession({
 
 //get middlewares 
 const getMiddlewares = require('./src/users/middlewares/middleware');
+app.use(getMiddlewares);
 
 //express ejs-layouts
 app.use(expressLayouts);
@@ -47,7 +48,7 @@ app.use("/admin", require("./src/admin/routes/movie"));
 app.use("/admin", require("./src/admin/routes/shows"));
 
 //use router for user
-app.use("/user", getMiddlewares);
+//app.use("/user", getMiddlewares);
 app.use("/user", require("./src/users/routes/home"));
 app.use("/user", require("./src/users/routes/movie-checkout"));
 app.use("/user", require("./src/users/routes/movie-customer"));

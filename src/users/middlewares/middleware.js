@@ -5,6 +5,7 @@ module.exports = (req, res, next) => {
     if(listShowtimes)
     {
         res.locals.getListShowtimes = listShowtimes;
+        req.getListShowtimes = listShowtimes;
         req.session.listShowtimes = null;
         next();
     }

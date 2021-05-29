@@ -131,7 +131,7 @@
                             <select class="select-bar" name="select_date">
                                 <% if(listDate) {%>
                                     <% listDate.map(date => { %>
-                                        <option value="<%= moment(date.theater_clusters_movies_date).format( 'DD-MM-YYYY') %>"><%= moment(date.theater_clusters_movies_date).format( 'DD-MM-YYYY') %></option>
+                                        <option value="<%= moment(date.schedule_date).format( 'DD-MM-YYYY') %>"><%= moment(date.schedule_date).format( 'DD-MM-YYYY') %></option>
                                 <% })} else { %>
                                     <option value="20-10-2020"></option>
                                     <% } %>

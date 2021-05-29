@@ -4613,7 +4613,7 @@ input[type="submit"] {
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between;
-    width: 45%;
+    width: 35%;
     border-right: 1px solid #11326f;
     -webkit-box-align: center;
     -ms-flex-align: center;
@@ -4656,11 +4656,10 @@ input[type="submit"] {
 }
 
 .seat-plan-wrapper li .movie-schedule {
-    width: calc(100% - 45%);
+    width: calc(100% - 35%);
     padding: 30px;
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
-    justify-content: space-between;
     margin: -5px;
 }
 
@@ -4682,7 +4681,7 @@ input[type="submit"] {
     cursor: pointer;
     -webkit-transition: all ease 0.3s;
     transition: all ease 0.3s;
-    margin: 5px;
+    margin: 10px;
 }
 
 .seat-plan-wrapper li .movie-schedule .item:hover {

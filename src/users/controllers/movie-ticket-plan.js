@@ -5,13 +5,14 @@ const Movies = require('../../models/movie');
 const Showtimes = require("../../models/showtimes");
 const Theater = require("../../models/theater");
 const Theater_clusters = require("../../models/theater_clusters");
-const Theater_clusters_movie = require("../../models/theater_clusters_movies");
+const Movies_schedule = require("../../models/movies_schedule");
 const Booking = require('../../models/booking');
 const Ticket = require('../../models/ticket');
 const User = require('../../models/user');
 
 exports.getShowTimes = asyncHandler(async (req, res) => {
     res.locals.moment = moment;
+    const {getListShowtimes} = req;
     res.locals.listMovies = await Movies.findAll({
         attributes: [
             [db.fn('DISTINCT', db.col('movie_name')), 'movie_name']
@@ -22,32 +23,21 @@ exports.getShowTimes = asyncHandler(async (req, res) => {
             [db.fn('DISTINCT', db.col('theater_clusters_name')), 'theater_clusters_name']
         ]
     });
-    res.locals.listDate = await Theater_clusters_movie.findAll({
+    res.locals.listDate = await Movies_schedule.findAll({
         attributes: [
-            [db.fn('DISTINCT', db.col('theater_clusters_movies_date')), 'theater_clusters_movies_date']
+            [db.fn('DISTINCT', db.col('schedule_date')), 'schedule_date']
         ],
-        order: [["theater_clusters_movies_date", "ASC"]],
+        order: [["schedule_date", "ASC"]],
     }); 
-    if(res.locals.getListShowtimes)
+    if(getListShowtimes)
     {
-        res.locals.listShowTimes = res.locals.getListShowtimes;
+        res.locals.listShowTimes = getListShowtimes;
         res.locals.listMovies = null;
         res.locals.listTheaterClusters = null;
         res.locals.listDate = null;
     }
-    else
-    {
-        res.locals.listShowTimes = await Showtimes.findAll({
-            attributes: [
-                'movie_id', 'showtimes_start', 'showtimes_end'
-            ],
-            include: [
-            {
-                model: Movies,
-                attributes: ['movie_name']
-            }
-            ]
-        });
+    else {
+        res.locals.listShowTimes = null;
     }
     res.render("users/movie-ticket-plan");
 });
@@ -69,8 +59,6 @@ exports.postShowTimes = asyncHandler(async (req, res) => {
     });
     const showtimesList = await Showtimes.findAll({
         attributes: [
-            'movie_id',
-            'theater_cluster_id',
             'showtimes_date',
             'showtimes_start', 
             'showtimes_end',
@@ -97,7 +85,10 @@ exports.postShowTimes = asyncHandler(async (req, res) => {
         res.redirect('/user/movie-ticket-plan');
     }
     else {
-        const msg = "Phim bạn chọn đã hết suất chiếu. Vui lòng chọn phim khác";
-        res.redirect('/user/?message=' + msg);
+        res.locals.listMovies = null;
+        res.locals.listTheaterClusters = null;
+        res.locals.listDate = null;
+        res.locals.listShowTimes = null;
+        res.render('users/movie-ticket-plan', {movie_name: select_movie_name, theater_cluster_name: select_theater_cluster, showtime_date: select_date});
     }
 });

@@ -5,7 +5,7 @@ const Movies = require('../../models/movie');
 const Showtimes = require("../../models/showtimes");
 const Theater = require("../../models/theater");
 const Theater_clusters = require("../../models/theater_clusters");
-const Theater_clusters_movies = require("../../models/theater_clusters_movies");
+const Movies_schedule = require('../../models/movies_schedule')
 
 exports.getMovies = asyncHandler(async (req, res) => {
     res.locals.moment = moment;
@@ -29,11 +29,11 @@ exports.getMovies = asyncHandler(async (req, res) => {
           [db.fn('DISTINCT', db.col('theater_clusters_name')), 'theater_clusters_name']
       ]
     });
-    res.locals.listDate = await Theater_clusters_movies.findAll({
+    res.locals.listDate = await Movies_schedule.findAll({
       attributes: [
-          [db.fn('DISTINCT', db.col('theater_clusters_movies_date')), 'theater_clusters_movies_date']
+          [db.fn('DISTINCT', db.col('schedule_date')), 'schedule_date']
       ],
-      order: [["theater_clusters_movies_date", "ASC"]],
+      order: [["schedule_date", "ASC"]],
     });
     
     //top movie just release
