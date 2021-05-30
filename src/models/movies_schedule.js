@@ -9,7 +9,7 @@ const Movies_schedule = db.define("movies_schedule", {
     primaryKey: true,
   },
   theater_cluster_id: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     primaryKey: true,
   },
   schedule_date: {
@@ -18,7 +18,10 @@ const Movies_schedule = db.define("movies_schedule", {
   },
 }, {timestamps: false, createdAt: false, updatedAt: false});
 
-Movies.belongsToMany(Theater_clusters, { through: Movies_schedule, foreignKey: 'movie_id', sourceKey: 'movie_id' });
-Theater_clusters.belongsToMany(Movies, { through: Movies_schedule, foreignKey: 'theater_cluster_id', sourceKey: 'theater_clusters_id' });
+//foreign key movie_id
+Movies_schedule.belongsTo(Movies, { foreignKey: "movie_id"});
+
+//foreign key theater_cluster_id
+Movies_schedule.belongsTo(Theater_clusters, { foreignKey: 'theater_cluster_id'});
 
 module.exports = Movies_schedule;
