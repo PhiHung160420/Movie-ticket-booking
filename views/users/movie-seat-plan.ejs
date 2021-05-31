@@ -9,7 +9,7 @@
             </div>
             <ul class="menu">
                 <li>
-                    <a href="/user/">Trang chủ</a>
+                    <a href="/user/" class="active">Trang chủ</a>
                 </li>
                 <li>
                     <a href="#0">Phim</a>
@@ -27,40 +27,49 @@
                 </li>
                 <li>
                     <a href="#0">Hệ thống rạp</a>
-
                     <ul class="submenu">
                         <li>
                             <a href="/user/movie-seat-plan">Tất cả các rạp</a>
                         </li>
                         <li>
-                            <a href="about.html">Rạp đặc biệt</a>
+                            <a href="#">Rạp đặc biệt</a>
                         </li>
                         <li>
-                            <a href="about.html">Rạp sắp mở</a>
+                            <a href="#">Rạp sắp mở</a>
                         </li>
                 </li>
                 </ul>
                 </li>
                 <li>
                     <a href="/user/movie-ticket-plan">Lịch chiếu</a>
-
                 </li>
                 <li>
                     <a href="/user/contact">Liên hệ</a>
                 </li>
                 <li>
-                    <a href="/user/movie-customer-profile">Thành viên</a>
+                    <a href="#">Thành viên</a>
                     <ul class="submenu">
                         <li>
                             <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
                         </li>
                         <li>
-                            <a href="blog-details.html">Vé của tôi</a>
+                            <a href="#">Vé của tôi</a>
                         </li>
                     </ul>
                 </li>
                 <li class="header-button pr-0">
-                    <a href="/user/sign-in">Đăng nhập</a>
+                    <% if(currentUser) { %>
+                        <a><%=currentUser.user_name%></a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="/user/logout">Đăng xuất</a>
+                            </li>
+                        </ul>
+                        <% } else { %>
+                                <a href="/user/sign-in">Đăng nhập</a>
+                            <% } %>
+
+                    
                 </li>
             </ul>
             <div class="header-bar d-lg-none">

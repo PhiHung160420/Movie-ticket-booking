@@ -8,9 +8,7 @@ router.use((request, response, next) => {
   next();
 });
 
-router.get(
-  "/",
-  asyncHandler(async (req, res) => {
+router.get("/", asyncHandler(async (req, res) => {
     const justRelease = await Movies.findAll({
       order: [["movie_releaseDate", "DESC"]],
       limit: 6,
