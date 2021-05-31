@@ -7,6 +7,10 @@ const setLayoutMiddleware = require("./src/admin/middlewares/set_layout");
 
 const theaterClustersRouter = require("./src/admin/routes/theater_clusters");
 
+const theaterRouter = require("./src/admin/routes/theater");
+
+const movieRouter = require("./src/admin/routes/movie");
+
 const app = express();
 
 //get connection database
@@ -45,8 +49,9 @@ app.use("/admin", setLayoutMiddleware);
 app.use("/admin", require("./src/admin/routes/login"));
 app.use("/admin", require("./src/admin/routes/home"));
 app.use("/admin", theaterClustersRouter);
+app.use("/admin", theaterRouter);
+app.use("/admin", movieRouter);
 app.use("/admin", require("./src/admin/routes/theater"));
-app.use("/admin", require("./src/admin/routes/movie"));
 app.use("/admin", require("./src/admin/routes/shows"));
 
 //use router for user

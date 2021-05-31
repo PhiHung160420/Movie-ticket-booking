@@ -2,29 +2,29 @@ const { DataTypes} = require("sequelize");
 const db =require("../config/database/db");
 
 const User=db.define("user",{
-  user_id: {
+  id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
     allowNull:false,
   },
-  user_email: {
+  email: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  user_password: {
+  password: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  user_name: {
+  name: {
     type: DataTypes.STRING,
     allowNull:false,
   },
-  user_phone: {
+  phone: {
     type: DataTypes.BIGINT,
     allowNull:false,
   },
-  user_role: {
+  role: {
     type: DataTypes.BOOLEAN,
     allowNull:false,
   },

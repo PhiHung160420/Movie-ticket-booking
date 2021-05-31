@@ -3,7 +3,7 @@ const db =require("../config/database/db");
 const User=require("./user");
 const Showtimes=require("./showtimes");
 const Booking=db.define("booking",{
-  booking_id: {
+  id: {
     type: DataTypes.UUID,
     defaultValue:DataTypes.UUIDV1,
     primaryKey: true,
@@ -17,11 +17,11 @@ const Booking=db.define("booking",{
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  booking_time: {
+  time: {
     type: DataTypes.DATE,
     allowNull:false,
   },
-  bookin_price: {
+  price: {
     type: DataTypes.FLOAT,
   },
 }, {timestamps: false, createdAt: false, updatedAt: false});

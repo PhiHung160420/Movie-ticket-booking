@@ -12,7 +12,7 @@ router.get(
   "/",
   asyncHandler(async (req, res) => {
     const justRelease = await Movies.findAll({
-      order: [["movie_releaseDate", "DESC"]],
+      order: [["releaseDate", "DESC"]],
       limit: 6,
     });
     const mostViewed = await Movies.findAll({

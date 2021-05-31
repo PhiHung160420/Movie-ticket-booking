@@ -3,19 +3,19 @@ const db = require("../config/database/db");
 const Booking = require("./booking");
 
 const Ticket = db.define("ticket",{
-  ticket_id: {
+  id: {
     type: DataTypes.UUID,
     defaultValue:DataTypes.UUIDV1,
     allowNull:false,
     primaryKey:true,
   },
-  ticket_booking_id: {
+  booking_id: {
     type: DataTypes.UUID,
     defaultValue:DataTypes.UUIDV1,
     primaryKey: true,
     allowNull: false,
   },
-  ticket_seat_code: {
+  seat_code: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -27,13 +27,13 @@ const Ticket = db.define("ticket",{
     type: DataTypes.STRING,
     allowNull:false,
   },
-  ticket_price: {
+  price: {
     type: DataTypes.FLOAT,
     allowNull:false,
   },
 }, {timestamps: false, createdAt: false, updatedAt: false});
 
-Booking.hasOne(Ticket, {foreignKey: "ticket_booking_id"}); 
-Ticket.belongsTo(Booking, {foreignKey: "ticket_booking_id"});
+Booking.hasOne(Ticket, {foreignKey: "booking_id"}); 
+Ticket.belongsTo(Booking, {foreignKey: "booking_id"});
 
 module.exports = Ticket;
