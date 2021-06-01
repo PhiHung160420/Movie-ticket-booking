@@ -2,36 +2,37 @@ const { DataTypes } = require("sequelize");
 const db = require("../config/database/db");
 
 const Movies = db.define("movies", {
-  movie_id: {
+  id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
   },
-  movie_name: {
+  name: {
     type: DataTypes.STRING,
   },
-  movie_releaseDate: {
-    type: DataTypes.DATE,
+  releaseDate: {
+    type: DataTypes.DATEONLY,
   },
-  movie_poster: {
+  poster: {
     type: DataTypes.BLOB,
+    allowNull: true,
   },
-  movie_duration: {
-    type: DataTypes.TIME,
+  duration: {
+    type: DataTypes.STRING,
   },
-  movie_viewed: {
+  trailer: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  viewed: {
     type: DataTypes.INTEGER,
     allowNull: true
   },
-  movie_liked: {
+  liked: {
     type: DataTypes.FLOAT,
     allowNull: true
   },
-  movie_trailer: {
-    type: DataTypes.STRING,
-    allowNull: true
-  }
 }, {timestamps: false, createdAt: false, updatedAt: false});
 
 module.exports = Movies;

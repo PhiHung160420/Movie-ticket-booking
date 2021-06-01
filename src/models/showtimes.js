@@ -4,7 +4,7 @@ const Movies = require('./movie');
 const Theater_clusters = require('./theater_clusters');
 
 const Showtimes = db.define("showtimes", {
-  showtimes_id: {
+  id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
@@ -19,13 +19,13 @@ const Showtimes = db.define("showtimes", {
     allowNull: false,
     primaryKey: true,
   },
-  showtimes_start: {
+  start: {
     type: DataTypes.TIME,
   },
-  showtimes_end: {
+  end: {
     type: DataTypes.TIME,
   },
-  showtimes_price: {
+  price: {
     type: DataTypes.DOUBLE,
   },
 }, {timestamps: false, createdAt: false, updatedAt: false});

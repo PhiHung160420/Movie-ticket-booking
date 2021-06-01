@@ -5,12 +5,16 @@
     <div class="page-header">
       <div class="row align-items-center mb-3">
         <div class="col-sm mb-2 mb-sm-0">
-          <h1 class="page-header-title">Danh Sách Rạp<span class="badge badge-soft-dark ml-2">999,999</span></h1>     
+          <h1 class="page-header-title">Danh Sách Rạp<span class="badge badge-soft-dark ml-2" >999,999</span></h1>     
+          
+        </div>
+        <!-- <div class="col-sm-auto">
+          <a class="btn btn-primary" href="/admin/theater">Danh Sách Rạp</a>
         </div>
 
         <div class="col-sm-auto">
           <a class="btn btn-primary" href="/admin/theater/add">Thêm Rạp</a>
-        </div>
+        </div> -->
       </div>
       <!-- End Row -->
 
@@ -19,7 +23,7 @@
         <!-- Nav -->
         <ul class="nav nav-tabs page-header-tabs" id="pageHeaderTab" role="tablist">
           <li class="nav-item">
-            <a class="nav-link active" href="#">Tất cả rạp</a>
+            <a class="nav-link active" href="#"">Tất cả rạp</a>
           </li>
         </ul>
         <!-- End Nav -->
@@ -110,37 +114,58 @@
           </thead>
 
           <tbody>
+
+          <% for (let i = 0; i < TheaterList.length; i++) { %>
             <tr> 
-              <td>1</td>            
+              <td> <%= i + 1 %> </td>            
               <td>
-                <a class="media align-items-center" href="ecommerce-product-details.html">
-                  <img class="avatar avatar-lg mr-3" src="/admin/assets\img\400x400\img4.jpg" alt="Image Description">
+                <a class="media align-items-center" href="/admin/theater/detail/<%= TheaterList[i].id %>">
+                  <img class="avatar avatar-lg mr-3" src="/admin/assets\img\400x400\theater.png" alt="Image Description">
                   <div class="media-body">
-                    <h5 class="text-hover-primary mb-0">Photive wireless speakers</h5>
+                    <h5 class="text-hover-primary mb-0"><%= TheaterList[i].name %></h5>
                   </div>
                 </a>
-              </td>
-              <td>Electronics</td>
-              <td>Electronics</td>            
+              </td>  
+              <td><%= TheaterList[i].theater_cluster_id %></td>
+              <td><%= TheaterList[i].kind %></td>            
               <td>
                 <div class="btn-group" role="group">
-                  <a class="btn btn-sm btn-success" href="ecommerce-product-details.html">
+                  <a class="btn btn-sm btn-success" href="/admin/theater/detail/<%= TheaterList[i].id %>">
                     <i class="tio-edit"></i> Sửa
                   </a>
-                  <a class="btn btn-sm btn-danger" href="ecommerce-product-details.html">
+                  <a class="btn btn-sm btn-danger" href="/admin/theater/delete/<%= TheaterList[i].id %>" data-toggle="modal" data-target="#exampleModalCenter">
                     <i class="tio-delete"></i> Xóa
                   </a>               
                 </div>
               </td>
             </tr>
-
+            <% } %>
             
            
           </tbody>
         </table>
       </div>
       <!-- End Table -->
-
+      <!-- Modal -->
+      <div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalCenterTitle">Thông Báo</h5>
+              <button type="button" class="btn btn-xs btn-icon btn-ghost-secondary" data-dismiss="modal" aria-label="Close">
+                <i class="tio-clear tio-lg"></i>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Bạn xác nhận xóa rạp đã chọn?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-white" data-dismiss="modal">Thoát</button>
+              <a id="btnConfirm" href="" class="btn btn-primary">Xác Nhận</a>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- Footer -->
       <div class="card-footer">
         <!-- Pagination -->
