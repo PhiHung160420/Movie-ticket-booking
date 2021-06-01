@@ -1,16 +1,17 @@
 const router = require("express").Router();
+const TheaterController = require('../controllers/theater');
 
-router.use((req, res, next) => {
-    res.locals.layout = "admin/layouts/layout";
-    next();
-});
+//INDEX
+router.get("/theater", TheaterController.getIndex);
 
-router.get('/theater', (req, res) => {
-    res.render("admin/theater/index");
-});
+//ADD
+router.get("/theater/add", TheaterController.getAdd);
+router.post("/theater/add", TheaterController.postAdd);
 
-router.get('/theater/add', (req, res) => {
-    res.render("admin/theater/add");
-});
+// DETAIL
+router.get("/theater/detail/:id", TheaterController.getDetail);
+router.post("/theater/detail/:id", TheaterController.postDetail);
 
+router.get("/theater/delete/:id", TheaterController.getDelete);
 module.exports = router;
+

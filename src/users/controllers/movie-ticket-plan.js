@@ -20,14 +20,14 @@ exports.getShowTimes = asyncHandler(async (req, res) => {
     //lấy danh sách các phim
     res.locals.listMovies = await Movies.findAll({
         attributes: [
-            [db.fn('DISTINCT', db.col('movie_name')), 'movie_name']
+            [db.fn('DISTINCT', db.col('name')), 'name']
         ]
     });
 
     //lấy danh sách các cụm rạp chiếu
     res.locals.listTheaterClusters = await Theater_clusters.findAll({
         attributes: [
-            [db.fn('DISTINCT', db.col('theater_clusters_name')), 'theater_clusters_name']
+            [db.fn('DISTINCT', db.col('name')), 'name']
         ]
     });
 
@@ -62,38 +62,38 @@ exports.postShowTimes = asyncHandler(async (req, res) => {
 
     const getMovieByName = await Movies.findOne({
         where: {
-            movie_name: select_movie_name
+            name: select_movie_name
         },  
-        attributes: ["movie_id", "movie_name"]
+        attributes: ["id", "name"]
     });
 
     const getTheaterByName = await Theater_clusters.findOne({
         where: {
-            theater_clusters_name: select_theater_cluster
+            name: select_theater_cluster
         },
-        attributes: ["theater_clusters_id", "theater_clusters_name"]
+        attributes: ["id", "name"]
     });
 
     const showtimesList = await Showtimes.findAll({
         attributes: [
-            'showtimes_date',
-            'showtimes_start', 
-            'showtimes_end',
+            'date',
+            'start', 
+            'end',
         ],
         include: [
             {
                 model: Movies,
-                attributes: ['movie_name']
+                attributes: ['name']
             },
             {
                 model: Theater_clusters,
-                attributes: ['theater_clusters_name']
+                attributes: ['name']
             }
         ],
         where: {
-            movie_id: getMovieByName.movie_id,
-            theater_cluster_id: getTheaterByName.theater_clusters_id,
-            showtimes_date: select_date
+            movie_id: getMovieByName.id,
+            theater_cluster_id: getTheaterByName.id,
+            date: select_date
         },
     });
 

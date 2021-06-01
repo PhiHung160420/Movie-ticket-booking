@@ -16,17 +16,17 @@ exports.getMovies = asyncHandler(async (req, res) => {
     //set value for select option 
     res.locals.listMovies = await Movies.findAll({
       attributes: [
-          [db.fn('DISTINCT', db.col('movie_name')), 'movie_name']
+          [db.fn('DISTINCT', db.col('name')), 'name']
       ]
     });
     res.locals.listTheaterClusters = await Theater_clusters.findAll({
       attributes: [
-          [db.fn('DISTINCT', db.col('theater_clusters_name')), 'theater_clusters_name']
+          [db.fn('DISTINCT', db.col('name')), 'name']
       ]
     });
     res.locals.listTheaterClusters = await Theater_clusters.findAll({
       attributes: [
-          [db.fn('DISTINCT', db.col('theater_clusters_name')), 'theater_clusters_name']
+          [db.fn('DISTINCT', db.col('name')), 'name']
       ]
     });
     res.locals.listDate = await Movies_schedule.findAll({
@@ -38,17 +38,17 @@ exports.getMovies = asyncHandler(async (req, res) => {
     
     //top movie just release
     const justRelease = await Movies.findAll({
-      order: [["movie_releaseDate", "DESC"]],
+      order: [["releaseDate", "DESC"]],
       limit: 6,
     });
     //top most watched movie
     const mostViewed = await Movies.findAll({
-      order: [["movie_viewed", "DESC"]],
+      order: [["viewed", "DESC"]],
       limit: 6,
     });
     //top favoried movie
     const mostLiked = await Movies.findAll({
-      order: [["movie_liked", "DESC"]],
+      order: [["liked", "DESC"]],
       limit: 6,
     });
 

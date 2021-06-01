@@ -30,20 +30,22 @@
 
           <!-- Body -->
           <div class="card-body">
-            <!-- Form Group -->
             <div class="form-group">
               <label for="name" class="input-label">Tên <i class="tio-help-outlined text-body ml-1" data-toggle="tooltip" data-placement="top" title=""></i></label>
 
-              <input type="text" class="form-control" name="name" id="name">
+              <input type="text" class="form-control" name="name" id="name" value="<%= theaterClusters.name %>">
             </div>
-            <!-- End Form Group -->
 
             <div class="form-group">
               <label for="address" class="input-label">Địa chỉ <i class="tio-help-outlined text-body ml-1" data-toggle="tooltip" data-placement="top" title=""></i></label>
 
-              <input type="text" class="form-control" name="address" id="address">
+              <input type="text" class="form-control" name="address" id="address" value="<%= theaterClusters.address %>" >
             </div>
         
+            <div class="form-group">  
+                <input type="text" class="form-control" name="id" id="address" value="<%= theaterClusters.id %>" readonly hidden>
+            </div>
+
           </div>
           <!-- Body -->
         </div>

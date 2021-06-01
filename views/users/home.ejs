@@ -103,7 +103,7 @@
                             <select class="select-bar" name="select_movie_name">
                                 <% if(listMovies) {%>
                                     <% listMovies.map(movie => { %>
-                                <option value="<%= movie.movie_name %>"><%= movie.movie_name %></option>
+                                <option value="<%= movie.name %>"><%= movie.name %></option>
                                 <% })} else { %>
                                     <option value="dhaka"></option>
                                     <% } %>
@@ -117,7 +117,7 @@
                             <select class="select-bar" name="select_theater_cluster">
                                 <% if(listTheaterClusters) {%>
                                     <% listTheaterClusters.map(theater_cluster => { %>
-                                        <option value="<%= theater_cluster.theater_clusters_name %>"><%= theater_cluster.theater_clusters_name %></option>
+                                        <option value="<%= theater_cluster.name %>"><%= theater_cluster.name %></option>
                                 <% })} else { %>        
                                     <option value="Venus">Venus</option>
                                     <% } %>           
@@ -233,14 +233,14 @@
                                 <div class="col-sm-6 col-lg-4">
                                     <div class="movie-grid">
                                         <div class="movie-thumb c-thumb">
-                                            <a href="/user/movie-detail/<%= movie.movie_id %>">
+                                            <a href="/user/movie-detail/<%= movie.id %>">
                                                 <img src="/user/images/movie/movie01.jpg" alt="movie">
                                             </a>
                                         </div>
                                         <div class="movie-content bg-one">
                                             <h5 class="title m-0">
-                                                <a href="#0">
-                                                    <%= movie.movie_name %>
+                                                <a href="/user/movie-detail/<%= movie.id %>">
+                                                    <%= movie.name %>
                                                 </a>
                                             </h5>
                                             <ul class="movie-rating-percent">
@@ -249,7 +249,7 @@
                                                         <img src="/user/images/movie/view.png" alt="movie">
                                                     </div>
                                                     <span class="content">
-                                                        <%= movie.movie_viewed %>
+                                                        <%= movie.viewed %>
                                                     </span>
                                                 </li>
                                                 <li>
@@ -257,7 +257,7 @@
                                                         <img src="/user/images/movie/heart.png" alt="movie">
                                                     </div>
                                                     <span class="content">
-                                                        <%= movie.movie_liked %>
+                                                        <%= movie.liked %>
                                                     </span>
                                                 </li>
                                             </ul>
@@ -269,7 +269,7 @@
                                         <div class="col-sm-6 col-lg-4">
                                             <div class="movie-grid">
                                                 <div class="movie-thumb c-thumb">
-                                                    <a href="/user/movie-detail">
+                                                    <a href="#0">
                                                         <img src="/user/images/movie/movie03.jpg" alt="movie">
                                                     </a>
                                                 </div>
@@ -282,13 +282,13 @@
                                                             <div class="thumb">
                                                                 <img src="/user/images/movie/view.png" alt="movie">
                                                             </div>
-                                                            <span class="content">88%</span>
+                                                            <span class="content">88</span>
                                                         </li>
                                                         <li>
                                                             <div class="thumb">
                                                                 <img src="/user/images/movie/heart.png" alt="movie">
                                                             </div>
-                                                            <span class="content">88%</span>
+                                                            <span class="content">88</span>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -308,14 +308,14 @@
                                 <div class="col-sm-6 col-lg-4">
                                     <div class="movie-grid">
                                         <div class="movie-thumb c-thumb">
-                                            <a href="/user/movie-detail">
+                                            <a href="/user/movie-detail/<%= movie.id %>">
                                                 <img src="/user/images/movie/movie03.jpg" alt="movie">
                                             </a>
                                         </div>
                                         <div class="movie-content bg-one">
                                             <h5 class="title m-0">
-                                                <a href="#0">
-                                                    <%= movie.movie_name %>
+                                                <a href="/user/movie-detail/<%= movie.id %>">
+                                                    <%= movie.name %>
                                                 </a>
                                             </h5>
                                             <ul class="movie-rating-percent">
@@ -324,7 +324,7 @@
                                                         <img src="/user/images/movie/view.png" alt="movie">
                                                     </div>
                                                     <span class="content">
-                                                        <%= movie.movie_viewed %>
+                                                        <%= movie.viewed %>
                                                     </span>
                                                 </li>
                                                 <li>
@@ -332,7 +332,7 @@
                                                         <img src="/user/images/movie/heart.png" alt="movie">
                                                     </div>
                                                     <span class="content">
-                                                        <%= movie.movie_liked %>
+                                                        <%= movie.liked %>
                                                     </span>
                                                 </li>
                                             </ul>
@@ -357,13 +357,13 @@
                                                             <div class="thumb">
                                                                 <img src="/user/images/movie/view.png" alt="movie">
                                                             </div>
-                                                            <span class="content">88%</span>
+                                                            <span class="content">88</span>
                                                         </li>
                                                         <li>
                                                             <div class="thumb">
                                                                 <img src="/user/images/movie/heart.png" alt="movie">
                                                             </div>
-                                                            <span class="content">88%</span>
+                                                            <span class="content">88</span>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -383,14 +383,14 @@
                                 <div class="col-sm-6 col-lg-4">
                                     <div class="movie-grid">
                                         <div class="movie-thumb c-thumb">
-                                            <a href="#0">
+                                            <a href="/user/movie-detail/<%= movie.id %>">
                                                 <img src="/user/images/movie/movie01.jpg" alt="movie">
                                             </a>
                                         </div>
                                         <div class="movie-content bg-one">
                                             <h5 class="title m-0">
-                                                <a href="#0">
-                                                    <%= movie.movie_name %>
+                                                <a href="/user/movie-detail/<%= movie.id %>">
+                                                    <%= movie.name %>
                                                 </a>
                                             </h5>
                                             <ul class="movie-rating-percent">
@@ -399,7 +399,7 @@
                                                         <img src="/user/images/movie/view.png" alt="movie">
                                                     </div>
                                                     <span class="content">
-                                                        <%= movie.movie_viewed %>
+                                                        <%= movie.viewed %>
                                                     </span>
                                                 </li>
                                                 <li>
@@ -407,7 +407,7 @@
                                                         <img src="/user/images/movie/heart.png" alt="movie">
                                                     </div>
                                                     <span class="content">
-                                                        <%= movie.movie_liked %>
+                                                        <%= movie.liked %>
                                                     </span>
                                                 </li>
                                             </ul>
@@ -432,13 +432,13 @@
                                                             <div class="thumb">
                                                                 <img src="/user/images/movie/view.png" alt="movie">
                                                             </div>
-                                                            <span class="content">88%</span>
+                                                            <span class="content">88</span>
                                                         </li>
                                                         <li>
                                                             <div class="thumb">
                                                                 <img src="/user/images/movie/heart.png" alt="movie">
                                                             </div>
-                                                            <span class="content">88%</span>
+                                                            <span class="content">88</span>
                                                         </li>
                                                     </ul>
                                                 </div>

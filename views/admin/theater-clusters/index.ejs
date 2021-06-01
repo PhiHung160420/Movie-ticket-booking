@@ -60,7 +60,6 @@
       <div class="table-responsive datatable-custom">
         <table id="datatable" class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table" data-hs-datatables-options='{
                  "columnDefs": [{
-                    "targets": [1],
                     "orderable": false
                   }],
                  "order": [],
@@ -84,35 +83,61 @@
           </thead>
 
           <tbody>
-            <tr> 
-              <td>1</td>            
-              <td>
-                <a class="media align-items-center" href="ecommerce-product-details.html">
-                  <img class="avatar avatar-lg mr-3" src="/admin/assets\img\400x400\img4.jpg" alt="Image Description">
-                  <div class="media-body">
-                    <h5 class="text-hover-primary mb-0">Photive wireless speakers</h5>
-                  </div>
-                </a>
-              </td>
-              <td>Electronics</td>             
-              <td>
-                <div class="btn-group" role="group">
-                  <a class="btn btn-sm btn-success" href="ecommerce-product-details.html">
-                    <i class="tio-edit"></i> Sửa
-                  </a>
-                  <a class="btn btn-sm btn-danger" href="ecommerce-product-details.html">
-                    <i class="tio-delete"></i> Xóa
-                  </a>               
-                </div>
-              </td>
-            </tr>
 
-            
+            <% for (let i = 0; i < theaterClusterList.length; i++) { %>
+              <tr>
+                <td> <%= i + 1 %> </td>
+
+                <td>
+                  <a class="media align-items-center" href="/admin/theater-clusters/detail/<%= theaterClusterList[i].id %>">                   
+                    <div class="media-body">
+                      <h5 class="text-hover-primary mb-0"> <%= theaterClusterList[i].name %> </h5>
+                    </div>
+                  </a>
+                </td>
+
+                <td><%= theaterClusterList[i].address %></td>
+
+                <td>
+                  <div class="btn-group" role="group">
+                    <a class="btn btn-sm btn-success" href="/admin/theater-clusters/detail/<%= theaterClusterList[i].id %>">
+                      <i class="tio-edit"></i> Sửa
+                    </a>
+                    <a class="btn btn-sm btn-danger" href="/admin/theater-clusters/delete/<%= theaterClusterList[i].id %>" data-toggle="modal" data-target="#exampleModalCenter">
+                      <i class="tio-delete"></i> Xóa
+                    </a>               
+                  </div>
+                </td>
+
+              </tr>
+            <% } %>
            
           </tbody>
         </table>
       </div>
       <!-- End Table -->
+
+      <!-- Modal -->
+      <div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalCenterTitle">Thông Báo</h5>
+              <button type="button" class="btn btn-xs btn-icon btn-ghost-secondary" data-dismiss="modal" aria-label="Close">
+                <i class="tio-clear tio-lg"></i>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Bạn xác nhận xóa cụm rạp đã chọn?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-white" data-dismiss="modal">Thoát</button>
+              <a id="btnConfirm" href="" class="btn btn-primary">Xác Nhận</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Modal -->
 
       <!-- Footer -->
       <div class="card-footer">

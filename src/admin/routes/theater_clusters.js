@@ -1,16 +1,17 @@
-const router = require("express").Router();
+const router = require('express').Router();
+const theaterClustersController = require('../controllers/theater_clusters');
 
-router.use((req, res, next) => {
-    res.locals.layout = "admin/layouts/layout";
-    next();
-});
+// INDEX
+router.get("/theater-clusters", theaterClustersController.getIndex);
 
-router.get('/theater-clusters', (req, res) => {
-    res.render("admin/theater-clusters/index");
-});
+// ADD
+router.get("/theater-clusters/add", theaterClustersController.getAdd);
+router.post("/theater-clusters/add", theaterClustersController.postAdd);
 
-router.get('/theater-clusters/add', (req, res) => {
-    res.render("admin/theater-clusters/add");
-});
+// DETAIL
+router.get("/theater-clusters/detail/:id", theaterClustersController.getDetail);
+router.post("/theater-clusters/detail/:id", theaterClustersController.postDetail);
+
+router.get("/theater-clusters/delete/:id", theaterClustersController.getDelete);
 
 module.exports = router;

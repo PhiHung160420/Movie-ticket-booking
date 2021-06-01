@@ -1,16 +1,24 @@
 const router = require("express").Router();
+const movieController = require('../controllers/movie');
+const multer  = require('multer');
+const upload = multer({ storage: multer.memoryStorage() });
 
-router.use((req, res, next) => {
-    res.locals.layout = "admin/layouts/layout";
-    next();
-});
+//INDEX
+router.get("/movie",movieController.getIndex);
 
-router.get('/movie', (req, res) => {
-    res.render("admin/movie/index");
-});
+// ADD
+router.get("/movie/add", movieController.getAdd);
+router.post("/movie/add", movieController.postAdd);
 
-router.get('/movie/add', (req, res) => {
-    res.render("admin/movie/add");
-});
+// UPLOAD
+router.post("/movie/upload", upload.single('file'), movieController.postUpload);
+
+
+// DETAIL
+router.get("/movie/detail/:id", movieController.getDetail);
+router.post("/movie/detail/:id", movieController.postDetail);
+
+router.get("/movie/delete/:id", movieController.getDelete);
+
 
 module.exports = router;
