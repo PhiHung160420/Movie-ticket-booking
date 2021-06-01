@@ -6,7 +6,6 @@ const cookieSession = require("cookie-session");
 
 const bodyParser = require("body-parser");
 const passport = require('passport');
-const flash = require('connect-flash'); 
 const authMiddlewares = require("./src/users/middlewares/auth");
 
 const setLayoutMiddleware = require("./src/admin/middlewares/set_layout");
