@@ -4991,6 +4991,10 @@ input[type="submit"] {
     position: relative;
 }
 
+.single-seat.seat-booked{
+    cursor: not-allowed;
+}
+
 .single-seat .sit-num {
     position: absolute;
     top: 50%;
@@ -5010,7 +5014,7 @@ input[type="submit"] {
 }
 
 .single-seat:hover .sit-num {
-    display: none;
+    
 }
 
 @media (max-width: 767px) {

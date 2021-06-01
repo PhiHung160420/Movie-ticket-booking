@@ -385,23 +385,39 @@
     });
 
     $(".seat-free img").on("click", function (e) {
-		const srcImg = $(this).attr("src");
-		if(srcImg == "/user/images/movie/seat01-free.png") {
-			$(this).attr("src", "/user/images/movie/seat01-booked.png");
-		} else {
-			$(this).attr("src", "/user/images/movie/seat01-free.png");
-		}
-
+      const srcImg = $(this).attr("src");
+      if(srcImg == "/user/images/movie/seat01-free.png") {
+        $(this).attr("src", "/user/images/movie/seat01-booked.png");
+      } else {
+        $(this).attr("src", "/user/images/movie/seat01-free.png");
+      }
     });
 
-    $(".seat-free-two img").on("click", function (e) {
-		const srcImg = $(this).attr("src");
-		if(srcImg == "/user/images/movie/seat02-free.png") {
-			$(this).attr("src", "/user/images/movie/seat02-booked.png");
-		} else {
-			$(this).attr("src", "/user/images/movie/seat02-free.png");
-		}
+    var srcImgHover;
+    $(".seat-free-two")
+      .mouseenter(function() {
+        srcImgHover = $(this).find("img").attr("src");
+        if(srcImgHover == "/user/images/movie/seat02-free.png") {
+          $(this).find("img").attr("src", "/user/images/movie/seat02-booked.png");
+        }        
+      })
+      .mouseleave(function() {
+        if(srcImgHover == "/user/images/movie/seat02-free.png") {
+          $(this).find("img").attr("src", srcImgHover);
+        }         
+      });
+
+    $(".seat-free-two").on("click", function (e) {
+      const srcImg = $(this).find("img").attr("src");
+      if(srcImgHover == "/user/images/movie/seat02-free.png") {
+        $(this).find("img").attr("src", "/user/images/movie/seat02-booked.png");
+        srcImgHover = "/user/images/movie/seat02-booked.png";
+      } else {
+        $(this).find("img").attr("src", "/user/images/movie/seat02-free.png");
+        srcImgHover = "/user/images/movie/seat02-free.png";
+      }
     });
+
     // shop cart + - start here
     var CartPlusMinus = $(".cart-plus-minus");
     CartPlusMinus.prepend('<div class="dec qtybutton">-</div>');

@@ -8,24 +8,25 @@ const Showtimes = db.define("showtimes", {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
+    allowNull: false
   },
   movie_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     primaryKey: true,
   },
-  theater_cluster_id: {
+  theater_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     primaryKey: true,
   },
-  showtimes_start: {
+  start_time: {
     type: DataTypes.TIME,
   },
-  showtimes_end: {
+  end_time: {
     type: DataTypes.TIME,
   },
-  showtimes_price: {
+  price: {
     type: DataTypes.DOUBLE,
   },
 }, {timestamps: false, createdAt: false, updatedAt: false});

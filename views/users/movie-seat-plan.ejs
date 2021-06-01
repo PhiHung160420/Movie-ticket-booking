@@ -124,12 +124,13 @@
             <div class="screen-thumb">
                 <img src="/user/images/movie/screen-thumb.png" alt="movie">
             </div>
+
             <h5 class="subtitle">Ghế thường</h5>
-            <div class="screen-wrapper">
-                <ul class="seat-area">
-                    <li class="seat-line">
+            <div class="screen-wrapper"> 
+                <ul class="seat-area">    
+                    <li class="seat-line"> <!-- chạy vòng for theo chiều dọc -->  
                         <span>G</span>
-                        <ul class="seat--area">
+                        <ul class="seat--area"> <!-- chạy vòng for theo chiều ngang -->  
                             <li class="front-seat">
                                 <ul>
                                     <li class="single-seat">
@@ -254,6 +255,7 @@
                     </li>
                 </ul>
             </div>
+
             <h5 class="subtitle">Ghế đôi</h5>
             <div class="screen-wrapper">
                 <ul class="seat-area couple">
@@ -311,7 +313,7 @@
                             </li>
                             <li class="front-seat">
                                 <ul>
-                                    <li class="single-seat">
+                                    <li class="single-seat seat-booked">
                                         <img src="/user/images/movie/seat02.png" alt="seat">
                                     </li>
                                     <li class="single-seat seat-free-two">
@@ -461,10 +463,11 @@
                             </li>
                         </ul>
                         <span>a</span>
-                    </li>
+                    </li>           
                 </ul>
             </div>
         </div>
+
         <div class="proceed-book bg_img" data-background="/user/images/movie/movie-bg-proceed.jpg">
             <div class="proceed-to-book">
                 <div class="book-item">
