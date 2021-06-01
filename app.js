@@ -5,6 +5,9 @@ const expressLayouts = require("express-ejs-layouts");
 const cookieSession = require("cookie-session");
 
 const bodyParser = require("body-parser");
+const passport = require('passport');
+const flash = require('connect-flash'); 
+const authMiddlewares = require("./src/users/middlewares/auth");
 
 const setLayoutMiddleware = require("./src/admin/middlewares/set_layout");
 
@@ -22,6 +25,8 @@ const app = express();
 const db = require("./src/config/database/db");
 
 app.use(express.json());
+app.use(express.urlencoded({extended: false})); 
+
 
 //session 
 app.use(cookieSession({
@@ -36,6 +41,8 @@ app.use(flash());
 const getMiddlewares = require('./src/users/middlewares/middleware');
 app.use(getMiddlewares);
 
+app.use(authMiddlewares);
+
 //express ejs-layouts
 app.use(expressLayouts);
 
@@ -44,12 +51,13 @@ app.set("view engine", "ejs");
 
 app.set("views", "./views");
 
-//use body-parser
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
 //khai báo static file
 app.use(express.static(__dirname + "/public"));
+
+// use body-parser
+// app.use(bodyParser.urlencoded({  extended: false })); 
+// app.use(bodyParser.json());
+
 
 //use router for admin
 app.use("/admin", setLayoutMiddleware);

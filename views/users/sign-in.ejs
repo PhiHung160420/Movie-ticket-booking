@@ -1,3 +1,87 @@
+<!-- ==========Header-Section========== -->
+<header class="header-section">
+    <div class="container">
+        <div class="header-wrapper">
+            <div class="logo">
+                <a href="/user/">
+                    <img style="border-radius: 20px;" src="/user/images/logo/logo-cinema.png" alt="logo">
+                </a>
+            </div>
+            <ul class="menu">
+                <li>
+                    <a href="/user/" class="active">Trang chủ</a>
+                </li>
+                <li>
+                    <a href="#0">Phim</a>
+                    <ul class="submenu">
+                        <li>
+                            <a href="/user/movie-list">Tất cả phim</a>
+                        </li>
+                        <li>
+                            <a href="/user/movie-list">Phim đang chiếu</a>
+                        </li>
+                        <li>
+                            <a href="/user/movie-list">Phim sắp chiếu</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#0">Hệ thống rạp</a>
+                    <ul class="submenu">
+                        <li>
+                            <a href="/user/movie-seat-plan">Tất cả các rạp</a>
+                        </li>
+                        <li>
+                            <a href="#">Rạp đặc biệt</a>
+                        </li>
+                        <li>
+                            <a href="#">Rạp sắp mở</a>
+                        </li>
+                </li>
+                </ul>
+                </li>
+                <li>
+                    <a href="/user/movie-ticket-plan">Lịch chiếu</a>
+                </li>
+                <li>
+                    <a href="/user/contact">Liên hệ</a>
+                </li>
+                <li>
+                    <a href="#">Thành viên</a>
+                    <ul class="submenu">
+                        <li>
+                            <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
+                        </li>
+                        <li>
+                            <a href="#">Vé của tôi</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="header-button pr-0">
+                    <% if(currentUser) { %>
+                        <a><%=currentUser.user_name%></a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="/user/logout">Đăng xuất</a>
+                            </li>
+                        </ul>
+                        <% } else { %>
+                                <a href="/user/sign-in">Đăng nhập</a>
+                            <% } %>
+
+                    
+                </li>
+            </ul>
+            <div class="header-bar d-lg-none">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- ==========Header-Section========== -->
+
 <!-- ==========Preloader========== -->
 <div class="preloader">
     <div class="preloader-inner">
@@ -17,14 +101,29 @@
                 <div class="section-header-3">
                     <h2 class="title">Đăng nhập</h2>
                 </div>
-                <form class="account-form">
+                <form action="/user/sign-in" method="POST" class="account-form">
+                    <% if(message) {%>
+                        <div class="alert alert-success" role="alert">
+                            <center>
+                                <%= message  %>
+                            </center>
+                        </div>
+                        <% } %>
+                            <% if(messageErr) {%>
+                                <div class="alert alert-danger" role="alert">
+                                    <center>
+                                        <%= messageErr  %>
+                                    </center>
+                                </div>
+                                <% } %>
+                    <div id="correct" style="display: block"> </div>
                     <div class="form-group">
-                        <label for="username">Tên đăng nhập</label>
-                        <input type="text" placeholder="Nhập vào tên đăng nhập" id="username" required>
+                        <label for="email">Email</label>
+                        <input type="email" placeholder="Nhập vào email" id="email" name="email" required>
                     </div>
                     <div class="form-group">
-                        <label for="pass3">Mật khẩu</label>
-                        <input type="password" placeholder="nhập vào mật khẩu" id="pass3" required>
+                        <label for="password">Mật khẩu</label>
+                        <input type="password" placeholder="nhập vào mật khẩu" id="password" name="password" required>
                     </div>
                     <div class="form-group checkgroup">
                         <input type="checkbox" id="bal2" required checked>
