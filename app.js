@@ -5,8 +5,9 @@ const expressLayouts = require("express-ejs-layouts");
 const cookieSession = require("cookie-session");
 
 const bodyParser = require("body-parser");
+
 const passport = require('passport');
-const flash = require('connect-flash'); 
+
 const authMiddlewares = require("./src/users/middlewares/auth");
 
 const setLayoutMiddleware = require("./src/admin/middlewares/set_layout");
@@ -26,7 +27,6 @@ const db = require("./src/config/database/db");
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false})); 
-
 
 //session 
 app.use(cookieSession({
