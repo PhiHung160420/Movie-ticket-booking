@@ -1,6 +1,9 @@
 const express = require("express");
+
 const expressLayouts = require("express-ejs-layouts");
+
 const cookieSession = require("cookie-session");
+
 const bodyParser = require("body-parser");
 const passport = require('passport');
 const flash = require('connect-flash'); 
@@ -8,7 +11,13 @@ const authMiddlewares = require("./src/users/middlewares/auth");
 
 const setLayoutMiddleware = require("./src/admin/middlewares/set_layout");
 
+const flash = require('express-flash');
+
 const theaterClustersRouter = require("./src/admin/routes/theater_clusters");
+
+const theaterRouter = require("./src/admin/routes/theater");
+
+const movieRouter = require("./src/admin/routes/movie");
 
 const app = express();
 
@@ -19,16 +28,18 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false})); 
 
 
-//Session
-app.use(
-  cookieSession({
-    name: "session",
-    keys: [process.env.COOKIE_KEY || "secret"],
+//session 
+app.use(cookieSession({
+  name: 'session',
+  keys: [process.env.COOKIE_KEY || 'secret'],
+  maxAge: 24*60*60*1000
+}));
 
-    // Cookie Options
-    maxAge: 24 * 60 * 60 * 1000, // 24 hours
-  })
-);
+app.use(flash());
+
+//get middlewares 
+const getMiddlewares = require('./src/users/middlewares/middleware');
+app.use(getMiddlewares);
 
 app.use(authMiddlewares);
 
@@ -53,11 +64,13 @@ app.use("/admin", setLayoutMiddleware);
 app.use("/admin", require("./src/admin/routes/login"));
 app.use("/admin", require("./src/admin/routes/home"));
 app.use("/admin", theaterClustersRouter);
+app.use("/admin", theaterRouter);
+app.use("/admin", movieRouter);
 app.use("/admin", require("./src/admin/routes/theater"));
-app.use("/admin", require("./src/admin/routes/movie"));
 app.use("/admin", require("./src/admin/routes/shows"));
 
 //use router for user
+//app.use("/user", getMiddlewares);
 app.use("/user", require("./src/users/routes/home"));
 app.use("/user", require("./src/users/routes/movie-checkout"));
 app.use("/user", require("./src/users/routes/movie-customer"));
@@ -79,5 +92,4 @@ db.sync()
         app.settings.env
       );
     });
-  })
-  .catch(console.error);
+  }).catch(console.error);

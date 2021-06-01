@@ -3903,6 +3903,13 @@ input[type="submit"] {
     padding-right: 50px;
 }
 
+.ticket-search-form .btn-search {
+    position: relative;
+    z-index: 1;
+    outline: none;
+    width: 10rem;
+}
+
 .ticket-search-form .form-group input::-webkit-input-placeholder {
     color: #90a5e8;
 }
@@ -4606,7 +4613,7 @@ input[type="submit"] {
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between;
-    width: 45%;
+    width: 35%;
     border-right: 1px solid #11326f;
     -webkit-box-align: center;
     -ms-flex-align: center;
@@ -4649,18 +4656,17 @@ input[type="submit"] {
 }
 
 .seat-plan-wrapper li .movie-schedule {
-    width: calc(100% - 45%);
+    width: calc(100% - 35%);
     padding: 30px;
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
-    justify-content: space-between;
     margin: -5px;
 }
 
 .seat-plan-wrapper li .movie-schedule .item {
     color: #ffffff;
     padding: 5px;
-    width: 70px;
+    width: 150px;
     background: #162f5f;
     position: relative;
     mask-position: center center;
@@ -4675,7 +4681,7 @@ input[type="submit"] {
     cursor: pointer;
     -webkit-transition: all ease 0.3s;
     transition: all ease 0.3s;
-    margin: 5px;
+    margin: 10px;
 }
 
 .seat-plan-wrapper li .movie-schedule .item:hover {
