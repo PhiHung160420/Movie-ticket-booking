@@ -2,6 +2,7 @@ module.exports = (req, res, next) => {
     res.locals.layout = "users/layouts/layout";
     const {listShowtimes} = req.session;
     res.locals.getListShowtimes = null;
+
     if(listShowtimes)
     {
         res.locals.getListShowtimes = listShowtimes;
@@ -12,6 +13,7 @@ module.exports = (req, res, next) => {
     else
     {
         req.session.listShowtimes = null;
+        res.locals.errors = req.flash('info');
         next();
     }
 };

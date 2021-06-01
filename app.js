@@ -6,7 +6,9 @@ const cookieSession = require("cookie-session");
 
 const expressLayouts = require("express-ejs-layouts");
 
-const bodyParser = require("body-parser");
+const bodyParser = require("body-parser");  
+
+const flash = require('express-flash');
 
 //get connection database
 const db = require("./src/config/database/db");
@@ -19,6 +21,8 @@ app.use(cookieSession({
   keys: [process.env.COOKIE_KEY || 'secret'],
   maxAge: 24*60*60*1000
 }));
+
+app.use(flash());
 
 //get middlewares 
 const getMiddlewares = require('./src/users/middlewares/middleware');

@@ -112,11 +112,7 @@
                     <% if(listMovies) {%>
                         <% listMovies.map(movie => { %>
                     <option value="<%= movie.movie_name %>"><%= movie.movie_name %></option>
-                    <% })} else if(listShowTimes) { %>
-                        <option value="<%=listShowTimes[0].movie.movie_name %>"><%=listShowTimes[0].movie.movie_name %></option>
-                        <% } else if(movie_name) { %>
-                            <option value="<%=movie_name %>"><%=movie_name %></option>
-                            <% } %>
+                    <% })} %>
                 </select>
             </div>
             <div class="form-group">
@@ -128,11 +124,7 @@
                     <% if(listTheaterClusters) {%>
                         <% listTheaterClusters.map(theater_cluster => { %>
                             <option value="<%= theater_cluster.theater_clusters_name %>"><%= theater_cluster.theater_clusters_name %></option>
-                    <% })} else if(listShowTimes) { %>        
-                        <option value="<%=listShowTimes[0].theater_cluster.theater_clusters_name %>"><%=listShowTimes[0].theater_cluster.theater_clusters_name %></option>
-                        <% } else if(theater_cluster_name) { %>   
-                            <option value="<%=theater_cluster_name %>"><%=theater_cluster_name %></option>
-                            <% } %>     
+                    <% })}  %>
                 </select>
             </div>
             <div class="form-group">
@@ -144,11 +136,7 @@
                     <% if(listDate) {%>
                         <% listDate.map(date => { %>
                             <option value="<%= moment(date.schedule_date).format( 'DD-MM-YYYY') %>"><%= moment(date.schedule_date).format( 'DD-MM-YYYY') %></option>
-                    <% })} else if(listShowTimes) { %>
-                        <option value="listShowTimes[0].showtimes_date"><%= moment(listShowTimes[0].showtimes_date).format( 'DD-MM-YYYY') %></option>
-                        <% } else if(showtime_date) { %>
-                            <option value="<%= showtime_date %>"><%= showtime_date %></option>
-                            <% } %>
+                    <% })} %>
                 </select>
             </div>
             <button type="submit" class="custom-button btn-search">Tìm kiếm</button>
@@ -190,6 +178,15 @@
                         </li>
 
                     </ul>
+                    <% } else if(errors.length > 0){ %>
+                        <section class="window-warning">
+                            <div class="lay"></div>
+                            <div class="warning-item">
+                                <h5 class="title"><%= errors[0] %></h5>
+                                <a href="/user/movie-ticket-plan" class="custom-button seatPlanButton">Tiếp tục<i
+                                    class="fas fa-angle-right"></i></a>
+                            </div>  
+                        </section>   
                     <% } %>
             </div>
         </div>
