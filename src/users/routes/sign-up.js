@@ -15,7 +15,12 @@ router.use((request, response, next) => {
 router.get("/sign-up", (req, res) => {
   const msg = req.query.valid;
   const msgErr = req.query.validErr;
-  res.render("users/sign-up", {message: msg, messageErr: msgErr});
+  if(req.session.user_id){
+      res.redirect("/user");
+    }
+  else{
+    res.render("users/sign-up", {message: msg, messageErr: msgErr});
+  }
 });
 
 const transporter = nodemailer.createTransport({
@@ -27,7 +32,8 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASSWORD || 'erzfrkcjmupomcnt'
   }
 });
-
+ 
+//validation schema
 
 router.post("/sign-up", asyncHandler(async(req, res) => {
     console.log(req.body);
@@ -52,7 +58,8 @@ router.post("/sign-up", asyncHandler(async(req, res) => {
     if (password != repassword) {
         errors = "Mật khẩu và mật khẩu nhập lại không khớp";
     }
-    if (User.findOne(email)){
+    const user = await User.findOne({where:{ 'user_email': email }})
+    if (user){
         errors = "Email này đã được sử dụng";
     }
     if (errors!=null) {

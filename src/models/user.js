@@ -23,7 +23,7 @@ const User=db.define(
       allowNull:false,
     },
     user_phone: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.STRING,
       allowNull:false,
     },
     user_token: {

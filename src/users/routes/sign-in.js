@@ -14,7 +14,14 @@ router.use((request, response, next) => {
 router.get("/sign-in", (req, res) => {
   const msg = req.query.valid;
   const msgErr = req.query.validErr;
-  res.render("users/sign-in", {message: msg, messageErr: msgErr});
+  
+  if(req.session.user_id){
+    res.redirect("/user");
+  }
+  else{
+    res.render("users/sign-in", {message: msg, messageErr: msgErr});
+  }
+  
 });
 
 
@@ -23,6 +30,10 @@ router.post("/sign-in", asyncHandler(async(req, res)=>{
   const {email, password} = req.body;
   const user = await User.findUserByEmail(email);
   if(!user){
+    const string = encodeURIComponent('Thông tin đăng nhập không đúng');
+    return res.redirect('/user/sign-in/?validErr=' + string);  
+  }
+  if(user && !bcrypt.compareSync(password, user.user_password)){
     const string = encodeURIComponent('Thông tin đăng nhập không đúng');
     return res.redirect('/user/sign-in/?validErr=' + string);  
   }

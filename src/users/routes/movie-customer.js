@@ -1,4 +1,5 @@
 const { request, response } = require("express");
+const User = require('../../models/user');
 var router = require("express").Router();
 
 router.use((request, response, next) => {
@@ -7,7 +8,12 @@ router.use((request, response, next) => {
 });
 
 router.get("/movie-customer-profile", (req, res) => {
-  res.render("users/movie-customer");
+  if(req.session.user_id){
+    res.render("users/movie-customer");
+  }
+  else{
+    res.redirect("/user");
+  }
 });
 
 module.exports = router;
