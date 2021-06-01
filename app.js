@@ -1,9 +1,14 @@
 const express = require("express");
+
 const expressLayouts = require("express-ejs-layouts");
+
 const cookieSession = require("cookie-session");
+
 const bodyParser = require("body-parser");
 
 const setLayoutMiddleware = require("./src/admin/middlewares/set_layout");
+
+const flash = require('express-flash');
 
 const theaterClustersRouter = require("./src/admin/routes/theater_clusters");
 
@@ -18,16 +23,18 @@ const db = require("./src/config/database/db");
 
 app.use(express.json());
 
-//Session
-app.use(
-  cookieSession({
-    name: "session",
-    keys: [process.env.COOKIE_KEY || "secret"],
+//session 
+app.use(cookieSession({
+  name: 'session',
+  keys: [process.env.COOKIE_KEY || 'secret'],
+  maxAge: 24*60*60*1000
+}));
 
-    // Cookie Options
-    maxAge: 24 * 60 * 60 * 1000, // 24 hours
-  })
-);
+app.use(flash());
+
+//get middlewares 
+const getMiddlewares = require('./src/users/middlewares/middleware');
+app.use(getMiddlewares);
 
 //express ejs-layouts
 app.use(expressLayouts);
@@ -55,6 +62,7 @@ app.use("/admin", require("./src/admin/routes/theater"));
 app.use("/admin", require("./src/admin/routes/shows"));
 
 //use router for user
+//app.use("/user", getMiddlewares);
 app.use("/user", require("./src/users/routes/home"));
 app.use("/user", require("./src/users/routes/movie-checkout"));
 app.use("/user", require("./src/users/routes/movie-customer"));
@@ -76,5 +84,4 @@ db.sync()
         app.settings.env
       );
     });
-  })
-  .catch(console.error);
+  }).catch(console.error);

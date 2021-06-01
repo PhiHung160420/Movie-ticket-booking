@@ -1,5 +1,5 @@
-const { DataTypes } = require("sequelize");
-const db = require("../config/database/db");
+const { DataTypes} = require("sequelize");
+const db =require("../config/database/db");
 
 const Movies = db.define("movies", {
   id: {

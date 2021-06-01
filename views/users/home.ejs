@@ -88,45 +88,56 @@
                 <div class="col-lg-6 mb-20">
                     <div class="search-ticket-header">
                         <h6 class="category">Chào mừng bạn đến với rạp phim của chúng tôi</h6>
-                        <h3 class="title">Bạn cần tìm kiếm gì ?</h3>
+                        <h3 class="title">Mua vé online</h3>
                     </div>
                 </div>
             </div>
             <div class="tab-area">
                 <div class="tab-item active">
-                    <form class="ticket-search-form">
-                        <div class="form-group large">
-                            <input type="text" placeholder="Nhập vào tên phim">
-                            <button type="submit"><i class="fas fa-search"></i></button>
+                    <form action="/user/movie-ticket-plan" class="ticket-search-form" method="POST">
+                        <div class="form-group">
+                            <div class="thumb">
+                                <img src="/user/images/ticket/cinema.png" alt="ticket">
+                            </div>
+                            <span class="type">Chọn phim</span>
+                            <select class="select-bar" name="select_movie_name">
+                                <% if(listMovies) {%>
+                                    <% listMovies.map(movie => { %>
+                                <option value="<%= movie.name %>"><%= movie.name %></option>
+                                <% })} else { %>
+                                    <option value="dhaka"></option>
+                                    <% } %>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="thumb">
+                                <img src="/user/images/ticket/city.png" alt="ticket">
+                            </div>
+                            <span class="type">Chọn rạp</span>
+                            <select class="select-bar" name="select_theater_cluster">
+                                <% if(listTheaterClusters) {%>
+                                    <% listTheaterClusters.map(theater_cluster => { %>
+                                        <option value="<%= theater_cluster.name %>"><%= theater_cluster.name %></option>
+                                <% })} else { %>        
+                                    <option value="Venus">Venus</option>
+                                    <% } %>           
+                            </select>
                         </div>
                         <div class="form-group">
                             <div class="thumb">
                                 <img src="/user/images/ticket/date.png" alt="ticket">
                             </div>
-                            <span class="type">Ngày</span>
-                            <select class="select-bar">
-                                <option value="26-12-19">23/10/2020</option>
-                                <option value="26-12-19">24/10/2020</option>
-                                <option value="26-12-19">25/10/2020</option>
-                                <option value="26-12-19">26/10/2020</option>
+                            <span class="type">Chọn ngày</span>
+                            <select class="select-bar" name="select_date">
+                                <% if(listDate) {%>
+                                    <% listDate.map(date => { %>
+                                        <option value="<%= moment(date.schedule_date).format( 'DD-MM-YYYY') %>"><%= moment(date.schedule_date).format( 'DD-MM-YYYY') %></option>
+                                <% })} else { %>
+                                    <option value="20-10-2020"></option>
+                                    <% } %>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <div class="thumb">
-                                <img src="/user/images/ticket/cinema.png" alt="ticket">
-                            </div>
-                            <span class="type">Rạp</span>
-                            <select class="select-bar">
-                                <option value="Awaken">CGV Sư Vạn Hạnh</option>
-                                <option value="dhaka">CGV GiGa Mall</option>
-                                <option value="Awaken">CGV Sư Vạn Hạnh</option>
-                                <option value="dhaka">CGV GiGa Mall</option>
-                                <option value="Awaken">CGV Sư Vạn Hạnh</option>
-                                <option value="dhaka">CGV GiGa Mall</option>
-                                <option value="Awaken">CGV Sư Vạn Hạnh</option>
-                                <option value="dhaka">CGV GiGa Mall</option>
-                            </select>
-                        </div>
+                        <button type="submit" class="custom-button btn-search">Đặt vé</button>
                     </form>
                 </div>
             </div>
@@ -217,19 +228,19 @@
                         <a class="view-all" href="/user/movie-list/releaseDate">Xem tất cả</a>
                     </div>
                     <div class="row mb-30-none justify-content-center">
-                        <% if(justRelease.length !== 0) { %>
+                        <% if(justRelease.length !==0) { %>
                             <% justRelease.forEach(function(movie) { %>
                                 <div class="col-sm-6 col-lg-4">
                                     <div class="movie-grid">
                                         <div class="movie-thumb c-thumb">
-                                            <a href="/user/movie-detail/<%= movie.movie_id %>">
+                                            <a href="/user/movie-detail/<%= movie.id %>">
                                                 <img src="/user/images/movie/movie01.jpg" alt="movie">
                                             </a>
                                         </div>
                                         <div class="movie-content bg-one">
                                             <h5 class="title m-0">
-                                                <a href="/user/movie-detail/<%= movie.movie_id %>">
-                                                    <%= movie.movie_name %>
+                                                <a href="/user/movie-detail/<%= movie.id %>">
+                                                    <%= movie.name %>
                                                 </a>
                                             </h5>
                                             <ul class="movie-rating-percent">
@@ -237,13 +248,17 @@
                                                     <div class="thumb">
                                                         <img src="/user/images/movie/view.png" alt="movie">
                                                     </div>
-                                                    <span class="content"><%= movie.movie_viewed %></span>
+                                                    <span class="content">
+                                                        <%= movie.viewed %>
+                                                    </span>
                                                 </li>
                                                 <li>
                                                     <div class="thumb">
                                                         <img src="/user/images/movie/heart.png" alt="movie">
                                                     </div>
-                                                    <span class="content"><%= movie.movie_liked %></span>
+                                                    <span class="content">
+                                                        <%= movie.liked %>
+                                                    </span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -288,19 +303,19 @@
                         <a class="view-all" href="/user/movie-list/mostViewed">Xem tất cả</a>
                     </div>
                     <div class="row mb-30-none justify-content-center">
-                        <% if(mostViewed.length !== 0) { %>
+                        <% if(mostViewed.length !==0) { %>
                             <% mostViewed.forEach(function(movie) { %>
                                 <div class="col-sm-6 col-lg-4">
                                     <div class="movie-grid">
                                         <div class="movie-thumb c-thumb">
-                                            <a href="/user/movie-detail/<%= movie.movie_id %>">
+                                            <a href="/user/movie-detail/<%= movie.id %>">
                                                 <img src="/user/images/movie/movie03.jpg" alt="movie">
                                             </a>
                                         </div>
                                         <div class="movie-content bg-one">
                                             <h5 class="title m-0">
-                                                <a href="/user/movie-detail/<%= movie.movie_id %>">
-                                                    <%= movie.movie_name %>
+                                                <a href="/user/movie-detail/<%= movie.id %>">
+                                                    <%= movie.name %>
                                                 </a>
                                             </h5>
                                             <ul class="movie-rating-percent">
@@ -308,13 +323,17 @@
                                                     <div class="thumb">
                                                         <img src="/user/images/movie/view.png" alt="movie">
                                                     </div>
-                                                    <span class="content"><%= movie.movie_viewed %></span>
+                                                    <span class="content">
+                                                        <%= movie.viewed %>
+                                                    </span>
                                                 </li>
                                                 <li>
                                                     <div class="thumb">
                                                         <img src="/user/images/movie/heart.png" alt="movie">
                                                     </div>
-                                                    <span class="content"><%= movie.movie_liked %></span>
+                                                    <span class="content">
+                                                        <%= movie.liked %>
+                                                    </span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -359,19 +378,19 @@
                         <a class="view-all" href="/user/movie-list/mostLiked">Xem tất cả</a>
                     </div>
                     <div class="row mb-30-none justify-content-center">
-                        <% if(mostLiked.length !== 0) { %>
+                        <% if(mostLiked.length !==0) { %>
                             <% mostLiked.forEach(function(movie) { %>
                                 <div class="col-sm-6 col-lg-4">
                                     <div class="movie-grid">
                                         <div class="movie-thumb c-thumb">
-                                            <a href="/user/movie-detail/<%= movie.movie_id %>">
+                                            <a href="/user/movie-detail/<%= movie.id %>">
                                                 <img src="/user/images/movie/movie01.jpg" alt="movie">
                                             </a>
                                         </div>
                                         <div class="movie-content bg-one">
                                             <h5 class="title m-0">
-                                                <a href="/user/movie-detail/<%= movie.movie_id %>">
-                                                    <%= movie.movie_name %>
+                                                <a href="/user/movie-detail/<%= movie.id %>">
+                                                    <%= movie.name %>
                                                 </a>
                                             </h5>
                                             <ul class="movie-rating-percent">
@@ -379,13 +398,17 @@
                                                     <div class="thumb">
                                                         <img src="/user/images/movie/view.png" alt="movie">
                                                     </div>
-                                                    <span class="content"><%= movie.movie_viewed %></span>
+                                                    <span class="content">
+                                                        <%= movie.viewed %>
+                                                    </span>
                                                 </li>
                                                 <li>
                                                     <div class="thumb">
                                                         <img src="/user/images/movie/heart.png" alt="movie">
                                                     </div>
-                                                    <span class="content"><%= movie.movie_liked %></span>
+                                                    <span class="content">
+                                                        <%= movie.liked %>
+                                                    </span>
                                                 </li>
                                             </ul>
                                         </div>
