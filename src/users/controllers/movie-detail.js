@@ -10,6 +10,6 @@ exports.getMovieDetail = asyncHandler(async (req, res) => {
         id: movieID
       }
     });
-    console.log(data);
+    data.poster = Buffer.from(data.poster, 'binary').toString('base64');
     res.render("users/movie-detail", { movie: data });
   })
