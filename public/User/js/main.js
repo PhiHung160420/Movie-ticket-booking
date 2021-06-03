@@ -384,37 +384,30 @@
       },
     });
 
-    $(".seat-free img").on("click", function (e) {
-      const srcImg = $(this).attr("src");
-      if(srcImg == "/user/images/movie/seat01-free.png") {
-        $(this).attr("src", "/user/images/movie/seat01-booked.png");
-      } else {
-        $(this).attr("src", "/user/images/movie/seat01-free.png");
-      }
-    });
-
-    var srcImgHover;
-    $(".seat-free-two")
+    var srcImgSingleSeat;
+    $(".seat-free")
       .mouseenter(function() {
-        srcImgHover = $(this).find("img").attr("src");
-        if(srcImgHover == "/user/images/movie/seat02-free.png") {
-          $(this).find("img").attr("src", "/user/images/movie/seat02-booked.png");
+        srcImgSingleSeat = $(this).find("img").attr("src");
+        if(srcImgSingleSeat == "/user/images/movie/seat01-free.png") {
+          $(this).find("img").attr("src", "/user/images/movie/seat01-selecting.png");
         }        
       })
       .mouseleave(function() {
-        if(srcImgHover == "/user/images/movie/seat02-free.png") {
-          $(this).find("img").attr("src", srcImgHover);
+        if(srcImgSingleSeat == "/user/images/movie/seat01-free.png") {
+          $(this).find("img").attr("src", srcImgSingleSeat);
         }         
       });
 
-    $(".seat-free-two").on("click", function (e) {
-      const srcImg = $(this).find("img").attr("src");
-      if(srcImgHover == "/user/images/movie/seat02-free.png") {
-        $(this).find("img").attr("src", "/user/images/movie/seat02-booked.png");
-        srcImgHover = "/user/images/movie/seat02-booked.png";
+    var selectedSeat = [];
+
+    $(".seat-free").on("click", function (e) {
+      if(srcImgSingleSeat == "/user/images/movie/seat01-free.png") {
+        $(this).find("img").attr("src", "/user/images/movie/seat01-selecting.png");
+        srcImgSingleSeat = "/user/images/movie/seat01-selecting.png";
+        selectedSeat.push($(this).find("span").val());
       } else {
-        $(this).find("img").attr("src", "/user/images/movie/seat02-free.png");
-        srcImgHover = "/user/images/movie/seat02-free.png";
+        $(this).find("img").attr("src", "/user/images/movie/seat01-free.png");
+        srcImgSingleSeat = "/user/images/movie/seat01-free.png";
       }
     });
 

@@ -5,14 +5,12 @@ const Booking = require("./booking");
 const Ticket = db.define("ticket",{
   ticket_id: {
     type: DataTypes.UUID,
-    defaultValue:DataTypes.UUIDV1,
+    defaultValue:DataTypes.UUIDV4,
     allowNull:false,
     primaryKey:true,
   },
   ticket_booking_id: {
     type: DataTypes.UUID,
-    defaultValue:DataTypes.UUIDV1,
-    primaryKey: true,
     allowNull: false,
   },
   ticket_seat_code: {
@@ -33,7 +31,7 @@ const Ticket = db.define("ticket",{
   },
 }, {timestamps: false, createdAt: false, updatedAt: false});
 
-Booking.hasOne(Ticket, {foreignKey: "ticket_booking_id"}); 
+Booking.hasMany(Ticket, {foreignKey: "ticket_booking_id"}); 
 Ticket.belongsTo(Booking, {foreignKey: "ticket_booking_id"});
 
 module.exports = Ticket;

@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const db = require("../config/database/db");
 const Movies = require('./movie');
-const Theater_clusters = require('./theater_clusters');
+const Theater = require('./theater');
 
 const Showtimes = db.define("showtimes", {
   showtimes_id: {
@@ -13,12 +13,10 @@ const Showtimes = db.define("showtimes", {
   movie_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    primaryKey: true,
   },
   theater_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    primaryKey: true,
   },
   start_time: {
     type: DataTypes.TIME,
@@ -38,9 +36,9 @@ Movies.hasMany(Showtimes, {
 Showtimes.belongsTo(Movies, {foreignKey: 'movie_id'});
 
 //foreign key between table shotimes and theater
-Theater_clusters.hasMany(Showtimes, {
-  foreignKey: 'theater_cluster_id',
+Theater.hasMany(Showtimes, {
+  foreignKey: 'theater_id',
 });
-Showtimes.belongsTo(Theater_clusters, {foreignKey: 'theater_cluster_id'});
+Showtimes.belongsTo(Theater, {foreignKey: 'theater_id'});
 
 module.exports = Showtimes;
