@@ -1,3 +1,12 @@
+<section class="window-warning inActive">
+    <div class="lay"></div>
+    <div class="warning-item">
+        <h6 class="subtitle"> Thông Báo </h6>
+        <h4 class="title">Bạn chỉ được phép chọn tối đa 8 ghế</h4>
+        <a class="custom-button seatPlanButton">Đã Hiểu</a>
+    </div>
+</section>
+
 <!-- ==========Header-Section========== -->
 <header class="header-section">
     <div class="container">
@@ -201,21 +210,27 @@
        
         </div>
 
-        <div class="proceed-book bg_img" data-background="/user/images/movie/movie-bg-proceed.jpg">
-            <div class="proceed-to-book">
-                <div class="book-item">
-                    <span>Ghế đã chọn</span>
-                    <h3 class="title">d9, d10, d9, d10, d9, d10, d9, d10, d9, d10</h3>
-                </div>
-                <div class="book-item">
-                    <span>Tổng tiền</span>
-                    <h3 class="title">$150</h3>
-                </div>
-                <div class="book-item">
-                    <a href="/user/movie-checkout" class="custom-button">Thanh toán</a>
+        <input value="<%= price %>" id="price" readonly hidden>
+
+        <form method="POST" id="formSeatPlan">
+            <div class="proceed-book bg_img" data-background="/user/images/movie/movie-bg-proceed.jpg">
+                <div class="proceed-to-book">
+                    <div class="book-item">
+                        <span>Ghế đã chọn:</span>
+                        <h3 class="title" id="selectedSeatList" ></h3>
+                        <input name="selectedSeatList" readonly hidden>
+                    </div>
+                    <div class="book-item">
+                        <span>Tổng tiền</span>
+                        <h3 class="title" id="totalPrice"></h3>
+                    </div>
+                    <div class="book-item">                      
+                        <a id="submitSeatPlan" class="custom-button" style="cursor: pointer;">Thanh toán</a>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
+ 
     </div>
 </div>
 <!-- ==========Movie-Section========== -->
