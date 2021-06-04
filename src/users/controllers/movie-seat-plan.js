@@ -9,11 +9,14 @@ const User = require('../../models/user');
 
 const { Op } = require("sequelize");
 
-exports.getSeat = async (req, res, next) => {
-    const { showtimeId } = req.params;
+let showtime = null
+let seatBookedList = null;
 
-    const showtime = await Showtimes.findOne({
-        attributes: ['theater_id'],
+exports.getSeat = async (req, res, next) => {
+    const { showtimeId }= req.params;
+
+    showtime = await Showtimes.findOne({
+        attributes: ['theater_id', 'price'],
         where: {
             showtimes_id: showtimeId
         }
@@ -33,14 +36,14 @@ exports.getSeat = async (req, res, next) => {
         }
     });
 
-    var bookingList = [];
+    const bookingList = [];
 
     booking.forEach(e => {
         bookingList.push(e.booking_id)
     });
 
-    const seatBookedList = await Ticket.findAll({
-        attributes: ['horizontal_address', 'vertical_address'],
+    seatBookedList = await Ticket.findAll({
+        attributes: ['ticket_seat_code', 'horizontal_address', 'vertical_address'],
         where: {
             ticket_booking_id: {
                 [Op.in]: bookingList,
@@ -50,6 +53,24 @@ exports.getSeat = async (req, res, next) => {
 
     res.locals.horizontalSize = theater.theater_horizontial_size;
     res.locals.verticalSize = theater.theater_vertical_size;
+    res.locals.price = showtime.price;
     res.locals.seatBookedList = seatBookedList;
     res.render("users/movie-seat-plan");
+};
+
+exports.postSeat = async (req, res, next) => {
+    const { showtimeId } = req.params;
+    const userId = 1;
+
+    let selectedSeatList = JSON.parse(req.body.selectedSeatList);
+
+    seatBookedList.forEach(e => {
+        const index = selectedSeatList.indexOf(e.ticket_seat_code);
+        if (index > -1) {
+            selectedSeatList.splice(index, 1);
+          }
+    });
+
+    req.session.selectedSeatList = selectedSeatList;  
+    res.redirect('/user/movie-checkout');
 };

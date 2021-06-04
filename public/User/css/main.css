@@ -4775,7 +4775,7 @@ input[type="submit"] {
     color: #0a1e5e;
     font-size: 18px;
     font-weight: 600;
-    margin-bottom: 12px;
+    margin-bottom: 25px;
 }
 
 .window-warning .warning-item .thumb {
@@ -4795,6 +4795,7 @@ input[type="submit"] {
     padding: 11px 35px;
     -webkit-box-shadow: 0px 10px 15px 0px rgba(59, 55, 188, 0.5);
     box-shadow: 0px 10px 15px 0px rgba(59, 55, 188, 0.5);
+    cursor: pointer;
 }
 
 .window-warning .warning-item .seatPlanButton i {
