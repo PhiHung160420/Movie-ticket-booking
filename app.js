@@ -81,6 +81,8 @@ app.use("/user", require("./src/users/routes/movie-ticket-plan"));
 app.use("/user", require("./src/users/routes/movie-contact"));
 app.use("/user", require("./src/users/routes/sign-in"));
 app.use("/user", require("./src/users/routes/sign-up"));
+app.use("/user", require("./src/users/routes/forgot"));
+
 
 //connect to postgres
 db.sync()

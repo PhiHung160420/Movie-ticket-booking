@@ -26,7 +26,6 @@ router.get("/sign-in", (req, res) => {
 
 
 router.post("/sign-in", asyncHandler(async(req, res)=>{
-  console.log(req.body);
   const {email, password} = req.body;
   const user = await User.findUserByEmail(email);
   if(!user){

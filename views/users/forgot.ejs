@@ -82,58 +82,78 @@
 </header>
 <!-- ==========Header-Section========== -->
 
-<!-- ==========Banner-Section========== -->
-<section class="speaker-banner bg_img" data-background="/user/images/banner/banner07.jpg">
-    <div class="container">
-        <div class="speaker-banner-content">
-            <h2 class="title">Thông tin của bạn</h2>
+<!-- ==========Preloader========== -->
+<div class="preloader">
+    <div class="preloader-inner">
+        <div class="preloader-icon">
+            <span></span>
+            <span></span>
         </div>
     </div>
-</section>
-<!-- ==========Banner-Section========== -->
+</div>
+<!-- ==========Preloader========== -->
 
-<!-- ==========Speaker-Single========== -->
-<section class="speaker-single padding-top pt-lg-0">
+<!-- ==========Sign-In-Section========== -->
+<section class="account-section bg_img" data-background="/user/images/account/account-bg.jpg">
     <div class="container">
-        <div class="speaker-wrapper bg-six padding-top">
-            <div class="speaker-thumb">
-                <img src="/user/images/speaker/speaker05.jpg" alt="speaker">
-            </div>
-            <div class="speaker-content">
-                <div class="author">
-                    <h2 class="title">
-                        <%- currentUser ? currentUser.user_name : 'Họ tên' %>
-                        <a href=""> </a>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-                    </h2>
+        <div class="padding-top padding-bottom">
+            <div class="account-area">
+                <div class="section-header-3">
+                    <h2 class="title">QUÊN MẬT KHẨU</h2>
+                    <br>
+                    <p>Vui lòng nhập email của bạn.
+                        Đường dẫn khôi phục mật khẩu sẽ gửi tới email của bạn.
+                    </p>
+                    
                 </div>
-                <div class="speak-con-wrapper">
-                    <div class="speak-con-area">                              
-                        <div class="item">
-                            <div class="item-content"> 
-                                <span class="up">Email: <%- currentUser ? currentUser.user_email : '123@gmail.com' %> </span>
-                            </div>
+                <form action="/user/forgot" method="POST" class="account-form">
+                    <% if(message) {%>
+                        <div class="alert alert-success" role="alert">
+                            <center>
+                                <%= message  %>
+                            </center>
                         </div>
-                        <div class="item">
-                            <div class="item-content">                          
-                                <span class="up">Số điện thoại: <%- currentUser ? currentUser.user_phone : '012456789' %> </span>
-                            </div>
-                        </div>
+                        <% } %>
+                            <% if(messageErr) {%>
+                                <div class="alert alert-danger" role="alert">
+                                    <center>
+                                        <%= messageErr  %>
+                                    </center>
+                                </div>
+                                <% } %>
+                    <div id="correct" style="display: block"> </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" placeholder="Nhập vào email" id="email" name="email" required>
                     </div>
+                    
+                    <div class="form-group text-center">
+                        <input type="submit" value="GỬI">
+                    </div>
+                </form>
+                <div class="option">
+                    Bạn chưa có tài khoản? <a href="/user/sign-up">Đăng ký</a>
                 </div>
-                <div style="margin-top: 180px;">
-                    <a style="margin-left: 20px; font-size: 18px; color: #81A9FF; display: inline;"
-                    href="/user/change-password">
-                        <img style="height: 18px; width: 15px;" src="/user/images/change-password.png" alt="password">
-                        Mật khẩu
-                    </a>
-                    <a  style="margin-left: 450px; font-size: 18px; color: #81A9FF; display: inline;"
-                         href="/user/edit-info">
-                        <img style="height: 18px; width: 15px;" src="/user/images/edit-info.png" alt="edit">
-                        Thay đổi thông tin 
-                    </a>
-                </div>
+                <div class="or"><span>Or</span></div>
+                <ul class="social-icons">
+                    <li>
+                        <a href="#0">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#0" class="active">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#0">
+                            <i class="fab fa-google"></i>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
 </section>
-<!-- ==========Speaker-Single========== -->
+<!-- ==========Sign-In-Section========== -->
