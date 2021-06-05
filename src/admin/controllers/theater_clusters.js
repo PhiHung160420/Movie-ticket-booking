@@ -1,10 +1,7 @@
 const TheaterClusters = require('../../models/theater_clusters');
 const User = require('../../models/user');
-const Theater = require('../../models/theater');
 const Ticket = require('../../models/ticket');
 const Booking = require('../../models/booking');
-const Movie = require('../../models/movie');
-const Theater_Clusters_Movies = require('../../models/theater_clusters_movies');
 const Showtimes = require('../../models/showtimes');
 
 //INDEX

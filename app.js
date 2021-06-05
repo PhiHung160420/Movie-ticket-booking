@@ -1,11 +1,24 @@
 const express = require("express");
+
 const expressLayouts = require("express-ejs-layouts");
+
 const cookieSession = require("cookie-session");
+
 const bodyParser = require("body-parser");
+
+const passport = require('passport');
+
+const authMiddlewares = require("./src/users/middlewares/auth");
 
 const setLayoutMiddleware = require("./src/admin/middlewares/set_layout");
 
+const flash = require('express-flash');
+
 const theaterClustersRouter = require("./src/admin/routes/theater_clusters");
+
+const theaterRouter = require("./src/admin/routes/theater");
+
+const movieRouter = require("./src/admin/routes/movie");
 
 const app = express();
 
@@ -13,17 +26,22 @@ const app = express();
 const db = require("./src/config/database/db");
 
 app.use(express.json());
+app.use(express.urlencoded({extended: false})); 
 
-//Session
-app.use(
-  cookieSession({
-    name: "session",
-    keys: [process.env.COOKIE_KEY || "secret"],
+//session 
+app.use(cookieSession({
+  name: 'session',
+  keys: [process.env.COOKIE_KEY || 'secret'],
+  maxAge: 24*60*60*1000
+}));
 
-    // Cookie Options
-    maxAge: 24 * 60 * 60 * 1000, // 24 hours
-  })
-);
+app.use(flash());
+
+//get middlewares 
+const getMiddlewares = require('./src/users/middlewares/middleware');
+app.use(getMiddlewares);
+
+app.use(authMiddlewares);
 
 //express ejs-layouts
 app.use(expressLayouts);
@@ -33,23 +51,26 @@ app.set("view engine", "ejs");
 
 app.set("views", "./views");
 
-//use body-parser
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
 //khai báo static file
 app.use(express.static(__dirname + "/public"));
+
+// use body-parser
+// app.use(bodyParser.urlencoded({  extended: false })); 
+// app.use(bodyParser.json());
+
 
 //use router for admin
 app.use("/admin", setLayoutMiddleware);
 app.use("/admin", require("./src/admin/routes/login"));
 app.use("/admin", require("./src/admin/routes/home"));
 app.use("/admin", theaterClustersRouter);
+app.use("/admin", theaterRouter);
+app.use("/admin", movieRouter);
 app.use("/admin", require("./src/admin/routes/theater"));
-app.use("/admin", require("./src/admin/routes/movie"));
 app.use("/admin", require("./src/admin/routes/shows"));
 
 //use router for user
+//app.use("/user", getMiddlewares);
 app.use("/user", require("./src/users/routes/home"));
 app.use("/user", require("./src/users/routes/movie-checkout"));
 app.use("/user", require("./src/users/routes/movie-customer"));
@@ -71,5 +92,4 @@ db.sync()
         app.settings.env
       );
     });
-  })
-  .catch(console.error);
+  }).catch(console.error);

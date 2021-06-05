@@ -9,13 +9,13 @@
             </div>
             <ul class="menu">
                 <li>
-                    <a href="/user/">Trang chủ</a>
+                    <a href="/user/" class="active">Trang chủ</a>
                 </li>
                 <li>
-                    <a href="#0" class="active">Phim</a>
+                    <a href="#0">Phim</a>
                     <ul class="submenu">
                         <li>
-                            <a href="/user/movie-list" class="active">Tất cả phim</a>
+                            <a href="/user/movie-list">Tất cả phim</a>
                         </li>
                         <li>
                             <a href="/user/movie-list">Phim đang chiếu</a>
@@ -27,40 +27,49 @@
                 </li>
                 <li>
                     <a href="#0">Hệ thống rạp</a>
-
                     <ul class="submenu">
                         <li>
                             <a href="/user/movie-seat-plan">Tất cả các rạp</a>
                         </li>
                         <li>
-                            <a href="about.html">Rạp đặc biệt</a>
+                            <a href="#">Rạp đặc biệt</a>
                         </li>
                         <li>
-                            <a href="about.html">Rạp sắp mở</a>
+                            <a href="#">Rạp sắp mở</a>
                         </li>
                 </li>
                 </ul>
                 </li>
                 <li>
                     <a href="/user/movie-ticket-plan">Lịch chiếu</a>
-
                 </li>
                 <li>
                     <a href="/user/contact">Liên hệ</a>
                 </li>
                 <li>
-                    <a href="/user/movie-customer-profile">Thành viên</a>
+                    <a href="#">Thành viên</a>
                     <ul class="submenu">
                         <li>
                             <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
                         </li>
                         <li>
-                            <a href="blog-details.html">Vé của tôi</a>
+                            <a href="#">Vé của tôi</a>
                         </li>
                     </ul>
                 </li>
                 <li class="header-button pr-0">
-                    <a href="/user/sign-in">Đăng nhập</a>
+                    <% if(currentUser) { %>
+                        <a><%=currentUser.user_name%></a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="/user/logout">Đăng xuất</a>
+                            </li>
+                        </ul>
+                        <% } else { %>
+                                <a href="/user/sign-in">Đăng nhập</a>
+                            <% } %>
+
+                    
                 </li>
             </ul>
             <div class="header-bar d-lg-none">
@@ -201,14 +210,14 @@
                                     <div class="col-sm-6 col-lg-4">
                                         <div class="movie-grid">
                                             <div class="movie-thumb c-thumb">
-                                                <a href="/user/movie-detail/<%= movie.movie_id %>">
+                                                <a href="/user/movie-detail/<%= movie.id %>">
                                                     <img src="/user/images/movie/movie01.jpg" alt="movie">
                                                 </a>
                                             </div>
                                             <div class="movie-content bg-one">
                                                 <h5 class="title m-0">
-                                                    <a href="/user/movie-detail/<%= movie.movie_id %>">
-                                                        <%= movie.movie_name %>
+                                                    <a href="/user/movie-detail/<%= movie.id %>">
+                                                        <%= movie.name %>
                                                     </a>
                                                 </h5>
                                                 <ul class="movie-rating-percent">
@@ -216,13 +225,13 @@
                                                         <div class="thumb">
                                                             <img src="/user/images/movie/view.png" alt="movie">
                                                         </div>
-                                                        <span class="content"><%= movie.movie_viewed %></span>
+                                                        <span class="content"><%= movie.viewed %></span>
                                                     </li>
                                                     <li>
                                                         <div class="thumb">
                                                             <img src="/user/images/movie/heart.png" alt="movie">
                                                         </div>
-                                                        <span class="content"><%= movie.movie_liked %></span>
+                                                        <span class="content"><%= movie.liked %></span>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -236,18 +245,18 @@
                                 <% movies.forEach(function(movie) { %>
                                     <div class="movie-list">
                                         <div class="movie-thumb c-thumb">
-                                            <a href="/user/movie-detail/<%= movie.movie_id %>" class="w-100 bg_img h-100" data-background="/user/images/movie/movie01.jpg">
+                                            <a href="/user/movie-detail/<%= movie.id %>" class="w-100 bg_img h-100" data-background="/user/images/movie/movie01.jpg">
                                                 <img class="d-sm-none" src="/user/images/movie/movie01.jpg" alt="movie">
                                             </a>
                                         </div>
                                         <div class="movie-content bg-one">
                                             <h5 class="title">
-                                                <a href="/user/movie-detail/<%= movie.movie_id %>">
-                                                    <%= movie.movie_name %>
+                                                <a href="/user/movie-detail/<%= movie.id %>">
+                                                    <%= movie.name %>
                                                 </a>
                                             </h5>
                                             <p class="duration"><span>Thời lượng: </span>
-                                                <%= movie.movie_duration %>
+                                                <%= movie.duration %>
                                             </p>
                                             <div class="movie-tags">
                                                 <a href="#0">action</a>
@@ -257,7 +266,7 @@
                                             <div class="release">
                                                 <span>Ngày ra mắt: </span>
                                                 <a href="#0">
-                                                    <%= moment(movie.movie_releaseDate).format( 'DD-MM-YYYY')%>
+                                                    <%= moment(movie.releaseDate).format( 'DD-MM-YYYY')%>
                                                 </a>
                                             </div>
                                             <ul class="movie-rating-percent">
@@ -265,13 +274,13 @@
                                                     <div class="thumb">
                                                         <img src="/user/images/movie/view.png" alt="movie">
                                                     </div>
-                                                    <span class="content">lượt xem: <%= movie.movie_viewed %></span>
+                                                    <span class="content">lượt xem: <%= movie.viewed %></span>
                                                 </li>
                                                 <li>
                                                     <div class="thumb">
                                                         <img src="/user/images/movie/heart.png" alt="movie">
                                                     </div>
-                                                    <span class="content">yêu thích: <%= movie.movie_liked %></span>
+                                                    <span class="content">yêu thích: <%= movie.liked %></span>
                                                 </li>
                                             </ul>
                                             <div class="book-area">

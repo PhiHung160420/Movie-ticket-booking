@@ -3,7 +3,7 @@ const db = require("../config/database/db");
 const Theater_clusters = require("./theater_clusters");
 
 const Theater = db.define("theater", {
-  theater_id: {
+  id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     autoIncrement: true,
@@ -12,10 +12,10 @@ const Theater = db.define("theater", {
   theater_cluster_id: {
     type: DataTypes.INTEGER,
   },
-  theater_name: {
+  name: {
     type: DataTypes.STRING,
   },
-  theater_kind: {
+  kind: {
     type: DataTypes.STRING,
   },
   theater_horizontial_size: {

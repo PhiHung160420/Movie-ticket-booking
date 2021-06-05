@@ -4,7 +4,7 @@ const User=require("./user");
 const Showtimes=require("./showtimes");
 
 const Booking=db.define("booking",{
-  booking_id: {
+  id: {
     type: DataTypes.UUID,
     defaultValue:DataTypes.UUIDV4,
     primaryKey: true,

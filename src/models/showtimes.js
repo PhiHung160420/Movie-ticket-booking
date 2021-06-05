@@ -4,7 +4,7 @@ const Movies = require('./movie');
 const Theater = require('./theater');
 
 const Showtimes = db.define("showtimes", {
-  showtimes_id: {
+  id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,

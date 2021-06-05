@@ -17,7 +17,7 @@
       <!-- End Row -->
     </div>
     <!-- End Page Header -->
-
+  <form method="POST" 9>
     <div class="row">
       <div class="col-lg-8">
         <!-- Card -->
@@ -34,7 +34,7 @@
             <div class="form-group">
               <label for="productNameLabel" class="input-label">Tên<i class="tio-help-outlined text-body ml-1" data-toggle="tooltip" data-placement="top" title=""></i></label>
 
-              <input type="text" class="form-control" name="productName" id="productNameLabel" placeholder="" aria-label="Shirt, t-shirts, etc.">
+              <input type="text" class="form-control" name="name" id="name" aria-label="Shirt, t-shirts, etc.">
             </div>
             <!-- End Form Group -->
 
@@ -54,7 +54,7 @@
                       </div>
                     </div>
            
-                    <input type="text" class="flatpickr-custom-form-control form-control" id="projectDeadlineFlatpickrNewProjectLabel" placeholder="Select dates" data-input value="29/06/2020">
+                    <input type="text" class="flatpickr-custom-form-control form-control" id="releaseDate" name="releaseDate" placeholder="Chọn ngày" data-input>
                   </div>
                 </div>
               </div>
@@ -62,10 +62,29 @@
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="SKULabel" class="input-label">Thời Lượng</label>
-                  <input type="number" class="form-control" name="productName" id="productNameLabel" placeholder="" aria-label="Shirt, t-shirts, etc.">
+                  <input type="number" class="form-control" name="duration" id="duration" placeholder="" aria-label="Shirt, t-shirts, etc.">
 
                 </div>
               </div>
+
+              <!-- <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="SKULabel" class="input-label">Trailer</label>
+                  <input type="text" class="form-control" name="trailer" id="trailer" placeholder="" aria-label="Shirt, t-shirts, etc.">
+                </div>
+              </div> -->
+
+              <!-- <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="SKULabel" class="input-label">Lượt xem</label>
+                  <input type="number" class="form-control" name="viewed" id="viewed" placeholder="" aria-label="Shirt, t-shirts, etc.">
+                </div>
+              </div> -->
+            </div>
+            <div class="form-group">
+              <label for="productNameLabel" class="input-label">Trailer<i class="tio-help-outlined text-body ml-1" data-toggle="tooltip" data-placement="top" title=""></i></label>
+
+              <input type="text" class="form-control" name="trailer" id="trailer" aria-label="Shirt, t-shirts, etc.">
             </div>
 
           </div>
@@ -89,8 +108,11 @@
             <!-- Form Group -->
             <div id="attachFilesLabel" class="js-dropzone dropzone-custom custom-file-boxed">
               <div class="dz-message custom-file-boxed-label">
-                <img class="avatar avatar-xl avatar-4by3 mb-3" src="../assets/svg/illustrations/browse.svg" alt="Image Description">
-            
+               
+                <input type="file" id="poster" name="poster" hidden >
+               
+                <img class="avatar avatar-xl avatar-4by3 mb-3" src="../assets/svg/illustrations/browse.svg">
+   
                 <h5>Kéo và thả ảnh của bạn vào đây</h5>
             
                 <p class="mb-2">or</p>
@@ -118,7 +140,7 @@
             </div>
             <div class="col-auto">
               <button type="button" class="btn btn-ghost-light mr-2">Nháp</button>
-              <button type="button" class="btn btn-primary">Lưu</button>
+              <button type="submit" class="btn btn-primary" onclick="addClick()">Lưu</button>
             </div>
           </div>
           <!-- End Row -->
@@ -126,5 +148,7 @@
       </div>
       <!-- End Card -->
     </div>
-  </div>
-  <!-- End Content -->
+  </form>
+
+</div>
+<!-- End Content -->

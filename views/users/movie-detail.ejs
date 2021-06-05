@@ -9,7 +9,7 @@
             </div>
             <ul class="menu">
                 <li>
-                    <a href="/user/">Trang chủ</a>
+                    <a href="/user/" class="active">Trang chủ</a>
                 </li>
                 <li>
                     <a href="#0">Phim</a>
@@ -32,10 +32,10 @@
                             <a href="/user/movie-seat-plan">Tất cả các rạp</a>
                         </li>
                         <li>
-                            <a href="about.html">Rạp đặc biệt</a>
+                            <a href="#">Rạp đặc biệt</a>
                         </li>
                         <li>
-                            <a href="about.html">Rạp sắp mở</a>
+                            <a href="#">Rạp sắp mở</a>
                         </li>
                 </li>
                 </ul>
@@ -47,18 +47,29 @@
                     <a href="/user/contact">Liên hệ</a>
                 </li>
                 <li>
-                    <a href="/user/movie-customer-profile">Thành viên</a>
+                    <a href="#">Thành viên</a>
                     <ul class="submenu">
                         <li>
                             <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
                         </li>
                         <li>
-                            <a href="blog-details.html">Vé của tôi</a>
+                            <a href="#">Vé của tôi</a>
                         </li>
                     </ul>
                 </li>
                 <li class="header-button pr-0">
-                    <a href="/user/sign-in">Đăng nhập</a>
+                    <% if(currentUser) { %>
+                        <a><%=currentUser.user_name%></a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="/user/logout">Đăng xuất</a>
+                            </li>
+                        </ul>
+                        <% } else { %>
+                                <a href="/user/sign-in">Đăng nhập</a>
+                            <% } %>
+
+                    
                 </li>
             </ul>
             <div class="header-bar d-lg-none">
@@ -83,7 +94,7 @@
             </div>
             <div class="details-banner-content offset-lg-3">
                 <h3 class="title">
-                    <%= movie.movie_name %>
+                    <%= movie.name %>
                 </h3>
                 <div class="tags">
                     <a href="#0">English</a>
@@ -95,10 +106,10 @@
                 <div class="social-and-duration">
                     <div class="duration-area">
                         <div class="item">
-                            <i class="fas fa-calendar-alt"></i><span><%= moment(movie.movie_releaseDate).format( 'DD-MM-YYYY')%></span>
+                            <i class="fas fa-calendar-alt"></i><span><%= moment(movie.releaseDate).format( 'DD-MM-YYYY')%></span>
                         </div>
                         <div class="item">
-                            <i class="far fa-clock"></i><span><%= movie.movie_duration %></span>
+                            <i class="far fa-clock"></i><span><%= movie.duration %></span>
                         </div>
                     </div>
                     <ul class="social-share">
@@ -126,7 +137,7 @@
                             <img src="/user/images/movie/view.png" alt="movie">
                         </div>
                         <div class="counter-area">
-                            <span class="counter-item odometer" data-odometer-final="<%= movie.movie_viewed %>"><%= movie.movie_viewed %></span>
+                            <span class="counter-item odometer" data-odometer-final="<%= movie.viewed %>"><%= movie.viewed %></span>
                         </div>
                     </div>
                     <p>Lượt xem</p>
@@ -137,7 +148,7 @@
                             <img src="/user/images/movie/heart.png" alt="movie">
                         </div>
                         <div class="counter-area">
-                            <span class="counter-item odometer" data-odometer-final="<%= movie.movie_liked %>"><%= movie.movie_liked %></span>
+                            <span class="counter-item odometer" data-odometer-final="<%= movie.liked %>"><%= movie.liked %></span>
                         </div>
                     </div>
                     <p>Lượt yêu thích</p>
