@@ -18,11 +18,11 @@ const Theater = db.define("theater", {
   kind: {
     type: DataTypes.STRING,
   },
-  horizontial_size: {
-    type: DataTypes.FLOAT,
+  theater_horizontial_size: {
+    type: DataTypes.INTEGER,
   },
-  vertical_size: {
-    type: DataTypes.FLOAT,
+  theater_vertical_size: {
+    type: DataTypes.INTEGER,
   },
 }, {timestamps: false, createdAt: false, updatedAt: false});
 

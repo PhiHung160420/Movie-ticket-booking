@@ -152,6 +152,9 @@
     $(".window-warning .lay").on("click", function () {
       $(".window-warning").addClass("inActive");
     });
+    $(".window-warning .seatPlanButton").on("click", function () {
+      $(".window-warning").addClass("inActive");
+    });
     $(".seat-plan-wrapper li .movie-schedule .item").on("click", function () {
       $(".window-warning").removeClass("inActive");
     });
@@ -383,26 +386,7 @@
         },
       },
     });
-    var book = 0;
-    $(".seat-free img").on("click", function (e) {
-      if (book == 0) {
-        $(this).attr("src", "/user/images/movie/seat01-free.png");
-        book = 1;
-      } else if (book == 1) {
-        $(this).attr("src", "/user/images/movie/seat01.png");
-        book = 0;
-      }
-    });
-    var bookTwo = 1;
-    $(".seat-free-two img").on("click", function (e) {
-      if (bookTwo == 0) {
-        $(this).attr("src", "/user/images/movie/seat02-free.png");
-        bookTwo = 1;
-      } else if (bookTwo == 1) {
-        $(this).attr("src", "/user/images/movie/seat02-booked.png");
-        bookTwo = 0;
-      }
-    });
+
     // shop cart + - start here
     var CartPlusMinus = $(".cart-plus-minus");
     CartPlusMinus.prepend('<div class="dec qtybutton">-</div>');
@@ -523,4 +507,87 @@
       owlB.trigger("prev.owl.carousel", [300]);
     });
   });
+
+  // select seat
+
+  var srcImgSingleSeat;
+    $(".seat-free")
+      .mouseenter(function() {
+        srcImgSingleSeat = $(this).find("img").attr("src");
+        if(srcImgSingleSeat == "/user/images/movie/seat01-free.png") {
+          $(this).find("img").attr("src", "/user/images/movie/seat01-selecting.png");
+        }        
+      })
+      .mouseleave(function() {
+        if(srcImgSingleSeat == "/user/images/movie/seat01-free.png") {
+          $(this).find("img").attr("src", srcImgSingleSeat);
+        }         
+      });
+
+  var selectedSeatList = [];
+
+  function showListOfSeats() {
+    let strSeatList = "";
+    for(let i = 0; i < selectedSeatList.length; i++) {
+      if(i < selectedSeatList.length - 1){
+        strSeatList += selectedSeatList[i] + ", ";
+      } else {
+        strSeatList += selectedSeatList[i];
+      }
+    }
+    $("#selectedSeatList").text(strSeatList);
+  }
+
+  function calTotalPrice() {
+    const price = $("#price").val();
+    const totalPrice = price * selectedSeatList.length;
+    $("#totalPrice").text(totalPrice);
+  }
+
+    
+    $(".seat-free").on("click", function (e) {
+      if(srcImgSingleSeat == "/user/images/movie/seat01-free.png") {
+        let seatCode = $(this).find("span").text();
+        let index = selectedSeatList.indexOf(seatCode);
+        if (index == -1) {
+          if(selectedSeatList.length < 8) {
+            // push seat selection into array
+            selectedSeatList.push(seatCode);
+            // change img of seat
+            $(this).find("img").attr("src", "/user/images/movie/seat01-selecting.png");
+            srcImgSingleSeat = "/user/images/movie/seat01-selecting.png";
+          } else {
+            $(".window-warning").removeClass("inActive");
+          }     
+        }
+
+        //show list of seats
+        showListOfSeats();
+        calTotalPrice();
+        console.log(selectedSeatList);
+      } else {
+        // change img of seat
+        $(this).find("img").attr("src", "/user/images/movie/seat01-free.png");
+        srcImgSingleSeat = "/user/images/movie/seat01-free.png";
+
+        // pop seat selection into array
+        let seatCode = $(this).find("span").text();
+        let index = selectedSeatList.indexOf(seatCode);
+        if (index > -1) {
+          selectedSeatList.splice(index, 1);
+        }
+
+        //show list of seats
+        showListOfSeats();
+        calTotalPrice();
+        console.log(selectedSeatList);
+      }
+    });
+
+    // submit form seat-plan
+    $("#submitSeatPlan").on("click", function (e) {
+      $("input[name^='selectedSeatList']").val(JSON.stringify(selectedSeatList));   
+      $("#formSeatPlan").submit();
+    });
+
 })(jQuery);
