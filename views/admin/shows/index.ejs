@@ -111,38 +111,60 @@
           </thead>
 
           <tbody>
+
+            <% for (let i = 0;i< showsList.length; i++){ %>
             <tr> 
               <td>1</td>            
               <td>
-                <a class="media align-items-center" href="ecommerce-product-details.html">
-                  <img class="avatar avatar-lg mr-3" src="/admin/assets\img\400x400\img4.jpg" alt="Image Description">
+                <a class="media align-items-center" href="/admin/movie/detail/<%= movieList[i].id %>">
+                  <img class="avatar avatar-lg mr-3" src="/admin/assets\img\400x400\theater.png" alt="Image Description">
                   <div class="media-body">
-                    <h5 class="text-hover-primary mb-0">Photive wireless speakers</h5>
+                    <h5 class="text-hover-primary mb-0"><%= showsList[i].movie_id %></h5>
                   </div>
                 </a>
               </td>
-              <td>Electronics</td>
-              <td>Electronics</td> 
-              <td>Electronics</td> 
-              <td>Electronics</td>            
+              <td> <a class="media align-items-center" href="/admin/theater/detail/<%= theaterList[i].id %>">  
+                <h5 class="text-hover-primary mb-0"><%= showsList[i].theater_id %></h5></td> 
+              <td><%= showsList[i].start %></td> 
+              <td><%= showsList[i].end %></td>
+              <td><%= showsList[i].price %></td>  
               <td>
                 <div class="btn-group" role="group">
-                  <a class="btn btn-sm btn-success" href="ecommerce-product-details.html">
+                  <!-- <a class="btn btn-sm btn-success" href="">
                     <i class="tio-edit"></i> Sửa
-                  </a>
-                  <a class="btn btn-sm btn-danger" href="ecommerce-product-details.html">
+                  </a> -->
+                  <a class="btn btn-sm btn-danger" href="/admin/shows/delete/<%= showsList[i].id %>" data-toggle="modal" data-target="#exampleModalCenter">
                     <i class="tio-delete"></i> Xóa
                   </a>               
                 </div>
               </td>
             </tr>
-
+            <% } %>
             
            
           </tbody>
         </table>
       </div>
       <!-- End Table -->
+      <div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalCenterTitle">Thông Báo</h5>
+              <button type="button" class="btn btn-xs btn-icon btn-ghost-secondary" data-dismiss="modal" aria-label="Close">
+                <i class="tio-clear tio-lg"></i>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Bạn xác nhận xóa suất chiếu đã chọn?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-white" data-dismiss="modal">Thoát</button>
+              <a id="btnConfirm" href="" class="btn btn-primary">Xác Nhận</a>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- Footer -->
       <div class="card-footer">

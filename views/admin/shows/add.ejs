@@ -7,7 +7,7 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb breadcrumb-no-gutter">
             <li class="breadcrumb-item">
-              <a class="breadcrumb-link" href="/admin/shows">Suất Chiếu</a>
+              <a class="breadcrumb-link" href="/admin/showtimes">Suất Chiếu</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">
               Thêm Suất Chiếu
@@ -39,9 +39,9 @@
           <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="SKULabel" class="input-label">Phim</label>
-                <!-- Select2 -->
+                <label for="SKULabel" class="input-label">Phim</label >
                 <select
+                  name="movie_id" id="movie_id"
                   class="js-select2-custom custom-select"
                   size="1"
                   style="opacity: 0"
@@ -54,15 +54,15 @@
                   <option value="2">Doraemon</option>
                   <option value="3">Conan</option>
                 </select>
-                <!-- End Select2 -->
               </div>
-            </div>
+            </div> 
 
-            <div class="col-sm-6">
+            <div class="col-sm-6"> 
               <div class="form-group">
                 <label for="SKULabel" class="input-label">Rạp</label>
-                <!-- Select2 -->
+                
                 <select
+                  name="theater_id" id="theater_id"
                   class="js-select2-custom custom-select"
                   size="1"
                   style="opacity: 0"
@@ -80,7 +80,7 @@
                     <option value="item-2-2">Cinestar 2</option>
                   </optgroup>
                 </select>
-                <!-- End Select2 -->
+                
               </div>
             </div>
           </div>
@@ -112,10 +112,11 @@
                   <input
                     type="text"
                     class="flatpickr-custom-form-control form-control"
-                    id="projectDeadlineFlatpickrNewProjectLabel"
+                    id="start"
                     placeholder="Select dates"
                     data-input
                     value="29/06/2020"
+                    name="start"
                   />
                 </div>
               </div>
@@ -147,10 +148,11 @@
                   <input
                     type="text"
                     class="flatpickr-custom-form-control form-control"
-                    id="projectDeadlineFlatpickrNewProjectLabel"
+                    id="end"
                     placeholder="Select dates"
                     data-input
                     value="29/06/2020"
+                    name="end"
                   />
                 </div>
               </div>
@@ -170,13 +172,14 @@
             <input
               type="number"
               class="form-control"
-              name="productName"
-              id="productNameLabel"
+              name="price"
+              id="price"
               placeholder=""
               aria-label="Shirt, t-shirts, etc."
             />
           </div>
-
+          
+          
           <!-- Body -->
         </div>
         <!-- End Card -->
@@ -196,10 +199,8 @@
               <button type="button" class="btn btn-ghost-danger">Xóa</button>
             </div>
             <div class="col-auto">
-              <button type="button" class="btn btn-ghost-light mr-2">
-                Nháp
-              </button>
-              <button type="button" class="btn btn-primary">Lưu</button>
+              <button type="button" class="btn btn-ghost-light mr-2">Nháp</button>
+              <button type="submit" class="btn btn-primary" onclick="addClick()">Lưu</button>
             </div>
           </div>
           <!-- End Row -->

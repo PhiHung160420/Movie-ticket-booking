@@ -16,6 +16,8 @@ const theaterRouter = require("./src/admin/routes/theater");
 
 const movieRouter = require("./src/admin/routes/movie");
 
+const showtimeRouter = require("./src/admin/routes/shows");
+
 const app = express();
 
 //get connection database
@@ -58,6 +60,7 @@ app.use("/admin", require("./src/admin/routes/home"));
 app.use("/admin", theaterClustersRouter);
 app.use("/admin", theaterRouter);
 app.use("/admin", movieRouter);
+app.use("/admin", showtimeRouter);
 app.use("/admin", require("./src/admin/routes/theater"));
 app.use("/admin", require("./src/admin/routes/shows"));
 
