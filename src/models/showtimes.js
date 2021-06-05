@@ -18,6 +18,9 @@ const Showtimes = db.define("showtimes", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  date: {
+    type: DataTypes.DATE,
+  },
   start_time: {
     type: DataTypes.TIME,
   },

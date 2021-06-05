@@ -18,7 +18,7 @@ const Movies = db.define("movies", {
     type: DataTypes.BLOB,
     allowNull: true,
   },
-  movie_duration: {
+  duration: {
     type: DataTypes.INTEGER,
   },
   trailer: {

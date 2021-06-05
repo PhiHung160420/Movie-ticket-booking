@@ -31,7 +31,7 @@ const Ticket = db.define("ticket",{
   },
 }, {timestamps: false, createdAt: false, updatedAt: false});
 
-Booking.hasOne(Ticket, {foreignKey: "booking_id"}); 
+Booking.hasMany(Ticket, {foreignKey: "booking_id"}); 
 Ticket.belongsTo(Booking, {foreignKey: "booking_id"});
 
 module.exports = Ticket;
