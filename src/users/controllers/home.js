@@ -56,15 +56,24 @@ exports.getMovies = asyncHandler(async (req, res) => {
     });
 
     justRelease.forEach( movie => {
-      movie.poster = Buffer.from(movie.poster, 'binary').toString('base64');
+      if(movie.poster)
+      {
+        movie.poster = Buffer.from(movie.poster, 'binary').toString('base64');
+      }
     });
 
     mostViewed.forEach( movie => {
-      movie.poster = Buffer.from(movie.poster, 'binary').toString('base64');
+      if(movie.poster)
+      {
+        movie.poster = Buffer.from(movie.poster, 'binary').toString('base64');
+      }
     });
 
     mostLiked.forEach( movie => {
-      movie.poster = Buffer.from(movie.poster, 'binary').toString('base64');
+      if(movie.poster)
+      {
+        movie.poster = Buffer.from(movie.poster, 'binary').toString('base64');
+      }
     });
 
     res.render("users/home", {

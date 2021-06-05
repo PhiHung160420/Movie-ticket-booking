@@ -6,7 +6,10 @@ exports.listMovies = asyncHandler(async (req, res) => {
     res.locals.moment = moment;
     const data = await Movies.findAll();
     data.forEach( movie => {
-      movie.poster = Buffer.from(movie.poster, 'binary').toString('base64');
+      if(movie.poster)
+      {
+        movie.poster = Buffer.from(movie.poster, 'binary').toString('base64');
+      }
     });
     res.render("users/movie-list", { movies: data });
 })
@@ -19,7 +22,10 @@ exports.ListMoviesSort = asyncHandler(async (req, res) => {
         order: [["releaseDate", "DESC"]],
       });
       data.forEach( movie => {
-        movie.poster = Buffer.from(movie.poster, 'binary').toString('base64');
+        if(movie.poster)
+        {
+          movie.poster = Buffer.from(movie.poster, 'binary').toString('base64');
+        }
       });
       res.render("users/movie-list", { movies: data });
     }
@@ -28,7 +34,10 @@ exports.ListMoviesSort = asyncHandler(async (req, res) => {
         order: [["viewed", "DESC"]],
       });
       data.forEach( movie => {
-        movie.poster = Buffer.from(movie.poster, 'binary').toString('base64');
+        if(movie.poster)
+        {
+          movie.poster = Buffer.from(movie.poster, 'binary').toString('base64');
+        }
       });
       res.render("users/movie-list", { movies: data });
     }
@@ -37,13 +46,19 @@ exports.ListMoviesSort = asyncHandler(async (req, res) => {
         order: [["liked", "DESC"]],
       });
       data.forEach( movie => {
-        movie.poster = Buffer.from(movie.poster, 'binary').toString('base64');
+        if(movie.poster)
+        {
+          movie.poster = Buffer.from(movie.poster, 'binary').toString('base64');
+        }
       });
       res.render("users/movie-list", { movies: data });
     } else {
       const data = await Movies.findAll();
       data.forEach( movie => {
-        movie.poster = Buffer.from(movie.poster, 'binary').toString('base64');
+        if(movie.poster)
+        {
+          movie.poster = Buffer.from(movie.poster, 'binary').toString('base64');
+        }
       });
       res.render("users/movie-list", { movies: data });
     }

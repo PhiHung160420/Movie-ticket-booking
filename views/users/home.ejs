@@ -58,7 +58,18 @@
                     </ul>
                 </li>
                 <li class="header-button pr-0">
-                    <a href="/user/sign-in">Đăng nhập</a>
+                    <% if(currentUser) { %>
+                        <a><%=currentUser.user_name%></a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="/user/logout">Đăng xuất</a>
+                            </li>
+                        </ul>
+                        <% } else { %>
+                                <a href="/user/sign-in">Đăng nhập</a>
+                            <% } %>
+
+                    
                 </li>
             </ul>
             <div class="header-bar d-lg-none">
@@ -234,7 +245,11 @@
                                     <div class="movie-grid">
                                         <div class="movie-thumb c-thumb">
                                             <a href="/user/movie-detail/<%= movie.id %>">
-                                                <img src="data:image/png;base64,<%= movie.poster %>" alt="movie">
+                                                <% if(movie.poster) { %>
+                                                    <img src="data:image/png;base64,<%= movie.poster %>" alt="movie">
+                                                <% } else {%>
+                                                    <img src="/user/images/movie/movie01.jpg" alt="movie">
+                                                <% } %>
                                             </a>
                                         </div>
                                         <div class="movie-content bg-one">
@@ -309,7 +324,11 @@
                                     <div class="movie-grid">
                                         <div class="movie-thumb c-thumb">
                                             <a href="/user/movie-detail/<%= movie.id %>">
-                                                <img src="data:image/png;base64,<%= movie.poster %>" alt="movie">
+                                                <% if(movie.poster) { %>
+                                                    <img src="data:image/png;base64,<%= movie.poster %>" alt="movie">
+                                                <% } else {%>
+                                                    <img src="/user/images/movie/movie01.jpg" alt="movie">
+                                                <% } %>
                                             </a>
                                         </div>
                                         <div class="movie-content bg-one">
@@ -384,7 +403,11 @@
                                     <div class="movie-grid">
                                         <div class="movie-thumb c-thumb">
                                             <a href="/user/movie-detail/<%= movie.id %>">
-                                                <img src="data:image/png;base64,<%= movie.poster %>" alt="movie">
+                                                <% if(movie.poster) { %>
+                                                    <img src="data:image/png;base64,<%= movie.poster %>" alt="movie">
+                                                <% } else {%>
+                                                    <img src="/user/images/movie/movie01.jpg" alt="movie">
+                                                <% } %>
                                             </a>
                                         </div>
                                         <div class="movie-content bg-one">

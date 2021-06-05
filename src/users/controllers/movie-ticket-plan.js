@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const db = require('../../config/database/db');
 const moment = require("moment");
 const asyncHandler = require("express-async-handler");
@@ -10,7 +11,7 @@ const Booking = require('../../models/booking');
 const Ticket = require('../../models/ticket');
 const User = require('../../models/user');
 
-//lấy các suất chiếu
+//lấy các suất chiếu theo phim, cụm rạp và ngày
 exports.getShowTimes = asyncHandler(async (req, res) => {
     res.locals.moment = moment;
 
@@ -60,6 +61,7 @@ exports.postShowTimes = asyncHandler(async (req, res) => {
         res.redirect('/user/movie-ticket-plan');
     }
 
+    //lấy phim theo tên phim
     const getMovieByName = await Movies.findOne({
         where: {
             name: select_movie_name
@@ -67,18 +69,36 @@ exports.postShowTimes = asyncHandler(async (req, res) => {
         attributes: ["id", "name"]
     });
 
-    const getTheaterByName = await Theater_clusters.findOne({
+    //lấy cụm rạp theo tên cụm rạp
+    const getTheaterClusterByName = await Theater_clusters.findOne({
         where: {
             name: select_theater_cluster
         },
         attributes: ["id", "name"]
     });
 
+    //lấy danh sách các rạp theo cụm rạp
+    const getListTheaterById = await Theater.findAll({
+        where: {
+            theater_cluster_id: getTheaterClusterByName.id
+        },
+        attributes: ['id', 'name']
+    });
+
+    //bỏ danh sách các rạp vào list
+    let listTheater = [];
+    getListTheaterById.forEach(item => {
+        listTheater.push(item.id);
+    });
+
     const showtimesList = await Showtimes.findAll({
         attributes: [
+            'id',
+            'movie_id',
+            'theater_id',
             'date',
-            'start', 
-            'end',
+            'start_time', 
+            'end_time',
         ],
         include: [
             {
@@ -86,15 +106,26 @@ exports.postShowTimes = asyncHandler(async (req, res) => {
                 attributes: ['name']
             },
             {
-                model: Theater_clusters,
-                attributes: ['name']
+                model: Theater,
+                include: [
+                    {
+                        model: Theater_clusters,
+                        attributes: ['id', 'name']
+                    }
+                ]
             }
         ],
         where: {
-            movie_id: getMovieByName.id,
-            theater_cluster_id: getTheaterByName.id,
-            date: select_date
+            [Op.and]: [
+                { movie_id: getMovieByName.id },
+                { theater_id: listTheater},
+                { date: select_date }
+            ]
         },
+        order: [
+            ['start_time', 'asc'],
+            ['end_time', 'asc']
+         ]
     });
 
     if(showtimesList.length !==0)
