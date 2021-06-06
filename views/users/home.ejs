@@ -111,13 +111,12 @@
                                 <img src="/user/images/ticket/cinema.png" alt="ticket">
                             </div>
                             <span class="type">Chọn phim</span>
-                            <select class="select-bar" name="select_movie_name">
+                            <select class="select-bar" name="select_movie">
+                                <option value=""></option>
                                 <% if(listMovies) {%>
                                     <% listMovies.map(movie => { %>
-                                <option value="<%= movie.name %>"><%= movie.name %></option>
-                                <% })} else { %>
-                                    <option value="dhaka"></option>
-                                    <% } %>
+                                <option value="<%= movie.id %>"><%= movie.name %></option>
+                                <% })} %>
                             </select>
                         </div>
                         <div class="form-group">
@@ -125,13 +124,8 @@
                                 <img src="/user/images/ticket/city.png" alt="ticket">
                             </div>
                             <span class="type">Chọn rạp</span>
-                            <select class="select-bar" name="select_theater_cluster">
-                                <% if(listTheaterClusters) {%>
-                                    <% listTheaterClusters.map(theater_cluster => { %>
-                                        <option value="<%= theater_cluster.name %>"><%= theater_cluster.name %></option>
-                                <% })} else { %>        
-                                    <option value="Venus">Venus</option>
-                                    <% } %>           
+                            <select disabled class="select-bar" name="select_theater_cluster">
+                                <option value=""></option>       
                             </select>
                         </div>
                         <div class="form-group">
@@ -139,13 +133,8 @@
                                 <img src="/user/images/ticket/date.png" alt="ticket">
                             </div>
                             <span class="type">Chọn ngày</span>
-                            <select class="select-bar" name="select_date">
-                                <% if(listDate) {%>
-                                    <% listDate.map(date => { %>
-                                        <option value="<%= moment(date.schedule_date).format( 'DD-MM-YYYY') %>"><%= moment(date.schedule_date).format( 'DD-MM-YYYY') %></option>
-                                <% })} else { %>
-                                    <option value="20-10-2020"></option>
-                                    <% } %>
+                            <select disabled class="select-bar" name="select_date">
+                                <option value=""></option>
                             </select>
                         </div>
                         <button type="submit" class="custom-button btn-search">Đặt vé</button>

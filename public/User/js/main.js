@@ -36,6 +36,64 @@
     });
   });
   $(document).ready(function () {
+
+    //filter theater cluster when selected movie
+    $('select[name=select_movie]').on('change', function() {
+      $("select[name=select_theater_cluster]").prop('disabled', false);
+      let movie_selected = $(this).val();
+      if(movie_selected !== "")
+      {
+        $.ajax({
+          type: "POST",
+          url: "/user/movie-ticket-plan/filter-cluster",
+          data: {movie_id: movie_selected},
+          dataType: "json",
+          success: function(res){
+              let html = "";
+              $.each(res, function(index, val) {
+                  html += '<option value="'+ val.cluster_id +'">'+ val.cluster_name+'</option>';
+              });
+              if(html == "") {
+                  html = '<option value="">Venus</option>';
+              }
+              $('select[name=select_theater_cluster]').html(html);
+              $('select[name=select_theater_cluster]').niceSelect('destroy');
+              $('select[name=select_theater_cluster]').niceSelect();
+          },        
+        });
+      }
+    });
+
+    //filter date when selected movie and theater_cluster
+    $('select[name=select_theater_cluster]').on('change', function() {
+      $("select[name=select_date]").prop('disabled', false);
+      let cluster_selected = $(this).val();
+      let movie_selected = $("select[name=select_movie] :selected").val();
+      if(cluster_selected !== "" && movie_selected !== "")
+      {
+        $.ajax({
+          type: "POST",
+          url: "/user/movie-ticket-plan/filter-date",
+          data: {cluster: cluster_selected, movie: movie_selected},
+          dataType: "json",
+          success: function(res){
+            console.log('response: ' + res);
+              let html = "";
+              $.each(res, function(index, val) {
+                  html += '<option value="' + val.schedule_date + '">' + val.schedule_date + '</option>';
+                  console.log(html);
+              });
+              if(html == "") {
+                  html = '<option value="">10-10-2020</option>';
+              }
+              $('select[name=select_date]').html(html);
+              $('select[name=select_date]').niceSelect('destroy');
+              $('select[name=select_date]').niceSelect();
+          },        
+        });
+      }
+    });
+
     // Nice Select
     $(".select-bar").niceSelect();
     // Lightcase
