@@ -1,6 +1,5 @@
 const Movie = require('../../models/movie');
 
-
 exports.getIndex = async (req, res, next) => {
     const movieList = await Movie.findAll({
         order: [['id', 'ASC']]

@@ -112,19 +112,33 @@
     var start = moment();
     var end = moment();
 
-    function cb(start, end) {
-      $('#js-daterangepicker-predefined .js-daterangepicker-predefined-preview').html(start.format('MMM D') + ' - ' + end.format('MMM D, YYYY'));
+    function cbTheaterCluster(start, end) {
+      $('#js-daterangepicker-predefined-theater-cluster .js-daterangepicker-predefined-preview-theater-cluster').html(start.format('MMM D') + ' - ' + end.format('MMM D, YYYY'));
     }
 
-    $('#js-daterangepicker-predefined').daterangepicker({
+    function cbMovie(start, end) {
+      $('#js-daterangepicker-predefined-movie .js-daterangepicker-predefined-preview-movie').html(start.format('MMM D') + ' - ' + end.format('MMM D, YYYY'));
+    }
+
+    $('#js-daterangepicker-predefined-theater-cluster').daterangepicker({
       startDate: start,
       endDate: end,
       ranges: {
         'Today': [moment(), moment()]
       }
-    }, cb);
+    }, cbTheaterCluster);
 
-    cb(start, end);
+    cbTheaterCluster(start, end);
+
+    $('#js-daterangepicker-predefined-movie').daterangepicker({
+      startDate: start,
+      endDate: end,
+      ranges: {
+        'Today': [moment(), moment()]
+      }
+    }, cbMovie);
+
+    cbMovie(start, end);
 
     // INITIALIZATION OF DROPZONE FILE ATTACH MODULE
     // =======================================================
@@ -200,21 +214,51 @@
     var start = moment();
     var end = moment();
 
-    function cb(start, end) {
-      $('#js-daterangepicker-predefined .js-daterangepicker-predefined-preview').html(start.format('MMM D') + ' - ' + end.format('MMM D, YYYY'));
+    function cbTheaterCluster(start, end) {
+      var start_date = new Date(start)
+      var end_date = new Date(end)
+      if(start_date.getDate() === end_date.getDate())
+      {
+        $('#js-daterangepicker-predefined-theater-cluster .js-daterangepicker-predefined-preview-theater-cluster').html(start.format('DD-MM-YYYY'));
+      }
+      else
+      {
+        $('#js-daterangepicker-predefined-theater-cluster .js-daterangepicker-predefined-preview-theater-cluster').html(start.format('DD-MM-YYYY') + ' - ' + end.format('DD-MM-YYYY'));
+      }
     }
 
-    $('#js-daterangepicker-predefined').daterangepicker({
+    function cbMovie(start, end) {
+      var start_date = new Date(start)
+      var end_date = new Date(end)
+      if(start_date.getDate() === end_date.getDate())
+      {
+        $('#js-daterangepicker-predefined-movie .js-daterangepicker-predefined-preview-movie').html(start.format('DD-MM-YYYY'));
+      }
+      else
+      {
+        $('#js-daterangepicker-predefined-movie .js-daterangepicker-predefined-preview-movie').html(start.format('DD-MM-YYYY') + ' - ' + end.format('DD-MM-YYYY'));
+      }
+    }
+
+    $('#js-daterangepicker-predefined-theater-cluster').daterangepicker({
       startDate: start,
       endDate: end,
       ranges: {
-        'Hôm Nay': [moment(), moment()],
-        
+        'Hôm Nay': [moment(), moment()],      
       }
-    }, cb);
+    }, cbTheaterCluster);
 
-    cb(start, end);
+    cbTheaterCluster(start, end);
 
+    $('#js-daterangepicker-predefined-movie').daterangepicker({
+      startDate: start,
+      endDate: end,
+      ranges: {
+        'Hôm Nay': [moment(), moment()],      
+      }
+    }, cbMovie);
+
+    cbMovies(start, end);
     
     // INITIALIZATION OF DATATABLES
     // =======================================================
