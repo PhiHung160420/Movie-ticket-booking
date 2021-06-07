@@ -36,7 +36,7 @@ const transporter = nodemailer.createTransport({
 //validation schema
 
 router.post("/sign-up", asyncHandler(async(req, res) => {
-    console.log(req.body);
+    
     const { username, email, phonenumber, password, repassword } = req.body;
     
     let errors = null;

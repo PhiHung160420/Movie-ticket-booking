@@ -47,8 +47,7 @@ router.post("/forgot", asyncHandler(async(req, res)=>{
         return res.redirect('/user/forgot/?validErr=' + string);   
     }
     else{
-        if(user.user_token !=undefined)
-        {
+        const code = crypto.randomBytes(64).toString('hex');
             const msg = {
                 to: email,
                 from: process.env.EMAIL || 'ltw2nnd@gmail.com',              
@@ -56,13 +55,13 @@ router.post("/forgot", asyncHandler(async(req, res)=>{
                 text: `
                     Xin chào ${user.user_name}, Ai đó vừa yêu cầu thay đổi mật khẩu tài khoản Sky cinema của bạn.
                     Nếu đây là bạn, hãy nhấp vào đường link phía dưới để đặt lại mật khẩu.
-                    http://${req.headers.host}/user/reset-password?token=${user.user_token}
+                    http://${req.headers.host}/user/reset-password?token=${code}
                 `,
                 html: `
                     <h1>Yêu cầu đặt lại mật khẩu</h1>
                     <p>Ai đó vừa yêu cầu thay đổi mật khẩu tài khoản Sky cinema của bạn.</p>
                     <p>Nếu đây là bạn, hãy nhấp vào đường link phía dưới để đặt lại mật khẩu.</p>
-                    <a href="http://${req.headers.host}/user/reset-password?token=${user.user_token}">Đặt lại mật khẩu của bạn</a>
+                    <a href="http://${req.headers.host}/user/reset-password?token=${code}">Đặt lại mật khẩu của bạn</a>
                     <p>Nếu bạn không muốn thay đổi mật khẩu của bạn, hãy đơn giản là bỏ qua email này và mọi thứ không có gì thay đổi.</p>
                 `
             };try{
@@ -76,6 +75,8 @@ router.post("/forgot", asyncHandler(async(req, res)=>{
                         console.log("email send" + info.response);
                     }
                 })
+                user.user_codereset = code;
+                user.save();
                 const string = encodeURIComponent('Xin kiểm tra email của bạn để đặt lại mật khẩu');
                 return res.redirect('/user/forgot/?valid=' + string);
             }
@@ -84,23 +85,27 @@ router.post("/forgot", asyncHandler(async(req, res)=>{
                 const string = encodeURIComponent('Đã có lỗi sảy ra');
                 res.redirect('/user/forgot/?valid=' + string);
             } 
-        }
     }
 }));
 
 
-router.get("/reset-password", (req, res) => {
+router.get("/reset-password", asyncHandler(async(req, res) => {
     const msg = req.query.valid;
     const msgErr = req.query.validErr;
     const token= req.query.token;
+    const user = await User.findOne({where:{'user_codereset': token} });
     
     if(req.session.user_id){
         res.redirect("/user");
     }
+    if(!user){
+        const string = "Mã đặt lại mật khẩu không tồn tại";
+        res.redirect('/user/sign-in?validErr=' + string);
+    }
     else{
         res.render("users/reset-password", {message: msg, messageErr: msgErr, token: token});
     }
-});
+}));
 
 
 router.post("/reset-password", asyncHandler(async(req, res) =>{
@@ -124,7 +129,7 @@ router.post("/reset-password", asyncHandler(async(req, res) =>{
         return res.redirect('/user/reset-password/?validErr=' + string);  
     }
 
-    const user = await User.findOne({where:{'user_token': token} });
+    const user = await User.findOne({where:{'user_codereset': token} });
     
     if(!user)
     {
@@ -134,6 +139,7 @@ router.post("/reset-password", asyncHandler(async(req, res) =>{
         try{
         
             user.user_password = bcrypt.hashSync(password, 10);
+            user.user_codereset = null;
             user.save();
             const string = encodeURIComponent('Mật khẩu của bạn đã được thay đổi thành công');
             res.redirect("/user/sign-in/?valid=" + string);
