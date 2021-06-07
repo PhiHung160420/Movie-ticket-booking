@@ -15,17 +15,16 @@ exports.getAdd = (req, res, next) => {
 
 exports.postAdd = async (req, res, next) => {
     try {
-        const {date, start, end, price} = req.body;
-        const movie_id = await Movie.findAll();
-        const theater_id = await Theater.findAll();
-
+        const {start, end, price,movieID, theaterID } = req.body;
+        
         const found = await Showtimes.findOne({
 
             where:{
-                movie_id : movie_id,
-                theater_id : theater_id,
+                movie_id : movieID,
+                theater_id : theaterID,
                 // date : date,
-                start : start
+                start : start,
+                end : end
             }
 
         });
@@ -36,8 +35,8 @@ exports.postAdd = async (req, res, next) => {
             start: start,
             end: end,
             // date:date,
-            movie_id: movie_id ,
-            theater_id: theater_id,
+            movie_id: movieID ,
+            theater_id: theaterID,
             price: price,
         });
         req.session.toastMessage = { title: "Thành Công", msg: "Thêm suất chiếu thành công!" };
@@ -66,9 +65,8 @@ exports.getDetail = async (req, res, next) => {
 
 exports.postDetail = async (req, res, next) => {
     try {
-        const {date, start, end, price} = req.body;
-        const movie_id = await Movie.findAll();
-        const theater_id = await Theater.findAll();
+        const {date, start, end, price, movieID, theaterID} = req.body;
+        
 
         const updateShowtime = await Showtimes.findByPk(id);
         if(!updateShowtime) throw new Error('Suất chiếu không tồn tại !');
@@ -76,10 +74,10 @@ exports.postDetail = async (req, res, next) => {
         // updateTheater.theater_cluster_id = theater_cluster_id;
         updateShowtime.start = start;
         updateShowtime.end = end;
-        updateShowtime.movie_id = movie_id;
-        updateShowtime.theater_id = theater_id;
-        updateShowtime.date = date;
-        updateShowtime.price = date
+        updateShowtime.movie_id = movieID;
+        updateShowtime.theater_id = theaterID;
+        // updateShowtime.date = date;
+        updateShowtime.price = price;
         await updateShowtime.save();
         req.session.toastMessage = { title: "Thành Công", msg: "Cập nhật suất chiếu thành công!" };
         res.redirect('/admin/shows'); 

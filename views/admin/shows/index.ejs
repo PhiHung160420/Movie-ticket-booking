@@ -116,15 +116,15 @@
             <tr> 
               <td>1</td>            
               <td>
-                <a class="media align-items-center" href="/admin/movie/detail/<%= movieList[i].id %>">
+                <a class="media align-items-center">
                   <img class="avatar avatar-lg mr-3" src="/admin/assets\img\400x400\theater.png" alt="Image Description">
                   <div class="media-body">
-                    <h5 class="text-hover-primary mb-0"><%= showsList[i].movie_id %></h5>
+                    <h5 class="text-hover-primary mb-0"><%= movieList[i].name %></h5>
                   </div>
                 </a>
               </td>
-              <td> <a class="media align-items-center" href="/admin/theater/detail/<%= theaterList[i].id %>">  
-                <h5 class="text-hover-primary mb-0"><%= showsList[i].theater_id %></h5></td> 
+              <td> <a class="media align-items-center ">  
+                <h5 class="text-hover-primary mb-0"><%= theaterList[i].name %></h5></td> 
               <td><%= showsList[i].start %></td> 
               <td><%= showsList[i].end %></td>
               <td><%= showsList[i].price %></td>  

@@ -77,6 +77,10 @@ app.use("/user", require("./src/users/routes/movie-contact"));
 app.use("/user", require("./src/users/routes/sign-in"));
 app.use("/user", require("./src/users/routes/sign-up"));
 
+
+app.post('/getJson', function (req, res) {
+  console.log(req.body.select);
+});
 //connect to postgres
 db.sync()
   .then(function () {

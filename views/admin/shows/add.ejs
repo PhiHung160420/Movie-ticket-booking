@@ -21,7 +21,7 @@
     <!-- End Row -->
   </div>
   <!-- End Page Header -->
-
+<form method="POST">
   <div class="row">
     <div class="col-lg">
       <!-- Card -->
@@ -41,7 +41,7 @@
               <div class="form-group">
                 <label for="SKULabel" class="input-label">Phim</label >
                 <select
-                  name="movie_id" id="movie_id"
+                  name="movieID"
                   class="js-select2-custom custom-select"
                   size="1"
                   style="opacity: 0"
@@ -50,9 +50,9 @@
                       "searchInputPlaceholder": "Tìm phim"
                     }'
                 >
-                  <option value="1">Vincenzo Cassano</option>
-                  <option value="2">Doraemon</option>
-                  <option value="3">Conan</option>
+                  <option value="1">Phim 1</option>
+                  <option value="2">Phim 2</option>
+                  <option value="3">Phim 3</option>
                 </select>
               </div>
             </div> 
@@ -62,7 +62,7 @@
                 <label for="SKULabel" class="input-label">Rạp</label>
                 
                 <select
-                  name="theater_id" id="theater_id"
+                  name="theaterID"
                   class="js-select2-custom custom-select"
                   size="1"
                   style="opacity: 0"
@@ -72,12 +72,12 @@
                     }'
                 >
                   <optgroup label="CGV">
-                    <option value="item-1-1">CGV 1</option>
-                    <option value="item-1-2">CGV 2</option>
+                    <option value="1">CGV 1</option>
+                    <option value="2">CGV 2</option>
                   </optgroup>
                   <optgroup label="Cinestar">
-                    <option value="item-2-1">Cinestar 1</option>
-                    <option value="item-2-2">Cinestar 2</option>
+                    <option value="3">Cinestar 1</option>
+                    <option value="4">Cinestar 2</option>
                   </optgroup>
                 </select>
                 
@@ -112,11 +112,11 @@
                   <input
                     type="text"
                     class="flatpickr-custom-form-control form-control"
-                    id="start"
                     placeholder="Select dates"
                     data-input
                     value="29/06/2020"
                     name="start"
+                    id="start"
                   />
                 </div>
               </div>
@@ -147,12 +147,12 @@
 
                   <input
                     type="text"
-                    class="flatpickr-custom-form-control form-control"
-                    id="end"
+                    class="flatpickr-custom-form-control form-control"1
                     placeholder="Select dates"
                     data-input
                     value="29/06/2020"
                     name="end"
+                    id="end"
                   />
                 </div>
               </div>
@@ -209,5 +209,6 @@
       <!-- End Card -->
     </div>
   </div>
+</form> 
   <!-- End Content -->
 </div>
