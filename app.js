@@ -44,6 +44,8 @@ function(accessToken, refreshToken, profile, done) {
           user_email: profile.emails[0].value,
       },
   }).then(async function (user) {
+    console.log(user);
+    console.log(profile);
       if(!user)
       {
           user = await User.create({
@@ -53,6 +55,8 @@ function(accessToken, refreshToken, profile, done) {
               user_verify: true
           });
       }
+      user.user_facebookid = profile.id;
+      user.user_verify = true;
       user.user_accessToken = accessToken;
       await user.save();
       done(null, user);
