@@ -77,3 +77,54 @@ exports.postStatisticCluster = asyncHandler(async (req, res) => {
 
     return res.status(200).json(lstResult);
 });
+
+//post statistic movies
+exports.postStatisticMovies = asyncHandler(async (req, res) => {
+  const date_start = req.body.date_start;
+  const date_end = req.body.date_end;
+  const select_movies = req.body.select_movies;
+
+  //get list showtime id by movies selected
+  const getListShowtimes = await Showtimes.findAll({
+    attributes: ['id'],
+    where: {
+      movie_id: select_movies
+    }
+  });
+
+  const listShowtimes = [];
+  getListShowtimes.forEach(item => listShowtimes.push(item.id));
+
+  const listBooking = await Booking.findAll({
+    attributes: [
+      [db.fn('COUNT', db.col('booking.id')), 'AmountTicket'],
+      [db.fn('SUM', db.col('booking_price')), 'TotalPrice']
+    ],
+    where: {
+      booking_time: {
+        [Op.between]: [date_start, date_end]
+      },
+      showtimes_id: {
+        [Op.in]: listShowtimes
+      },
+    },
+    group: ['booking.user_id'],
+    raw:true
+  });
+
+  const lstResult = {};
+
+  let ticket = 0;
+  let price = 0;
+
+  for (var i = 0; i < listBooking.length; i++) {
+    ticket += parseInt(listBooking[i].AmountTicket);
+    price += parseFloat(listBooking[i].TotalPrice);
+  }
+
+  lstResult.ticketTotal = String(ticket).replace(/(.)(?=(\d{3})+$)/g,'$1,');
+  lstResult.priceTotal = price.toLocaleString('vi-VN', {style : 'currency', currency : 'VND'});
+
+  return res.status(200).json(lstResult);
+
+});

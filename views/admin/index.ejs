@@ -218,11 +218,11 @@
             <div class="col-sm-auto">
               <!-- Daterangepicker -->
               <button
-                id="js-daterangepicker-predefined-movie"
+                id="js-daterangepicker-predefined-movies"
                 class="btn btn-sm btn-white dropdown-toggle mb-2 mb-sm-0"
               >
                 <i class="tio-date-range"></i>
-                <span class="js-daterangepicker-predefined-preview-movie ml-1"></span>
+                <span class="js-daterangepicker-predefined-preview-movies ml-1"></span>
               </button>
               <!-- End Daterangepicker -->
             </div>
@@ -231,6 +231,7 @@
               </div>
               <div class="col-auto">
                 <select
+                  name="select_movies"
                   class="js-select2-custom js-datatable-filter custom-select"
                   size="1"
                   name="select-theater-clusters"
@@ -245,12 +246,17 @@
                 >
                   <% if(lstMovies) {%>
                     <% lstMovies.forEach(item => { %>
-                      <option value="<%=item.name %>"><%=item.name %></option>
+                      <option value="<%=item.id %>"><%=item.name %></option>
                     <% }) %>
                   <% } else { %>
                     <option value="">Tất cả</option>
                   <% } %>
                 </select>
+              </div>
+              <div class="col-auto">
+                <input type="hidden" id="date_start_movies" name="date_start_movies" value="">
+                <input type="hidden" id="date_end_movies" name="date_end_movies" value="">
+                <button type="submit" class="btn btn-primary" name="btn_statis_movies" id="btn_statis_movies">Thống kê</button>
               </div>
           </div>
         </div>
@@ -363,7 +369,7 @@
                 style="min-height: 10.5rem"
               >
                 <h6 class="card-subtitle">Doanh Thu</h6>
-                <span class="d-block display-4 text-dark mb-1 mr-3"
+                <span name="totalPriceMovies" id="totalPriceMovies" class="d-block display-4 text-dark mb-1 mr-3"
                   >20.000.000.000</span
                 >
               </div>
@@ -385,7 +391,7 @@
                 style="min-height: 10.5rem"
               >
                 <h6 class="card-subtitle">Số Vé Bán Được</h6>
-                <span class="d-block display-4 text-dark mb-1 mr-3"
+                <span name="totalTicketMovies" id="totalTicketMovies" class="d-block display-4 text-dark mb-1 mr-3"
                   >80 000</span
                 >
               </div>
