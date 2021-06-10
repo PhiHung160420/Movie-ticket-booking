@@ -28,8 +28,8 @@
                 <h4 class="card-header-title">Chọn cụm rạp</h4>
               </div>
               <div class="col-auto">
-                <form action="/admin/statistic/theater-cluster" method="post" class="form-inline">
                 <select
+                  name="select_cluster"
                   class="js-select2-custom js-datatable-filter custom-select"
                   size="1"
                   style="opacity: 0"
@@ -43,18 +43,17 @@
                 >
                   <% if(lstTheaterCluster) {%>
                     <% lstTheaterCluster.forEach(item => { %>
-                      <option value="<%=item.name %>"><%=item.name %></option>
+                      <option value="<%=item.id %>"><%=item.name %></option>
                     <% }) %>
                   <% } else { %>
                     <option value="">Tất cả</option>
                   <% } %>
                 </select>
-                <div class="col-auto">
-                  <input type="hidden" id="date_start" name="date_start" value="">
-                  <input type="hidden" id="date_end" name="date_end" value="">
-                  <button type="submit" class="btn btn-primary">Thống kê</button>
-                </div>
-              </form>
+              </div>
+              <div class="col-auto">
+                <input type="hidden" id="date_start_cluster" name="date_start_cluster" value="">
+                <input type="hidden" id="date_end_cluster" name="date_end_cluster" value="">
+                <button type="submit" class="btn btn-primary" name="btn_statis_cluster" id="btn_statis_cluster">Thống kê</button>
               </div>
           </div>
         </div>
@@ -168,10 +167,7 @@
                 style="min-height: 10.5rem"
               >
                 <h6 class="card-subtitle">Doanh Thu</h6>
-                <span class="d-block display-4 text-dark mb-1 mr-3"
-                  >20.000.000.000</span
-                >
-                <span class="d-block text-success"> </span>
+                  <span id="totalPriceCluster" class="d-block display-4 text-dark mb-1 mr-3">20.000.000.000</span>
               </div>
               <!-- End Stats -->
 
@@ -191,10 +187,7 @@
                 style="min-height: 10.5rem"
               >
                 <h6 class="card-subtitle">Số Vé Bán Được</h6>
-                <span class="d-block display-4 text-dark mb-1 mr-3"
-                  >80 000</span
-                >
-                <span class="d-block text-danger"> </span>
+                    <span id="totalTicketCluster" class="d-block display-4 text-dark mb-1 mr-3">80 000</span>
               </div>
               <!-- End Stats -->
             </div>

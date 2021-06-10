@@ -10,6 +10,27 @@
 <!-- JS Plugins Init. -->
 <script>
   $(document).on('ready', function () {
+    //AJAX FOR STATISTICS
+    $('#btn_statis_cluster').on('click', function() {
+      let date_start = $('#date_start_cluster').val();
+      let date_end = $('#date_end_cluster').val();
+      let select_cluster = $("select[name=select_cluster]").children("option:selected").val();
+      console.log(date_start);
+      console.log(date_end);
+      console.log(select_cluster);
+      $.ajax({
+          type: "POST",
+          url: "/admin/statistic/theater-cluster",
+          data: {date_start: date_start, date_end: date_end, select_cluster: select_cluster},
+          dataType: "json",
+          success: function(res){
+            console.log('result: ' + res.ticketTotal);
+            $("#totalTicketCluster").text(res.ticketTotal);
+            $("#totalPriceCluster").text(res.priceTotal);
+          },        
+      });
+    });
+
     // ONLY DEV
     // =======================================================
     
@@ -215,8 +236,10 @@
     var end = moment();
 
     function cbTheaterCluster(start, end) {
-      var start_date = new Date(start)
-      var end_date = new Date(end)
+      var start_date = new Date(start);
+      var end_date = new Date(end);
+      $('#date_start_cluster').val(start_date);
+      $('#date_end_cluster').val(end_date);
       if(start_date.getDate() === end_date.getDate())
       {
         $('#js-daterangepicker-predefined-theater-cluster .js-daterangepicker-predefined-preview-theater-cluster').html(start.format('DD-MM-YYYY'));
@@ -226,6 +249,16 @@
         $('#js-daterangepicker-predefined-theater-cluster .js-daterangepicker-predefined-preview-theater-cluster').html(start.format('DD-MM-YYYY') + ' - ' + end.format('DD-MM-YYYY'));
       }
     }
+
+    $('#js-daterangepicker-predefined-theater-cluster').daterangepicker({
+      startDate: start,
+      endDate: end,
+      ranges: {
+        'Hôm Nay': [moment(), moment()],      
+      }
+    }, cbTheaterCluster);
+
+    cbTheaterCluster(start, end);
 
     function cbMovie(start, end) {
       var start_date = new Date(start)
@@ -240,16 +273,6 @@
       }
     }
 
-    $('#js-daterangepicker-predefined-theater-cluster').daterangepicker({
-      startDate: start,
-      endDate: end,
-      ranges: {
-        'Hôm Nay': [moment(), moment()],      
-      }
-    }, cbTheaterCluster);
-
-    cbTheaterCluster(start, end);
-
     $('#js-daterangepicker-predefined-movie').daterangepicker({
       startDate: start,
       endDate: end,
@@ -258,7 +281,7 @@
       }
     }, cbMovie);
 
-    cbMovies(start, end);
+    cbMovie(start, end);
     
     // INITIALIZATION OF DATATABLES
     // =======================================================
