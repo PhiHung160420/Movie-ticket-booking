@@ -1,31 +1,30 @@
 const { DataTypes } = require("sequelize");
 const db = require("../config/database/db");
 const Movies = require('./movie');
-const Theater_clusters = require('./theater_clusters');
+const Theater = require('./theater');
 
 const Showtimes = db.define("showtimes", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
+    allowNull: false
   },
   movie_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    primaryKey: true,
   },
-  theater_cluster_id: {
+  theater_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    primaryKey: true,
   },
   date: {
     type: DataTypes.DATE,
   },
-  start: {
+  start_time: {
     type: DataTypes.TIME,
   },
-  end: {
+  end_time: {
     type: DataTypes.TIME,
   },
   price: {
@@ -40,9 +39,9 @@ Movies.hasMany(Showtimes, {
 Showtimes.belongsTo(Movies, {foreignKey: 'movie_id'});
 
 //foreign key between table shotimes and theater
-Theater_clusters.hasMany(Showtimes, {
-  foreignKey: 'theater_cluster_id',
+Theater.hasMany(Showtimes, {
+  foreignKey: 'theater_id',
 });
-Showtimes.belongsTo(Theater_clusters, {foreignKey: 'theater_cluster_id'});
+Showtimes.belongsTo(Theater, {foreignKey: 'theater_id'});
 
 module.exports = Showtimes;
