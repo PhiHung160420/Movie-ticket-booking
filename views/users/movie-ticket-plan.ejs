@@ -83,12 +83,12 @@
 <!-- ==========Header-Section========== -->
 
 <!-- ==========Window-Warning-Section========== -->
-<section class="window-warning inActive">
+<section class="window-warning inActive" id="windown-warning">
     <div class="lay"></div>
-    <div class="warning-item">
-        <h6 class="subtitle">Welcome! </h6>
-        <h4 class="title">Select Your Seats</h4>
-        <div class="thumb">
+    <div class="warning-item" id="warning-item">
+        <h6 class="subtitle">Xin chào</h6>
+        <h4 class="title">Hãy tiếp tục chọn ghế</h4>
+        <div class="thumb" id="thumb">
             <img src="/user/images/movie/seat-plan.png" alt="movie">
         </div>
         <a href="/user/movie-seat-plan/" class="custom-button seatPlanButton">Chọn ghế<i
@@ -97,8 +97,20 @@
 </section>
 <!-- ==========Window-Warning-Section========== -->
 
+<!-- ==========Custom-Window-Warning-Section========== -->
+<section class="custom-windown-warning inActive" id="custom-windown-warning">
+    <div class="lay"></div>
+    <div class="custom-warning-item" id="custom-warning-item">
+        <h6 class="subtitle"></h6>
+        <h4 class="title"></h4>
+        <a href="/user/movie-ticket-plan" class="custom-button continueButton">Tiếp tục<i
+                class="fas fa-angle-right"></i></a> 
+    </div>
+</section>
+<!-- ==========Custom-Window-Warning-Section========== -->
+
 <!-- ==========Banner-Section========== -->
-<section class="details-banner hero-area bg_img" data-background="/user/images/banner/banner03.jpg">
+<section class="details-banner hero-area bg_img" data-background="ass/user/images/banner/banner03.jpg">
     <div class="container">
         <div class="details-banner-wrapper">
             <div class="details-banner-content">
@@ -112,7 +124,7 @@
 <!-- ==========Book-Section========== -->
 <section class="book-section bg-one">
     <div class="container">
-        <form action="/user/movie-ticket-plan" class="ticket-search-form two" method="POST">
+        <form class="ticket-search-form two" id="form_search_ajax">
             <div class="form-group">
                 <div class="thumb">
                     <img src="/user/images/ticket/cinema.png" alt="ticket">
@@ -144,10 +156,8 @@
                     <option value=""> </option>
                 </select>
             </div>
-            <button type="submit" class="custom-button btn-search">Tìm kiếm</button>
+            <button name="btn_search_showtimes" id="btn_search_showtimes" class="custom-button btn-search">Tìm kiếm</button>
         </form>
-        <section id="notification" class="notification" class="window-warning" style="display: none;" >           
-        </section> 
     </div>
 </section>
 <!-- ==========Book-Section========== -->
@@ -157,8 +167,25 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-12 mb-5 mb-lg-0">
+                <ul class="seat-plan-wrapper bg-five" id="set_plan_wrapper_ajax" style="display: none;">
+                    <li>
+                        <div class="movie-name">
+                            <div class="icons">
+                                <i class="far fa-heart"></i>
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <a href="#0" class="name" id="movie_search_ajax"></a>
+                            <div class="location-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                        </div>
+                        <div class="movie-schedule" id="movie_schedule_ajax">
+                            <div class="item"></div>
+                        </div>
+                    </li>
+                </ul>
                 <% if(listShowTimes) {%>
-                    <ul class="seat-plan-wrapper bg-five">
+                    <ul class="seat-plan-wrapper bg-five" id="seat_plan_wrapper">
                         <li>
                             <div class="movie-name">
                                 <div class="icons">
@@ -173,9 +200,9 @@
                                 </div>
                             </div>
                             <div class="movie-schedule">
-
-                                <% listShowTimes.map(showtime => { %>
-                                    <div class="item">
+                                <% listShowTimes.map(showtime => { %>                       
+                                    <div class="item" id="showtime_item">
+                                        <input type="hidden" value="<%= showtime.id%>"/>
                                         <%= moment(showtime.start_time, "HH:mm:ss").format("HH:mm") %>
                                             -
                                             <%= moment(showtime.end_time, "HH:mm:ss").format("HH:mm") %>
@@ -183,7 +210,6 @@
                                     <% }) %>
                             </div>
                         </li>
-
                     </ul>
                     <% } else if(errors.length > 0){ %>
                         <section class="window-warning">

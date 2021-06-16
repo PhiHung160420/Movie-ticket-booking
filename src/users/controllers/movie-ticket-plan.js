@@ -14,9 +14,6 @@ const User = require('../../models/user');
 exports.getShowTimes = asyncHandler(async (req, res) => {
     res.locals.moment = moment;
 
-    //lấy danh sách các suất chiếu
-    const {getListShowtimes} = req;
-
     //lấy danh sách các phim
     res.locals.listMovies = await Movies.findAll({
         attributes: [
@@ -24,14 +21,6 @@ exports.getShowTimes = asyncHandler(async (req, res) => {
             'id'
         ]
     });
-
-    if(getListShowtimes)
-    {
-        res.locals.listShowTimes = getListShowtimes;
-    }
-    else {
-        res.locals.listShowTimes = null;
-    }
 
     res.render("users/movie-ticket-plan");
 });
@@ -85,12 +74,14 @@ exports.filterDate = asyncHandler(async (req, res) => {
 //lấy dữ liệu từ post và xử lý
 exports.postShowTimes = asyncHandler(async (req, res) => {
     res.locals.moment = moment;
+
     const { select_movie, select_theater_cluster, select_date } = req.body;
 
     //kiểm tra nếu không tồn tại dữ liệu
     if(!select_movie || !select_theater_cluster || !select_date){
-        req.flash('info', '')
-        res.redirect('/user/movie-ticket-plan');
+        res.locals.listShowTimes = null;
+        req.flash('info', 'Hãy chọn đầy đủ các thông tin');
+        res.redirect('/user/');
     }
 
     //lấy danh sách các rạp theo cụm rạp
@@ -152,6 +143,84 @@ exports.postShowTimes = asyncHandler(async (req, res) => {
     else {
         res.locals.listShowTimes = null;
         req.flash('info', 'Phim bạn chọn tạm thời không còn suất chiếu. Xin vui lòng chọn phim khác')
+        res.redirect('/user/');
+    }
+});
+
+// ajax search showtimes
+exports.ajaxSearchShowtimes = asyncHandler(async (req, res) => {
+    res.locals.moment = moment;
+    res.locals.listShowTimes = null;
+    
+    const select_movie = req.body.select_movie;
+    const select_cluster = req.body.select_cluster;
+    const select_date = req.body.select_date;
+
+    console.log('movie_selected: ' + select_movie);
+    console.log('cluster_selected: ' + select_cluster);
+    console.log('date_selected: ' + select_date);
+
+    //kiểm tra nếu không tồn tại dữ liệu
+    if(!select_movie || !select_cluster || !select_date){
+        req.flash('info', '')
         res.redirect('/user/movie-ticket-plan');
     }
+
+    //lấy danh sách các rạp theo cụm rạp
+    const getListTheater = await Theater.findAll({
+        where: {
+            theater_cluster_id: select_cluster
+        },
+        attributes: ['id', 'name']
+    });
+
+    //bỏ danh sách các rạp vào list
+    let listTheater = [];
+    getListTheater.forEach(item => {
+        listTheater.push(item.id);
+    });
+
+    const showtimesList = await Showtimes.findAll({
+        attributes: [
+            'id',
+            'movie_id',
+            'theater_id',
+            'date',
+            'start_time', 
+            'end_time',
+        ],
+        include: [
+            {
+                model: Movies,
+                attributes: ['name']
+            },
+            {
+                model: Theater,
+                include: [
+                    {
+                        model: Theater_clusters,
+                        attributes: ['id', 'name']
+                    }
+                ]
+            }
+        ],
+        where: {
+            [Op.and]: [
+                { movie_id: select_movie },
+                { theater_id: listTheater},
+                { date: select_date }
+            ]
+        },
+        order: [
+            ['start_time', 'asc'],
+            ['end_time', 'asc']
+         ]
+    });
+
+    showtimesList.forEach((item) => {
+        item.start_time = moment(item.start_time, "HH:mm:ss").format("HH:mm"),
+        item.end_time = moment(item.end_time, "HH:mm:ss").format("HH:mm")
+    });
+
+    return res.status(200).json(showtimesList);
 });
