@@ -3,6 +3,7 @@ const TheaterClusters = require('../../models/theater_clusters');
 //INDEX
 exports.getIndex = async(req, res, next) => {
     res.locals.TheaterList = await Theater.findAll({order: [['id', 'ASC']]});
+    res.locals.TheaterClusters = await TheaterClusters.findAll({order: [['id', 'ASC']]});
     res.render("admin/theater/index");
 };
 exports.getAdd = (req, res, next) => {
