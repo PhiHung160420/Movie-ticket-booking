@@ -2,11 +2,21 @@ const Theater = require('../../models/theater');
 
 //INDEX
 exports.getIndex = async(req, res, next) => {
-    res.locals.TheaterList = await Theater.findAll({order: [['id', 'ASC']]});
-    res.render("admin/theater/index");
+    if(req.session.user_role == true) {
+        res.locals.TheaterList = await Theater.findAll({order: [['id', 'ASC']]});
+        res.render("admin/theater/index");
+    }
+    else {
+        res.redirect("/user");
+    }
 };
 exports.getAdd = (req, res, next) => {
-    res.render("admin/theater/add");
+    if(req.session.user_role == true) {
+        res.render("admin/theater/add");
+    }
+    else {
+        res.redirect("/user");
+    }
 }
 
 exports.postAdd = async (req, res, next) => {
@@ -39,16 +49,21 @@ exports.postAdd = async (req, res, next) => {
 
 //DETAIL
 exports.getDetail = async (req, res, next) => {
-    try {
-        const { id } = req.params;
+    if(req.session.user_role == true) {
+        try {
+            const { id } = req.params;
 
-        const updateTheater = await Theater.findByPk(id);
-        if(!updateTheater) throw new Error('Rạp không tồn tại !');
+            const updateTheater = await Theater.findByPk(id);
+            if(!updateTheater) throw new Error('Rạp không tồn tại !');
 
-        res.locals.Theater = updateTheater;
-        res.render("admin/theater/detail");
-    } catch(e) {
-        res.redirect("/admin/theater");
+            res.locals.Theater = updateTheater;
+            res.render("admin/theater/detail");
+        } catch(e) {
+            res.redirect("/admin/theater");
+        }
+    }
+    else {
+        res.redirect("/user");
     }
 }
 
@@ -77,17 +92,22 @@ exports.postDetail = async (req, res, next) => {
 
 //DELETE
 exports.getDelete = async (req, res, next) => {
-    try {
-        const { id } = req.params;
+    if(req.session.user_role == true) {
+        try {
+            const { id } = req.params;
 
-        const deleteTheater = await Theater.findByPk(id);
-        if(!deleteTheater) throw new Error('Rạp không tồn tại !');
+            const deleteTheater = await Theater.findByPk(id);
+            if(!deleteTheater) throw new Error('Rạp không tồn tại !');
 
-        await deleteTheater.destroy();
-        req.session.toastMessage = { title: "Thành Công", msg: "Xóa rạp thành công!" };
-    } catch (e) {
-        res.session.toastMessage = { title: "Thất Bại", msg: "Đã có lỗi xảy ra, vui lòng kiểm tra lại dữ liệu!" };
-    } finally {
-        res.redirect("/admin/theater");
-    } 
+            await deleteTheater.destroy();
+            req.session.toastMessage = { title: "Thành Công", msg: "Xóa rạp thành công!" };
+        } catch (e) {
+            res.session.toastMessage = { title: "Thất Bại", msg: "Đã có lỗi xảy ra, vui lòng kiểm tra lại dữ liệu!" };
+        } finally {
+            res.redirect("/admin/theater");
+        } 
+    }
+    else {
+        res.redirect("/user");
+    }
 }

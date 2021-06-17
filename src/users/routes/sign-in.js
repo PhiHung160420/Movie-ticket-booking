@@ -46,6 +46,7 @@ router.post("/sign-in", asyncHandler(async(req, res)=>{
       if(user && bcrypt.compareSync(password, user.user_password))
       {
           req.session.user_id = user.user_id;
+          req.session.user_role = user.user_role;
           res.redirect("/user");
       }
       else

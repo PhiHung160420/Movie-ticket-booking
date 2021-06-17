@@ -49,12 +49,25 @@
                 <li>
                     <a href="#">Thành viên</a>
                     <ul class="submenu">
-                        <li>
-                            <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
-                        </li>
-                        <li>
-                            <a href="#">Vé của tôi</a>
-                        </li>
+                        <% if(currentUser != null && currentUser.user_role == true) { %>
+                            <li>
+                                <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
+                            </li>
+                            <li>
+                                <a href="#">Vé của tôi</a>
+                            </li>
+                            <li>
+                                <a href="/admin">Quản lý</a>
+                            </li>
+                            <% } else { %>
+                                <li>
+                                    <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
+                                </li>
+                                <li>
+                                    <a href="#">Vé của tôi</a>
+                                </li>
+                                
+                            <% } %>
                     </ul>
                 </li>
                 <li class="header-button pr-0">

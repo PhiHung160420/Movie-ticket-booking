@@ -1,7 +1,15 @@
 const router = require("express").Router();
 
 router.get('/', (req, res) => {
-    res.render("admin/index");
+    console.log(req.session.user_role);
+    if(req.session.user_role == true)
+    {
+        res.render("admin/index");
+    }
+    else
+    {
+        res.redirect("/user");
+    }
 });
 
 module.exports = router;
