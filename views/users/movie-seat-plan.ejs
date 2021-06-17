@@ -147,7 +147,7 @@
                             <li class="front-seat">
                                 <ul>
                                     <% for(let j = 1; j <= 4; j++) { 
-                                        const state = seatBookedList.find(s => s.vertical_address.charCodeAt(0) == i 
+                                        const state = bookedSeatList.find(s => s.vertical_address.charCodeAt(0) == i 
                                             && s.horizontal_address == j);
                                     %>
                                     <%  if(state) {  %>
@@ -166,7 +166,7 @@
                             <li class="front-seat">
                                 <ul>
                                     <% for(let j = 5; j <= horizontalSize - 4; j++) { 
-                                        const state = seatBookedList.find(s => s.vertical_address.charCodeAt(0) == i 
+                                        const state = bookedSeatList.find(s => s.vertical_address.charCodeAt(0) == i 
                                             && s.horizontal_address == j);
                                     %>
                                     <%  if(state) {  %>
@@ -185,7 +185,7 @@
                             <li class="front-seat">
                                 <ul>
                                     <% for(let j = horizontalSize - 3; j <= horizontalSize; j++) { 
-                                        const state = seatBookedList.find(s => s.vertical_address.charCodeAt(0) == i 
+                                        const state = bookedSeatList.find(s => s.vertical_address.charCodeAt(0) == i 
                                             && s.horizontal_address == j);
                                     %>
                                     <%  if(state) {  %>
@@ -217,8 +217,8 @@
                 <div class="proceed-to-book">
                     <div class="book-item">
                         <span>Ghế đã chọn:</span>
-                        <h3 class="title" id="selectedSeatList" ></h3>
-                        <input name="selectedSeatList" readonly hidden>
+                        <h3 class="title" id="currentSeatList" ></h3>
+                        <input name="currentSeatList" readonly hidden>
                     </div>
                     <div class="book-item">
                         <span>Tổng tiền</span>

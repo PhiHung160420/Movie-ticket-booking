@@ -150,37 +150,40 @@
                     </p>
                 </div>
             </div>
+            
             <div class="col-lg-4">
-                <div class="booking-summery bg-one">
-                    <h4 class="title">Thông Tin</h4>
-                    <ul>
-                        <li>
-                            <h6 class="subtitle">Girl From Nowwhere</h6>
-                            <span class="info">Vietnam - 2d</span>
-                        </li>
-                        <li>
-                            <h6 class="subtitle"><span>Rạp Cinestar Long Khánh</span></h6>
-                            <div class="info"><span>11:00, 19/05/2021</span></div>
-                        </li>
-                        <li>
-                            <h6 class="subtitle"><span>Phòng Chiếu 01</span></h6>
-                            <div class="info"><span>H9, H10</span></div>
-                        </li>
-                        <li>
-                            <h6 class="subtitle mb-0"><span>Giá vé</span><span>$150</span></h6>
-                        </li>
-                    </ul>
-                    <ul class="side-shape">
-                        <li>
-                            <h6 class="subtitle"><span>combos</span><span>$57</span></h6>
-                            <span class="info"><span>MILO COMBO</span></span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="proceed-area  text-center">
-                    <h6 class="subtitle"><span>Tổng tiền</span><span>$222</span></h6>
-                    <a href="#0" class="custom-button back-button">Thanh Toán</a>
-                </div>
+                <form method="POST" id="frmCheckout">
+                    <div class="booking-summery bg-one">
+                        <h4 class="title">Thông Tin</h4>
+                        <ul>
+                            <li>
+                                <h6 class="subtitle"><%= movieName %></h6>
+                                <span class="info"><%= theater.theater_kind %></span>
+                            </li>
+                            <li>
+                                <h6 class="subtitle"><span><%= theater.theater_cluster.theater_clusters_name %></span></h6>
+                                <div class="info"><span><%= showtime.start_time.substr(0, 5) %>, 19/05/2021</span></div>
+                            </li>
+                            <li>
+                                <h6 class="subtitle"><span><%= theater.theater_name %></span></h6>
+                                <div class="info"><span><%= currentSeatList.join(', ') %></span></div>
+                            </li>
+                            <li>
+                                <h6 class="subtitle mb-0"><span>Giá vé</span><span>$150</span></h6>
+                            </li>
+                        </ul>
+                        <ul class="side-shape">
+                            <li>
+                                <h6 class="subtitle"><span>combos</span><span>$57</span></h6>
+                                <span class="info"><span>MILO COMBO</span></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="proceed-area  text-center">
+                        <h6 class="subtitle"><span>Tổng tiền</span><span><%= totalPrice %></span></h6>
+                        <a id="submitCheckout" class="custom-button" style="cursor: pointer;">Thanh toán</a>
+                    </div>
+                </form>              
             </div>
         </div>
     </div>

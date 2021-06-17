@@ -10,7 +10,7 @@ const User = require('../../models/user');
 const { Op } = require("sequelize");
 
 let showtime = null
-let seatBookedList = null;
+let bookedSeatList = null;
 
 exports.getSeat = async (req, res, next) => {
     const { showtimeId }= req.params;
@@ -22,10 +22,26 @@ exports.getSeat = async (req, res, next) => {
         }
     }); 
 
-    const theater = await Theater.findOne({
-        attributes: ['theater_horizontial_size', 'theater_vertical_size'],
+    const movie = await Movies.findOne({
+        attributes: ['movie_name'],
         where: {
-            theater_id: showtime.theater_id
+            movie_id: showtimeId
+        }
+    });
+
+    const theater = await Theater.findOne({
+        attributes: [
+            'theater_name', 
+            'theater_kind',
+            'theater_horizontial_size', 
+            'theater_vertical_size',
+        ],
+        include: [{
+            model: Theater_clusters,
+            attributes: ['theater_clusters_name']
+        }],
+        where: {
+            theater_id: showtime.theater_id,
         }
     });
 
@@ -42,7 +58,7 @@ exports.getSeat = async (req, res, next) => {
         bookingList.push(e.booking_id)
     });
 
-    seatBookedList = await Ticket.findAll({
+    bookedSeatList = await Ticket.findAll({
         attributes: ['ticket_seat_code', 'horizontal_address', 'vertical_address'],
         where: {
             ticket_booking_id: {
@@ -54,23 +70,23 @@ exports.getSeat = async (req, res, next) => {
     res.locals.horizontalSize = theater.theater_horizontial_size;
     res.locals.verticalSize = theater.theater_vertical_size;
     res.locals.price = showtime.price;
-    res.locals.seatBookedList = seatBookedList;
+    res.locals.bookedSeatList = bookedSeatList;
     res.render("users/movie-seat-plan");
 };
 
 exports.postSeat = async (req, res, next) => {
     const { showtimeId } = req.params;
-    const userId = 1;
 
-    let selectedSeatList = JSON.parse(req.body.selectedSeatList);
+    let currentSeatList = JSON.parse(req.body.currentSeatList);
 
-    seatBookedList.forEach(e => {
-        const index = selectedSeatList.indexOf(e.ticket_seat_code);
+    bookedSeatList.forEach(e => {
+        const index = currentSeatList.indexOf(e.ticket_seat_code);
         if (index > -1) {
-            selectedSeatList.splice(index, 1);
-          }
+            currentSeatList.splice(index, 1);
+        }
     });
 
-    req.session.selectedSeatList = selectedSeatList;  
+    req.session.showtimeId = showtimeId;  
+    req.session.currentSeatList = currentSeatList;  
     res.redirect('/user/movie-checkout');
 };
