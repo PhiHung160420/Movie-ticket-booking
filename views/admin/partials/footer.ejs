@@ -36,17 +36,67 @@
       let date_start = $('#date_start_movies').val();
       let date_end = $('#date_end_movies').val();
       let select_movies = $("select[name=select_movies]").children("option:selected").val();
-      console.log(date_start);
-      console.log(date_end);
-      console.log(select_movies);
+      
       $.ajax({
           type: "POST",
           url: "/admin/statistic/movies",
-          data: {date_start: date_start, date_end: date_end, select_movies: select_movies},
+          data: {date_start, date_end, select_movies},
           dataType: "json",
           success: function(res){
-            $("#totalTicketMovies").text(res.ticketTotal);
-            $("#totalPriceMovies").text(res.priceTotal);
+            if(res.listLabels)
+            {
+              $("#js-chart-movies").removeAttr('data-hs-chartjs-options')   
+              let chart = $("#js-chart-movies").get(0).getContext("2d");          
+              let myBarChart = new Chart(chart, {
+                type: 'line',
+                data: {
+                    labels: res.listLabels,
+                    datasets: [{
+                      data: res.listTicket,
+                      label: 'Số vé bán được',
+                      fill: false,
+                      borderColor: '#e7eaf3',
+                      tension: 0.1
+                    },
+                    {
+                      data: res.listPrice,
+                      label: 'Doanh thu',
+                      fill: false,
+                      borderColor: 'rgb(75, 192, 192)',
+                      tension: 0.1
+                    }]
+                },               
+              });
+        
+              $("#totalTicketMovies").text(res.ticketTotal);
+              $("#totalPriceMovies").text(res.priceTotal);
+            }
+            else
+            {
+              let chart_ctx = $("#js-chart-movies").get(0).getContext("2d");  
+              let chart = new Chart(chart_ctx, {    
+                  type: "line",
+                  data: {
+                    labels: ["","",""],
+                    datasets: [{
+                      data: [0,0,0],
+                      label: 'Số vé bán được',
+                      fill: false,
+                      borderColor: '#e7eaf3',
+                      tension: 0.1
+                    },
+                    {
+                      data: [0,0,0],
+                      label: 'Doanh thu',
+                      fill: false,
+                      borderColor: 'rgb(75, 192, 192)',
+                      tension: 0.1
+                    }]
+                },  
+              });
+              $("#totalTicketMovies").text(res.ticketTotal);
+              $("#totalPriceMovies").text(res.priceTotal);
+            }
           },        
       });
     });
@@ -330,13 +380,6 @@
       }
     });
 
-    $('.js-datatable-filter').on('change', function() {
-      var $this = $(this),
-        elVal = $this.val(),
-        targetColumnIndex = $this.data('target-column-index');
-
-      datatable.column(targetColumnIndex).search(elVal).draw();
-    });
 
     $('#datatableSearch').on('mouseup', function (e) {
       var $input = $(this),
