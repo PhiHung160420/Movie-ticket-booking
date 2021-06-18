@@ -1,7 +1,7 @@
 const Movies = require('../../models/movie');
 const Showtimes = require("../../models/showtimes");
 const Theater = require("../../models/theater");
-const Theater_clusters = require("../../models/theater_clusters");
+const TheaterClusters = require("../../models/theater_clusters");
 const Booking = require('../../models/booking');
 const Ticket = require('../../models/ticket');
 const User = require('../../models/user');
@@ -15,37 +15,36 @@ exports.getSeat = async (req, res, next) => {
     const { showtimeId }= req.params;
 
     showtime = await Showtimes.findOne({
-        attributes: ['theater_id', 'price'],
         where: {
-            showtimes_id: showtimeId
+            id: showtimeId
         }
     }); 
 
     const movie = await Movies.findOne({
-        attributes: ['movie_name'],
+        attributes: ['name'],
         where: {
-            movie_id: showtimeId
+            id: showtime.movie_id
         }
     });
 
     const theater = await Theater.findOne({
         attributes: [
-            'theater_name', 
-            'theater_kind',
-            'theater_horizontial_size', 
-            'theater_vertical_size',
+            'name', 
+            'kind',
+            'horizontial_size', 
+            'vertical_size',
         ],
         include: [{
-            model: Theater_clusters,
-            attributes: ['theater_clusters_name']
+            model: TheaterClusters,
+            attributes: ['name']
         }],
         where: {
-            theater_id: showtime.theater_id,
+            id: showtime.theater_id,
         }
     });
 
     const booking = await Booking.findAll({
-        attributes: ['booking_id'],
+        attributes: ['id'],
         where: {
             showtimes_id: showtimeId
         }
@@ -54,21 +53,21 @@ exports.getSeat = async (req, res, next) => {
     const bookingList = [];
 
     booking.forEach(e => {
-        bookingList.push(e.booking_id)
+        bookingList.push(e.id)
     });
 
     bookedSeatList = await Ticket.findAll({
-        attributes: ['ticket_seat_code', 'horizontal_address', 'vertical_address'],
+        attributes: ['seat_code', 'horizontal_address', 'vertical_address'],
         where: {
-            ticket_booking_id: {
+            booking_id: {
                 [Op.in]: bookingList,
             }        
         }
     });
 
-    res.locals.horizontalSize = theater.theater_horizontial_size;
-    res.locals.verticalSize = theater.theater_vertical_size;
-    res.locals.price = showtime.price;
+    res.locals.movie = movie;
+    res.locals.theater = theater;
+    res.locals.showtime = showtime;
     res.locals.bookedSeatList = bookedSeatList;
     res.render("users/movie-seat-plan");
 };

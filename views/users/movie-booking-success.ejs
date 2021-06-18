@@ -94,7 +94,7 @@
                 <div class="author">
                     <h2 class="title"><%= movieName %></h2>
                     <div style="text-align: center; font-size: 20px; color: #31d7a9; margin-bottom: 10px;"> 
-                        <%= theater.theater_kind %> 
+                        <%= theater.kind %> 
                     </div>
                 </div>
                 <div class="speak-con-wrapper">
@@ -104,7 +104,7 @@
                                 <span class="up">
                                     Rạp:
                                     <a>
-                                        <%= theater.theater_cluster.theater_clusters_name %>
+                                        <%= theater.theater_cluster.name %>
                                     </a>
                                 </span>
                             </div>
@@ -115,7 +115,8 @@
                                 <span class="up"> 
                                     Ngày chiếu: 
                                     <a>
-                                        none, <%= showtime.start_time.substr(0, 5) %> ~ <%= showtime.end_time.substr(0, 5) %> 
+                                        <%= showtime.date.getDate() %>/<%= showtime.date.getMonth() + 1 %>/<%= showtime.date.getFullYear() %>, 
+                                        <%= showtime.start_time.substr(0, 5) %> ~ <%= showtime.end_time.substr(0, 5) %> 
                                     </a>      
                                 </span>
                             </div>
@@ -124,7 +125,7 @@
                         <div class="item">
                             <div class="item-content">
                                 <span class="up">Phòng chiếu: 
-                                    <a> <%= theater.theater_name %> </a>
+                                    <a> <%= theater.name %> </a>
                                 </span>
                             </div>
                         </div>
@@ -135,9 +136,9 @@
                                     <%
                                         for(let i = 0; i < seatList.length; i++) {
                                             if (i == seatList.length - 1) { %>
-                                                <a> <%= seatList[i].ticket_seat_code; %> </a>
+                                                <a> <%= seatList[i].seat_code; %> </a>
                                             <% } else { %>
-                                                <a> <%= seatList[i].ticket_seat_code + ', ' %> </a>
+                                                <a> <%= seatList[i].seat_code + ', ' %> </a>
                                         <% } }
                                     %>
                                     <a> </a>

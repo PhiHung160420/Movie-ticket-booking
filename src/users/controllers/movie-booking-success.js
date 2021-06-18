@@ -1,7 +1,7 @@
 const Movies = require('../../models/movie');
 const Showtimes = require("../../models/showtimes");
 const Theater = require("../../models/theater");
-const Theater_clusters = require("../../models/theater_clusters");
+const TheaterClusters = require("../../models/theater_clusters");
 const Booking = require('../../models/booking');
 const Ticket = require('../../models/ticket');
 const User = require('../../models/user');
@@ -15,48 +15,48 @@ exports.getBookingSuccess = async (req, res, next) => {
     const booking = await Booking.findOne({   
         attributes: ['showtimes_id'],     
         where: {
-            booking_id: booking_id
+            id: booking_id
         }
     });
     
     const showtime = await Showtimes.findOne({
         where: {
-            showtimes_id: booking.showtimes_id
+            id: booking.showtimes_id
         }
     });
 
     const movie = await Movies.findOne({
-        attributes: ['movie_name'], 
+        attributes: ['name'], 
         where: {
-            movie_id: showtime.movie_id
+            id: showtime.movie_id
         }
     });
 
     const theater = await Theater.findOne({
         attributes: [
-            'theater_name', 
-            'theater_kind'
+            'name', 
+            'kind'
         ],
         include: [{
-            model: Theater_clusters,
-            attributes: ['theater_clusters_name']
+            model: TheaterClusters,
+            attributes: ['name']
         }],
         where: {
-            theater_id: showtime.theater_id,
+            id: showtime.theater_id,
         }
     });
 
     const seatList = await Ticket.findAll({
-        attributes: ['ticket_seat_code'],
+        attributes: ['seat_code'],
         where: {
-            ticket_booking_id: booking_id
+            booking_id: booking_id
         }
     });
 
     const dataQRCode = {
         userId: "1",
         bookingId: booking_id,
-        showtimeId: showtime.showtimes_id,
+        showtimeId: showtime.id,
     }
 
     const momoQRCode = "https://test-payment.momo.vn/pay/store/MOMOKFA420210617-2106171443298352528f?a=10000&b=B001221&s=683aeb44452a938eb8e8550ebf888da90972c6d08097517956bfff7159d8358f";
@@ -68,7 +68,7 @@ exports.getBookingSuccess = async (req, res, next) => {
     res.locals.qrCode = qrCode;
     res.locals.showtime = showtime;
     res.locals.theater = theater;
-    res.locals.movieName = movie.movie_name;
+    res.locals.movieName = movie.name;
     res.locals.seatList = seatList;
     res.render("users/movie-booking-success");
 };
