@@ -84,7 +84,6 @@
 
 <!-- ==========Banner-Section========== -->
 <section class="banner-section">
-    <div class="banner-bg bg_img bg-fixed" data-background="/user/images/banner/"></div>
     <div class="poster-cinema">
         <img class="poster-cinema-img" src="/user/images/poster/uu-dai-cinema.jpg" alt="sidebar">
     </div>
@@ -94,7 +93,7 @@
 <!-- ==========Ticket-Search========== -->
 <section class="search-ticket-section pt-lg-0">
     <div class="container">
-        <div class="search-tab bg_img" data-background="/user/images/ticket/ticket-bg01.jpg">
+        <div class="search-tab bg_img">
             <div class="row align-items-center mb--20">
                 <div class="col-lg-6 mb-20">
                     <div class="search-ticket-header">
@@ -111,13 +110,12 @@
                                 <img src="/user/images/ticket/cinema.png" alt="ticket">
                             </div>
                             <span class="type">Chọn phim</span>
-                            <select class="select-bar" name="select_movie_name">
+                            <select class="select-bar" name="select_movie">
+                                <option value=""></option>
                                 <% if(listMovies) {%>
                                     <% listMovies.map(movie => { %>
-                                <option value="<%= movie.name %>"><%= movie.name %></option>
-                                <% })} else { %>
-                                    <option value="dhaka"></option>
-                                    <% } %>
+                                <option value="<%= movie.id %>"><%= movie.name %></option>
+                                <% })} %>
                             </select>
                         </div>
                         <div class="form-group">
@@ -125,13 +123,8 @@
                                 <img src="/user/images/ticket/city.png" alt="ticket">
                             </div>
                             <span class="type">Chọn rạp</span>
-                            <select class="select-bar" name="select_theater_cluster">
-                                <% if(listTheaterClusters) {%>
-                                    <% listTheaterClusters.map(theater_cluster => { %>
-                                        <option value="<%= theater_cluster.name %>"><%= theater_cluster.name %></option>
-                                <% })} else { %>        
-                                    <option value="Venus">Venus</option>
-                                    <% } %>           
+                            <select disabled class="select-bar" name="select_theater_cluster">
+                                <option value=""></option>       
                             </select>
                         </div>
                         <div class="form-group">
@@ -139,20 +132,25 @@
                                 <img src="/user/images/ticket/date.png" alt="ticket">
                             </div>
                             <span class="type">Chọn ngày</span>
-                            <select class="select-bar" name="select_date">
-                                <% if(listDate) {%>
-                                    <% listDate.map(date => { %>
-                                        <option value="<%= moment(date.schedule_date).format( 'DD-MM-YYYY') %>"><%= moment(date.schedule_date).format( 'DD-MM-YYYY') %></option>
-                                <% })} else { %>
-                                    <option value="20-10-2020"></option>
-                                    <% } %>
+                            <select disabled class="select-bar" name="select_date">
+                                <option value=""></option>
                             </select>
                         </div>
-                        <button type="submit" class="custom-button btn-search">Đặt vé</button>
+                        <button type="submit" class="custom-button btn-search" id="btn_search">Đặt vé</button>
                     </form>
                 </div>
             </div>
         </div>
+        <% if(errors.length > 0){ %>
+            <section class="window-warning">
+                <div class="lay"></div>
+                <div class="warning-item">
+                    <h5 class="title"><%= errors[0] %></h5>
+                    <a href="/user/" class="custom-button seatPlanButton">Tiếp tục<i
+                        class="fas fa-angle-right"></i></a>
+                </div>  
+            </section>   
+        <% } %>
     </div>
 </section>
 <!-- ==========Ticket-Search========== -->
@@ -245,7 +243,11 @@
                                     <div class="movie-grid">
                                         <div class="movie-thumb c-thumb">
                                             <a href="/user/movie-detail/<%= movie.id %>">
-                                                <img src="/user/images/movie/movie01.jpg" alt="movie">
+                                                <% if(movie.poster) { %>
+                                                    <img src="data:image/png;base64,<%= movie.poster %>" alt="movie">
+                                                <% } else {%>
+                                                    <img src="/user/images/movie/movie01.jpg" alt="movie">
+                                                <% } %>
                                             </a>
                                         </div>
                                         <div class="movie-content bg-one">
@@ -320,7 +322,11 @@
                                     <div class="movie-grid">
                                         <div class="movie-thumb c-thumb">
                                             <a href="/user/movie-detail/<%= movie.id %>">
-                                                <img src="/user/images/movie/movie03.jpg" alt="movie">
+                                                <% if(movie.poster) { %>
+                                                    <img src="data:image/png;base64,<%= movie.poster %>" alt="movie">
+                                                <% } else {%>
+                                                    <img src="/user/images/movie/movie01.jpg" alt="movie">
+                                                <% } %>
                                             </a>
                                         </div>
                                         <div class="movie-content bg-one">
@@ -395,7 +401,11 @@
                                     <div class="movie-grid">
                                         <div class="movie-thumb c-thumb">
                                             <a href="/user/movie-detail/<%= movie.id %>">
-                                                <img src="/user/images/movie/movie01.jpg" alt="movie">
+                                                <% if(movie.poster) { %>
+                                                    <img src="data:image/png;base64,<%= movie.poster %>" alt="movie">
+                                                <% } else {%>
+                                                    <img src="/user/images/movie/movie01.jpg" alt="movie">
+                                                <% } %>
                                             </a>
                                         </div>
                                         <div class="movie-content bg-one">

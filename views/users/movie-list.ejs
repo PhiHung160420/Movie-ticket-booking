@@ -211,7 +211,11 @@
                                         <div class="movie-grid">
                                             <div class="movie-thumb c-thumb">
                                                 <a href="/user/movie-detail/<%= movie.id %>">
-                                                    <img src="/user/images/movie/movie01.jpg" alt="movie">
+                                                    <% if(movie.poster) { %>
+                                                        <img src="data:image/png;base64,<%= movie.poster %>" alt="movie">
+                                                    <% } else {%>
+                                                        <img src="/user/images/movie/movie01.jpg" alt="movie">
+                                                    <% } %>
                                                 </a>
                                             </div>
                                             <div class="movie-content bg-one">
@@ -245,9 +249,15 @@
                                 <% movies.forEach(function(movie) { %>
                                     <div class="movie-list">
                                         <div class="movie-thumb c-thumb">
-                                            <a href="/user/movie-detail/<%= movie.id %>" class="w-100 bg_img h-100" data-background="/user/images/movie/movie01.jpg">
-                                                <img class="d-sm-none" src="/user/images/movie/movie01.jpg" alt="movie">
-                                            </a>
+                                            <% if(movie.poster) { %>
+                                                <a href="/user/movie-detail/<%= movie.id %>" class="w-100 bg_img h-100" data-background="data:image/png;base64,<%= movie.poster %>">
+                                                    <img class="d-sm-none" src="data:image/png;base64,<%= movie.poster %>" alt="movie">
+                                                </a>
+                                            <% } else {%>
+                                                <a href="/user/movie-detail/<%= movie.id %>" class="w-100 bg_img h-100" data-background="/user/images/movie/movie01.jpg">
+                                                    <img class="d-sm-none" src="/user/images/movie/movie01.jpg" alt="movie">
+                                                </a>
+                                            <% } %>
                                         </div>
                                         <div class="movie-content bg-one">
                                             <h5 class="title">
@@ -301,7 +311,7 @@
                                                         </a>
                                                     </div>
                                                     <div class="react-item">
-                                                        <a href="#0" class="popup-video">
+                                                        <a href="<%= movie.trailer %>" class="popup-video">
                                                             <div class="thumb">
                                                                 <img src="/user/images/icons/play-button.png" alt="icons">
                                                             </div>

@@ -1,7 +1,11 @@
 const Movies = require('../../models/movie');
 const Showtimes = require("../../models/showtimes");
 const Theater = require("../../models/theater");
+
+//const Theater_clusters = require("../../models/theater_clusters");
+
 const TheaterClusters = require("../../models/theater_clusters");
+
 const Booking = require('../../models/booking');
 const Ticket = require('../../models/ticket');
 const User = require('../../models/user');
