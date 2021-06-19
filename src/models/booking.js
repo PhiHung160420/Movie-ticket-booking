@@ -30,7 +30,7 @@ const Booking=db.define("booking",{
 User.hasMany(Booking, {foreignKey: "user_id"});
 Booking.belongsTo(User, {foreignKey: "user_id"});
 
-Showtimes.hasMany(Booking, {foreignKey: "user_id"});
+Showtimes.hasMany(Booking, {foreignKey: "showtimes_id"});
 Booking.belongsTo(Showtimes, {foreignKey: "showtimes_id"});
 
 module.exports = Booking;

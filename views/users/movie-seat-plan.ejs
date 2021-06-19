@@ -96,10 +96,13 @@
     <div class="container">
         <div class="details-banner-wrapper">
             <div class="details-banner-content style-two">
-                <h3 class="title">SpiderMan</h3>
+                <h3 class="title"> <%= movie.name %> </h3>
                 <div class="tags">
-                    <a href="#0">09:40</a>
-                    <a href="#0">2D</a>
+                    <a> <%= showtime.date.getDate() %>/<%= showtime.date.getMonth() + 1 %>/<%= showtime.date.getFullYear() %>, </a>
+                    <a> <%= showtime.start_time.substr(0, 5) %> ~ <%= showtime.end_time.substr(0, 5) %> </a>
+                    <br>
+                    <a> <%= theater.name %> - </a>
+                    <a> <%= theater.kind %> </a>
                 </div>
             </div>
         </div>
@@ -147,7 +150,7 @@
             <div class="screen-wrapper"> 
                 <ul class="seat-area">  
                     <%
-                        for(let i = 65; i <= 65 + verticalSize; i++) {
+                        for(let i = 65; i <= 65 + theater.vertical_size; i++) {
                             const verticalAddress = String.fromCharCode(i);
                     %>  
                     <li class="seat-line"> <!-- chạy vòng for theo chiều dọc -->  
@@ -156,7 +159,7 @@
                             <li class="front-seat">
                                 <ul>
                                     <% for(let j = 1; j <= 4; j++) { 
-                                        const state = seatBookedList.find(s => s.vertical_address.charCodeAt(0) == i 
+                                        const state = bookedSeatList.find(s => s.vertical_address.charCodeAt(0) == i 
                                             && s.horizontal_address == j);
                                     %>
                                     <%  if(state) {  %>
@@ -174,8 +177,8 @@
 
                             <li class="front-seat">
                                 <ul>
-                                    <% for(let j = 5; j <= horizontalSize - 4; j++) { 
-                                        const state = seatBookedList.find(s => s.vertical_address.charCodeAt(0) == i 
+                                    <% for(let j = 5; j <= theater.horizontial_size - 4; j++) { 
+                                        const state = bookedSeatList.find(s => s.vertical_address.charCodeAt(0) == i 
                                             && s.horizontal_address == j);
                                     %>
                                     <%  if(state) {  %>
@@ -193,8 +196,8 @@
 
                             <li class="front-seat">
                                 <ul>
-                                    <% for(let j = horizontalSize - 3; j <= horizontalSize; j++) { 
-                                        const state = seatBookedList.find(s => s.vertical_address.charCodeAt(0) == i 
+                                    <% for(let j = theater.horizontial_size - 3; j <= theater.horizontial_size; j++) { 
+                                        const state = bookedSeatList.find(s => s.vertical_address.charCodeAt(0) == i 
                                             && s.horizontal_address == j);
                                     %>
                                     <%  if(state) {  %>
@@ -219,15 +222,15 @@
        
         </div>
 
-        <input value="<%= price %>" id="price" readonly hidden>
+        <input value="<%= showtime.price %>" id="price" readonly hidden>
 
         <form method="POST" id="formSeatPlan">
             <div class="proceed-book bg_img" data-background="/user/images/movie/movie-bg-proceed.jpg">
                 <div class="proceed-to-book">
                     <div class="book-item">
                         <span>Ghế đã chọn:</span>
-                        <h3 class="title" id="selectedSeatList" ></h3>
-                        <input name="selectedSeatList" readonly hidden>
+                        <h3 class="title" id="currentSeatList" ></h3>
+                        <input name="currentSeatList" readonly hidden>
                     </div>
                     <div class="book-item">
                         <span>Tổng tiền</span>
