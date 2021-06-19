@@ -128,9 +128,9 @@ app.use("/admin", require("./src/admin/routes/theater"));
 app.use("/admin", require("./src/admin/routes/shows"));
 
 //use router for user
-//app.use("/user", getMiddlewares);
 app.use("/user", require("./src/users/routes/home"));
 app.use("/user", require("./src/users/routes/movie-checkout"));
+app.use("/user", require("./src/users/routes/movie-booking-success"));
 app.use("/user", require("./src/users/routes/movie-customer"));
 app.use("/user", require("./src/users/routes/movie-detail"));
 app.use("/user", require("./src/users/routes/movie-list"));

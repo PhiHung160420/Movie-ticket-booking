@@ -100,71 +100,31 @@
     <div class="container">
         <div class="details-banner-wrapper">
             <div class="details-banner-content style-two">
-                <h3 class="title">Venus</h3>
-                <div class="tags">
-                    <a href="#0">City Walk</a>
-                    <a href="#0">English - 2D</a>
-                </div>
+                <h3 class="title">THANH TOÁN</h3>
             </div>
         </div>
     </div>
 </section>
 <!-- ==========Banner-Section========== -->
 
-<!-- ==========Page-Title========== -->
-<section class="page-title bg-one">
-    <div class="container">
-        <div class="page-title-area">
-            <div class="item md-order-1">
-                <a href="/user/movie-ticket-plan" class="custom-button back-button">
-                    <i class="flaticon-double-right-arrows-angles"></i>back
-                </a>
-            </div>
-            <div class="item date-item">
-                <span class="date">MON, SEP 09 2020</span>
-                <select class="select-bar">
-                    <option value="sc1">09:40</option>
-                    <option value="sc2">13:45</option>
-                    <option value="sc3">15:45</option>
-                    <option value="sc4">19:50</option>
-                </select>
-            </div>
-            <div class="item">
-                <h5 class="title">05:00</h5>
-                <p>Mins Left</p>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- ==========Page-Title========== -->
-
 <!-- ==========Movie-Section========== -->
-<div class="movie-facility padding-bottom padding-top">
+<div class="movie-facility padding-bottom">
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
-                <div class="checkout-widget d-flex flex-wrap align-items-center justify-cotent-between">
-                    <div class="title-area">
-                        <h5 class="title">Bạn đã có tài khoản chưa ?</h5>
-                        <p>Nếu chưa hãy đăng ký để tiến hành thanh toán</p>
-                    </div>
-                    <a href="/user/sign-up" class="sign-in-area">
-                        <i class="fas fa-user"></i><span>Đăng ký</span>
-                    </a>
-                </div>
                 <div class="checkout-widget checkout-contact">
-                    <h5 class="title">Mã khuyến mãi</h5>
+                    <h5 class="title">Mã Khuyến Mãi</h5>
                     <form class="checkout-contact-form">
                         <div class="form-group">
-                            <input type="text" placeholder="Please enter promo code">
+                            <input type="text" placeholder="Vui lòng nhập mã khuyến mãi">
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Verify" class="custom-button">
+                            <input type="submit" value="Xác Nhận" class="custom-button">
                         </div>
                     </form>
                 </div>
                 <div class="checkout-widget checkout-card mb-0">
-                    <h5 class="title">Hình thức thanh toán</h5>
+                    <h5 class="title">Hình Thức Thanh Toán</h5>
                     <ul class="payment-option">
                         <li class="active">
                             <a href="#0">
@@ -206,60 +166,47 @@
                             <label for="card4">MÃ SỐ XÁC MINH</label>
                             <input type="text" id="card4" placeholder="CVV">
                         </div>
-                        <div class="form-group check-group">
-                            <input id="card5" type="checkbox" checked>
-                            <label for="card5">
-                                <span class="title">QuickPay</span>
-                                <span class="info">Save this card information to my Boleto account and make faster
-                                    payments.</span>
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" class="custom-button" value="Thanh toán">
-                        </div>
                     </form>
                     <p class="notice">
-                        By Clicking "Make Payment" you agree to the <a href="#0">terms and conditions</a>
+                        Khi nhấp vào "Thanh Toán" thì bạn đã chấp nhận<a href="#0">các điều khoản và điệu kiện</a> của chúng tôi
                     </p>
                 </div>
             </div>
+            
             <div class="col-lg-4">
-                <div class="booking-summery bg-one">
-                    <h4 class="title">Thanh toán</h4>
-                    <ul>
-                        <li>
-                            <h6 class="subtitle">Venus</h6>
-                            <span class="info">English-2d</span>
-                        </li>
-                        <li>
-                            <h6 class="subtitle"><span>City Walk</span><span>02</span></h6>
-                            <div class="info"><span>10 SEP TUE, 11:00 PM</span> <span>Tickets</span></div>
-                        </li>
-                        <li>
-                            <h6 class="subtitle mb-0"><span>Giá vé</span><span>$150</span></h6>
-                        </li>
-                    </ul>
-                    <ul class="side-shape">
-                        <li>
-                            <h6 class="subtitle"><span>combos</span><span>$57</span></h6>
-                            <span class="info"><span>2 Nachos Combo</span></span>
-                        </li>
-                        <li>
-                            <h6 class="subtitle"><span>food & bevarage</span></h6>
-                        </li>
-                    </ul>
-                    <ul>
-                        <li>
-                            <span class="info"><span>Tổng cộng</span><span>$207</span></span>
-                            <span class="info"><span>Thuế</span><span>$15</span></span>
-                            <span class="info"><span>Ưu đãi</span><span>$15</span></span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="proceed-area  text-center">
-                    <h6 class="subtitle"><span>Tổng tiền</span><span>$222</span></h6>
-                    <a href="#0" class="custom-button back-button">Xác nhận</a>
-                </div>
+                <form method="POST" id="frmCheckout">
+                    <div class="booking-summery bg-one">
+                        <h4 class="title">Thông Tin</h4>
+                        <ul>
+                            <li>
+                                <h6 class="subtitle"><%= currentShowtime.movieName %></h6>
+                                <span class="info"><%= currentShowtime.theater.kind %></span>
+                            </li>
+                            <li>
+                                <h6 class="subtitle"><span><%= currentShowtime.theater.theater_cluster.name %></span></h6>
+                                <div class="info"><span><%= currentShowtime.showtime.date.getDate() %>/<%= currentShowtime.showtime.date.getMonth() + 1 %>/<%= currentShowtime.showtime.date.getFullYear() %>
+                                    , <%= currentShowtime.showtime.start_time.substr(0, 5) %> ~ <%= currentShowtime.showtime.end_time.substr(0, 5) %> </span></div>
+                            </li>
+                            <li>
+                                <h6 class="subtitle"><span><%= currentShowtime.theater.name %></span></h6>
+                                <div class="info"><span><%= currentSeatList.join(', ') %></span></div>
+                            </li>
+                            <li>
+                                <h6 class="subtitle mb-0"><span>Giá vé</span><span><%= currentShowtime.showtime.price %></span></h6>
+                            </li>
+                        </ul>
+                        <ul class="side-shape">
+                            <li>
+                                <h6 class="subtitle"><span>combos</span><span>$57</span></h6>
+                                <span class="info"><span>MILO COMBO</span></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="proceed-area  text-center">
+                        <h6 class="subtitle"><span>Tổng tiền</span><span><%= currentShowtime.totalPrice %></span></h6>
+                        <a id="submitCheckout" class="custom-button" style="cursor: pointer;">Thanh toán</a>
+                    </div>
+                </form>              
             </div>
         </div>
     </div>
