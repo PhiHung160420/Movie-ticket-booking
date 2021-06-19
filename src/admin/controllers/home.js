@@ -11,15 +11,23 @@ const Theater = require("../../models/theater");
 
 exports.getIndex = asyncHandler(async (req, res) => {
   //get list theater_clusters
-  res.locals.lstTheaterCluster = await Theater_clusters.findAll({
-    attributes: [[db.fn("DISTINCT", db.col("name")), "name"], "id"],
-  });
 
-  //get list movies
-  res.locals.lstMovies = await Movies.findAll({
-    attributes: [[db.fn("DISTINCT", db.col("name")), "name"], "id"],
-  });
-  res.render("admin/index");
+  if(req.session.user_role == true)
+  {
+    res.locals.lstTheaterCluster = await Theater_clusters.findAll({
+      attributes: [[db.fn("DISTINCT", db.col("name")), "name"], "id"],
+    });
+    
+    //get list movies
+    res.locals.lstMovies = await Movies.findAll({
+      attributes: [[db.fn("DISTINCT", db.col("name")), "name"], "id"],
+    });
+    res.render("admin/index");
+  }
+  else
+  {
+    res.redirect("/user");
+  }
 });
 
 //post statistics theater cluster
