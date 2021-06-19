@@ -723,9 +723,13 @@
       $("#formSeatPlan").submit();
     });
 
+<<<<<<< HEAD
+})(jQuery);
+=======
     // submit form checkout
     $("#submitCheckout").on("click", function (e) {
       $("#frmCheckout").submit();
     });
 
 })(jQuery);
+>>>>>>> 9ee929c4e78d7508addb1d6c72746da8dfe5af62

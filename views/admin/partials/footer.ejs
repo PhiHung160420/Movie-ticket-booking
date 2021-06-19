@@ -10,6 +10,75 @@
 <!-- JS Plugins Init. -->
 <script>
   $(document).on('ready', function () {
+    //AJAX FOR STATISTICS
+    $('#btn_statis_cluster').on('click', function() {
+      let date_start = $('#date_start_cluster').val();
+      let date_end = $('#date_end_cluster').val();
+      let select_cluster = $("select[name=select_cluster]").children("option:selected").val();
+      $.ajax({
+          type: "POST",
+          url: "/admin/statistic/theater-cluster",
+          data: {date_start, date_end, select_cluster},
+          dataType: "json",
+          success: function(res){
+            if(res.listLabels)
+            {     
+              $("#js-chart-cluster").removeAttr('data-hs-chartjs-options')   
+              let chart = $("#js-chart-cluster").get(0).getContext("2d");          
+              let myBarChart = new Chart(chart, {
+                type: 'line',
+                data: {
+                    labels: res.listLabels,
+                    datasets: [{
+                      data: res.listTicket,
+                      label: 'Số vé bán được',
+                      fill: false,
+                      borderColor: '#e7eaf3',
+                      tension: 0.1
+                    },
+                    {
+                      data: res.listPrice,
+                      label: 'Doanh thu',
+                      fill: false,
+                      borderColor: 'rgb(75, 192, 192)',
+                      tension: 0.1
+                    }]
+                },               
+              });
+        
+              $("#totalTicketCluster").text(res.ticketTotal);
+              $("#totalPriceCluster").text(res.priceTotal);
+            }
+            else
+            {
+              let chart_ctx = $("#js-chart-cluster").get(0).getContext("2d");  
+              let chart = new Chart(chart_ctx, {    
+                  type: "line",
+                  data: {
+                    labels: ["","", ""],
+                    datasets: [{
+                      data: [0,0,0],
+                      label: 'Số vé bán được',
+                      fill: false,
+                      borderColor: '#e7eaf3',
+                      tension: 0.1
+                    },
+                    {
+                      data: [0,0,0],
+                      label: 'Doanh thu',
+                      fill: false,
+                      borderColor: 'rgb(75, 192, 192)',
+                      tension: 0.1
+                    }]
+                },  
+              });
+              $("#totalTicketCluster").text(res.ticketTotal);
+              $("#totalPriceCluster").text(res.priceTotal);
+            }
+          },        
+      });
+    });
+
     // ONLY DEV
     // =======================================================
     
@@ -112,19 +181,33 @@
     var start = moment();
     var end = moment();
 
-    function cb(start, end) {
-      $('#js-daterangepicker-predefined .js-daterangepicker-predefined-preview').html(start.format('MMM D') + ' - ' + end.format('MMM D, YYYY'));
+    function cbTheaterCluster(start, end) {
+      $('#js-daterangepicker-predefined-theater-cluster .js-daterangepicker-predefined-preview-theater-cluster').html(start.format('MMM D') + ' - ' + end.format('MMM D, YYYY'));
     }
 
-    $('#js-daterangepicker-predefined').daterangepicker({
+    function cbMovie(start, end) {
+      $('#js-daterangepicker-predefined-movie .js-daterangepicker-predefined-preview-movie').html(start.format('MMM D') + ' - ' + end.format('MMM D, YYYY'));
+    }
+
+    $('#js-daterangepicker-predefined-theater-cluster').daterangepicker({
       startDate: start,
       endDate: end,
       ranges: {
         'Today': [moment(), moment()]
       }
-    }, cb);
+    }, cbTheaterCluster);
 
-    cb(start, end);
+    cbTheaterCluster(start, end);
+
+    $('#js-daterangepicker-predefined-movie').daterangepicker({
+      startDate: start,
+      endDate: end,
+      ranges: {
+        'Today': [moment(), moment()]
+      }
+    }, cbMovie);
+
+    cbMovie(start, end);
 
     // INITIALIZATION OF DROPZONE FILE ATTACH MODULE
     // =======================================================
@@ -200,21 +283,53 @@
     var start = moment();
     var end = moment();
 
-    function cb(start, end) {
-      $('#js-daterangepicker-predefined .js-daterangepicker-predefined-preview').html(start.format('MMM D') + ' - ' + end.format('MMM D, YYYY'));
+    function cbTheaterCluster(start, end) {
+      var start_date = new Date(start);
+      var end_date = new Date(end);
+      $('#date_start_cluster').val(start_date);
+      $('#date_end_cluster').val(end_date);
+      if(start_date.getDate() === end_date.getDate())
+      {
+        $('#js-daterangepicker-predefined-theater-cluster .js-daterangepicker-predefined-preview-theater-cluster').html(start.format('DD-MM-YYYY'));
+      }
+      else
+      {
+        $('#js-daterangepicker-predefined-theater-cluster .js-daterangepicker-predefined-preview-theater-cluster').html(start.format('DD-MM-YYYY') + ' - ' + end.format('DD-MM-YYYY'));
+      }
     }
 
-    $('#js-daterangepicker-predefined').daterangepicker({
+    $('#js-daterangepicker-predefined-theater-cluster').daterangepicker({
       startDate: start,
       endDate: end,
       ranges: {
-        'Hôm Nay': [moment(), moment()],
-        
+        'Hôm Nay': [moment(), moment()],      
       }
-    }, cb);
+    }, cbTheaterCluster);
 
-    cb(start, end);
+    cbTheaterCluster(start, end);
 
+    function cbMovie(start, end) {
+      var start_date = new Date(start)
+      var end_date = new Date(end)
+      if(start_date.getDate() === end_date.getDate())
+      {
+        $('#js-daterangepicker-predefined-movie .js-daterangepicker-predefined-preview-movie').html(start.format('DD-MM-YYYY'));
+      }
+      else
+      {
+        $('#js-daterangepicker-predefined-movie .js-daterangepicker-predefined-preview-movie').html(start.format('DD-MM-YYYY') + ' - ' + end.format('DD-MM-YYYY'));
+      }
+    }
+
+    $('#js-daterangepicker-predefined-movie').daterangepicker({
+      startDate: start,
+      endDate: end,
+      ranges: {
+        'Hôm Nay': [moment(), moment()],      
+      }
+    }, cbMovie);
+
+    cbMovie(start, end);
     
     // INITIALIZATION OF DATATABLES
     // =======================================================
@@ -321,8 +436,6 @@
         toast();
       </script> 
   <%  } %>
-
-
 </body>
 
 </html>

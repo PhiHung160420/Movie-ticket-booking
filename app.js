@@ -8,8 +8,11 @@ const bodyParser = require("body-parser");
 
 const passport = require('passport');
 
+//get middlewares
+//user
 const authMiddlewares = require("./src/users/middlewares/auth");
-
+const getMiddlewares = require('./src/users/middlewares/middleware');
+//admin
 const setLayoutMiddleware = require("./src/admin/middlewares/set_layout");
 
 const flash = require('express-flash');
@@ -37,10 +40,9 @@ app.use(cookieSession({
 
 app.use(flash());
 
-//get middlewares 
-const getMiddlewares = require('./src/users/middlewares/middleware');
+//use middlewares 
+//user
 app.use(getMiddlewares);
-
 app.use(authMiddlewares);
 
 //express ejs-layouts
@@ -58,11 +60,10 @@ app.use(express.static(__dirname + "/public"));
 // app.use(bodyParser.urlencoded({  extended: false })); 
 // app.use(bodyParser.json());
 
-
 //use router for admin
 app.use("/admin", setLayoutMiddleware);
-app.use("/admin", require("./src/admin/routes/login"));
 app.use("/admin", require("./src/admin/routes/home"));
+app.use("/admin", require("./src/admin/routes/login"));
 app.use("/admin", theaterClustersRouter);
 app.use("/admin", theaterRouter);
 app.use("/admin", movieRouter);

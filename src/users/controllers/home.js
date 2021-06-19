@@ -18,17 +18,13 @@ exports.getMovies = asyncHandler(async (req, res) => {
     //list movie
     res.locals.listMovies = await Movies.findAll({
       attributes: [
-          [db.fn('DISTINCT', db.col('name')), 'name'],
-          'id'
-      ]
+          [db.fn('DISTINCT', db.col('name')), 'name'],'id']
     });
 
     //list theater cluster
     res.locals.listTheaterClusters = await Theater_clusters.findAll({
       attributes: [
-          [db.fn('DISTINCT', db.col('name')), 'name'],
-          'id'
-      ]
+          [db.fn('DISTINCT', db.col('name')), 'name'],'id']
     });
 
     //list showtime
