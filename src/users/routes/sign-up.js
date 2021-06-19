@@ -36,7 +36,7 @@ const transporter = nodemailer.createTransport({
 //validation schema
 
 router.post("/sign-up", asyncHandler(async(req, res) => {
-    console.log(req.body);
+    
     const { username, email, phonenumber, password, repassword } = req.body;
     
     let errors = null;
@@ -46,17 +46,28 @@ router.post("/sign-up", asyncHandler(async(req, res) => {
     if (!email) {
         errors = "Email không được để trống";
     }
+    const valphone = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+    if(!phonenumber.match(valphone)){
+        errors = "Số điện thoại không đúng định dạng";
+    }
     if (!phonenumber) {
         errors = "Số điện thoại không được để trống";
+    }
+    const phone = await User.findOne({where:{ 'user_phone': phonenumber }})
+    if(phone){
+        errors = "Số điện thoại đã được sử dụng";
+    }
+    if(password.length<6){
+        errors = "Mật khẩu phải có ít nhất 6 ký tự";
     }
     if (!password) {
         errors = "Mật khẩu không được để trống";
     }
     if (!repassword) {
-        errors = "Mật khẩu nhập lại không được để trống";
+        errors = "Mật khẩu xác nhận không được để trống";
     }
     if (password != repassword) {
-        errors = "Mật khẩu và mật khẩu nhập lại không khớp";
+        errors = "Mật khẩu và mật khẩu xác nhận không khớp";
     }
     const user = await User.findOne({where:{ 'user_email': email }})
     if (user){
@@ -119,15 +130,16 @@ router.post("/sign-up", asyncHandler(async(req, res) => {
 
 router.get("/verify-email", async(req, res) => {
     try{
-        const user = await User.findOne({ user_token: req.query.user_token });
+        const user = await User.findOne({where:{'user_token': req.query.token} });
+        
         if(!user)
         {
             return res.redirect("/user/sign-up");
         }
-        const userFind = await User.findAll();
-        const u = userFind[0];
-        u.user_verify = true;
-        u.save();
+        // const userFind = await User.findAll();
+        // const u = userFind[0];
+        user.user_verify = true;
+        user.save();
         const string = encodeURIComponent('Xác thực tài khoản thành công');
         res.redirect("/user/sign-in/?valid=" + string);
     }

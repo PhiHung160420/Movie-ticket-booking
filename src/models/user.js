@@ -10,13 +10,15 @@ const User=db.define(
       primaryKey: true,
       allowNull:false,
     },
+    user_facebookid: {
+      type: DataTypes.STRING,
+    },
     user_email: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     user_password: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     user_name: {
       type: DataTypes.STRING,
@@ -24,9 +26,16 @@ const User=db.define(
     },
     user_phone: {
       type: DataTypes.STRING,
-      allowNull:false,
+     
     },
     user_token: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    user_accessToken: {
+      type: DataTypes.STRING,
+    },
+    user_codereset:{
       type: DataTypes.STRING,
       allowNull: true
     },
@@ -52,6 +61,14 @@ User.findUserByEmail = async function (user_email) {
 
 User.finUserdById = async function (user_id) {
   return User.findByPk(user_id);  
+};
+
+User.findUserByFacebookId = async function (user_facebookid){
+  return User.findOne({
+    where:{
+      user_facebookid,
+    }
+  })
 };
 
 //sinh chuỗi hash
