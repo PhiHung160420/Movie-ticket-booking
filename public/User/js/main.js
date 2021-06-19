@@ -668,7 +668,7 @@
         strSeatList += selectedSeatList[i];
       }
     }
-    $("#selectedSeatList").text(strSeatList);
+    $("#currentSeatList").text(strSeatList);
   }
 
   function calTotalPrice() {
@@ -719,8 +719,13 @@
 
     // submit form seat-plan
     $("#submitSeatPlan").on("click", function (e) {
-      $("input[name^='selectedSeatList']").val(JSON.stringify(selectedSeatList));   
+      $("input[name^='currentSeatList']").val(JSON.stringify(selectedSeatList));   
       $("#formSeatPlan").submit();
+    });
+
+    // submit form checkout
+    $("#submitCheckout").on("click", function (e) {
+      $("#frmCheckout").submit();
     });
 
 })(jQuery);

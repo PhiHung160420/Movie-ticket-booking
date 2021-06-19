@@ -2166,7 +2166,7 @@ input[type="submit"] {
 
 .details-banner-content .tags span::after,
 .details-banner-content .tags a::after {
-    content: " ,";
+    
 }
 
 .details-banner-content .tags span:last-child::after,
@@ -2415,7 +2415,6 @@ input[type="submit"] {
 
 .details-banner.hero-area .details-banner-wrapper .details-banner-content.style-two .tags a::after,
 .details-banner.hero-area .details-banner-wrapper .details-banner-content.style-two .tags span::after {
-    content: "|";
     font-size: 18px;
 }
 
@@ -6941,8 +6940,6 @@ input[type="submit"] {
 
 .speaker-wrapper .speaker-thumb img {
     width: 100%;
-    mask: url(./img/team-shape02.png) no-repeat center center;
-    -webkit-mask: url(./img/team-shape02.png) no-repeat center center;
     mask-size: cover;
     -webkit-mask-size: cover;
     -webkit-transform: scale(1.02);
