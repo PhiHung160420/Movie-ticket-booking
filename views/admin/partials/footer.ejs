@@ -10,7 +10,8 @@
 <!-- JS Plugins Init. -->
 <script>
   $(document).on('ready', function () {
-    //AJAX FOR STATISTICS
+
+    // AJAX FOR STATISTICS THEATER CLUSTER
     $('#btn_statis_cluster').on('click', function() {
       let date_start = $('#date_start_cluster').val();
       let date_end = $('#date_end_cluster').val();
@@ -74,6 +75,76 @@
               });
               $("#totalTicketCluster").text(res.ticketTotal);
               $("#totalPriceCluster").text(res.priceTotal);
+            }
+          },        
+      });
+    });
+
+    // AJAX FOR STATISTICS MOVIES
+    $('#btn_statis_movies').on('click', function() {
+      let date_start = $('#date_start_movies').val();
+      let date_end = $('#date_end_movies').val();
+      let select_movies = $("select[name=select_movies]").children("option:selected").val();
+      
+      $.ajax({
+          type: "POST",
+          url: "/admin/statistic/movies",
+          data: {date_start, date_end, select_movies},
+          dataType: "json",
+          success: function(res){
+            if(res.listLabels)
+            {
+              $("#js-chart-movies").removeAttr('data-hs-chartjs-options')   
+              let chart = $("#js-chart-movies").get(0).getContext("2d");          
+              let myBarChart = new Chart(chart, {
+                type: 'line',
+                data: {
+                    labels: res.listLabels,
+                    datasets: [{
+                      data: res.listTicket,
+                      label: 'Số vé bán được',
+                      fill: false,
+                      borderColor: '#e7eaf3',
+                      tension: 0.1
+                    },
+                    {
+                      data: res.listPrice,
+                      label: 'Doanh thu',
+                      fill: false,
+                      borderColor: 'rgb(75, 192, 192)',
+                      tension: 0.1
+                    }]
+                },               
+              });
+        
+              $("#totalTicketMovies").text(res.ticketTotal);
+              $("#totalPriceMovies").text(res.priceTotal);
+            }
+            else
+            {
+              let chart_ctx = $("#js-chart-movies").get(0).getContext("2d");  
+              let chart = new Chart(chart_ctx, {    
+                  type: "line",
+                  data: {
+                    labels: ["","",""],
+                    datasets: [{
+                      data: [0,0,0],
+                      label: 'Số vé bán được',
+                      fill: false,
+                      borderColor: '#e7eaf3',
+                      tension: 0.1
+                    },
+                    {
+                      data: [0,0,0],
+                      label: 'Doanh thu',
+                      fill: false,
+                      borderColor: 'rgb(75, 192, 192)',
+                      tension: 0.1
+                    }]
+                },  
+              });
+              $("#totalTicketMovies").text(res.ticketTotal);
+              $("#totalPriceMovies").text(res.priceTotal);
             }
           },        
       });
@@ -185,10 +256,6 @@
       $('#js-daterangepicker-predefined-theater-cluster .js-daterangepicker-predefined-preview-theater-cluster').html(start.format('MMM D') + ' - ' + end.format('MMM D, YYYY'));
     }
 
-    function cbMovie(start, end) {
-      $('#js-daterangepicker-predefined-movie .js-daterangepicker-predefined-preview-movie').html(start.format('MMM D') + ' - ' + end.format('MMM D, YYYY'));
-    }
-
     $('#js-daterangepicker-predefined-theater-cluster').daterangepicker({
       startDate: start,
       endDate: end,
@@ -199,15 +266,19 @@
 
     cbTheaterCluster(start, end);
 
-    $('#js-daterangepicker-predefined-movie').daterangepicker({
+    function cbMovies(start, end) {
+      $('#js-daterangepicker-predefined-movies .js-daterangepicker-predefined-preview-movies').html(start.format('MMM D') + ' - ' + end.format('MMM D, YYYY'));
+    }
+
+    $('#js-daterangepicker-predefined-movies').daterangepicker({
       startDate: start,
       endDate: end,
       ranges: {
         'Today': [moment(), moment()]
       }
-    }, cbMovie);
+    }, cbMovies);
 
-    cbMovie(start, end);
+    cbMovies(start, end);
 
     // INITIALIZATION OF DROPZONE FILE ATTACH MODULE
     // =======================================================
@@ -286,8 +357,11 @@
     function cbTheaterCluster(start, end) {
       var start_date = new Date(start);
       var end_date = new Date(end);
+
+      //set value for date when statistics theater cluster
       $('#date_start_cluster').val(start_date);
       $('#date_end_cluster').val(end_date);
+
       if(start_date.getDate() === end_date.getDate())
       {
         $('#js-daterangepicker-predefined-theater-cluster .js-daterangepicker-predefined-preview-theater-cluster').html(start.format('DD-MM-YYYY'));
@@ -308,28 +382,32 @@
 
     cbTheaterCluster(start, end);
 
-    function cbMovie(start, end) {
-      var start_date = new Date(start)
-      var end_date = new Date(end)
+    function cbMovies(start, end) {
+      var start_date = new Date(start);
+      var end_date = new Date(end);
+      //set value for date when statistic movies
+      $('#date_start_movies').val(start_date);
+      $('#date_end_movies').val(end_date);
+
       if(start_date.getDate() === end_date.getDate())
       {
-        $('#js-daterangepicker-predefined-movie .js-daterangepicker-predefined-preview-movie').html(start.format('DD-MM-YYYY'));
+        $('#js-daterangepicker-predefined-movies .js-daterangepicker-predefined-preview-movies').html(start.format('DD-MM-YYYY'));
       }
       else
       {
-        $('#js-daterangepicker-predefined-movie .js-daterangepicker-predefined-preview-movie').html(start.format('DD-MM-YYYY') + ' - ' + end.format('DD-MM-YYYY'));
+        $('#js-daterangepicker-predefined-movies .js-daterangepicker-predefined-preview-movies').html(start.format('DD-MM-YYYY') + ' - ' + end.format('DD-MM-YYYY'));
       }
     }
 
-    $('#js-daterangepicker-predefined-movie').daterangepicker({
+    $('#js-daterangepicker-predefined-movies').daterangepicker({
       startDate: start,
       endDate: end,
       ranges: {
         'Hôm Nay': [moment(), moment()],      
       }
-    }, cbMovie);
+    }, cbMovies);
 
-    cbMovie(start, end);
+    cbMovies(start, end);
     
     // INITIALIZATION OF DATATABLES
     // =======================================================
@@ -351,13 +429,6 @@
       }
     });
 
-    $('.js-datatable-filter').on('change', function() {
-      var $this = $(this),
-        elVal = $this.val(),
-        targetColumnIndex = $this.data('target-column-index');
-
-      datatable.column(targetColumnIndex).search(elVal).draw();
-    });
 
     $('#datatableSearch').on('mouseup', function (e) {
       var $input = $(this),
