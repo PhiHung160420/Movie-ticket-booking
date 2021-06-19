@@ -24,61 +24,139 @@ exports.getIndex = asyncHandler(async (req, res) => {
 
 //post statistics theater cluster
 exports.postStatisticCluster = asyncHandler(async (req, res) => {
-  const date_start_cluster = req.body.date_start;
-  const date_end_cluster = req.body.date_end;
-  const select_cluster = req.body.select_cluster;
+  const {date_start, date_end, select_cluster} = req.body;
+  
+  if (select_cluster !== "all") {
+    //get list theater by theater cluster id
+    const getListTheater = await Theater.findAll({
+      attributes: ["id", "name"],
+      where: {
+        theater_cluster_id: select_cluster,
+      },
+    });
 
-  //get list theater by theater cluster id
-  const getListTheater = await Theater.findAll({
-    attributes: ["id", "name"],
-    where: {
-      theater_cluster_id: select_cluster,
-    },
-  });
+    const listTheater = [];
+    getListTheater.forEach((item) => listTheater.push(item.id));
 
-  const listTheater = [];
-  getListTheater.forEach((item) => listTheater.push(item.id));
-
-  const listBooking = await Booking.findAll({
-    attributes: [
-      [db.fn("COUNT", db.col("booking.id")), "AmountTicket"],
-      [db.fn("SUM", db.col("booking_price")), "TotalPrice"],
-    ],
-    include: [
-      {
-        model: Showtimes,
-        where: {
-          theater_id: listTheater,
+    const listBooking = await Booking.findAll({
+      attributes: [
+        [db.fn("COUNT", db.col("booking.id")), "AmountTicket"],
+        [db.fn("SUM", db.col("booking_price")), "TotalPrice"],
+      ],
+      include: [
+        {
+          model: Showtimes,
+          where: {
+            theater_id: listTheater,
+          },
+          attributes: [],
         },
-        attributes: [],
+      ],
+      where: {
+        booking_time: {
+          [Op.between]: [date_start, date_end],
+        },
       },
-    ],
-    where: {
-      booking_time: {
-        [Op.between]: [date_start_cluster, date_end_cluster],
-      },
-    },
-    group: ["booking.user_id"],
-    raw: true,
-  });
+      group: ["booking.user_id"],
+      raw: true,
+    });
 
-  const lstResult = {};
+    const lstResult = {};
 
-  let ticket = 0;
-  let price = 0;
+    let ticket = 0;
+    let price = 0;
 
-  for (var i = 0; i < listBooking.length; i++) {
-    ticket += parseInt(listBooking[i].AmountTicket);
-    price += parseFloat(listBooking[i].TotalPrice);
+    for (var i = 0; i < listBooking.length; i++) {
+      ticket += parseInt(listBooking[i].AmountTicket);
+      price += parseFloat(listBooking[i].TotalPrice);
+    }
+
+    lstResult.ticketTotal = String(ticket).replace(/(.)(?=(\d{3})+$)/g, "$1,");
+    lstResult.priceTotal = price.toLocaleString("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    });
+
+    return res.status(200).json(lstResult);
   }
+  else
+  {
+    const listBooking = await Booking.findAll({
+      attributes: [
+        [db.fn("COUNT", db.col("booking.id")), "AmountTicket"],
+        [db.fn("SUM", db.col("booking_price")), "TotalPrice"],
+      ],
+      include: [
+        {
+          model: Showtimes,
+          as: 'showtime',
+          required: true,
+          attributes: [],
+          include: [
+            {
+              model: Theater,
+              as: 'theater',
+              required: true,
+              attributes: [],
+              include: [
+                {
+                  model: Theater_clusters,
+                  as: 'theater_cluster',
+                  required: true,
+                  attributes: ['name']
+                }
+              ]
+            }
+          ]
+        },
+      ],
+      where: {
+        booking_time: {
+          [Op.between]: [date_start, date_end],
+        },
+      },
+      group: ["showtime.theater.theater_cluster.name", "showtime.theater.theater_cluster.id"],
+      raw: true,
+    });
 
-  lstResult.ticketTotal = String(ticket).replace(/(.)(?=(\d{3})+$)/g, "$1,");
-  lstResult.priceTotal = price.toLocaleString("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  });
+    let lstResult = {};
 
-  return res.status(200).json(lstResult);
+    let ticket = 0;
+    let price = 0;
+
+    for (var i = 0; i < listBooking.length; i++) {
+      ticket += parseInt(listBooking[i].AmountTicket);
+      price += parseFloat(listBooking[i].TotalPrice);
+    }
+
+    ticketTotal = String(ticket).replace(/(.)(?=(\d{3})+$)/g, "$1,");
+    priceTotal = price.toLocaleString("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    });
+
+    //get list labels
+    let listLabels=[];
+    listBooking.forEach(item => listLabels.push(item['showtime.theater.theater_cluster.name']));
+
+    //get list amount ticket
+    let listTicket = [];
+    listBooking.forEach(item => listTicket.push(item.AmountTicket));
+
+    //get list total price
+    let listPrice = [];
+    listBooking.forEach(item => listPrice.push(item.TotalPrice));
+
+    lstResult = {
+      listLabels,
+      listTicket,
+      listPrice,
+      ticketTotal,
+      priceTotal,
+    }
+
+    return res.status(200).json(lstResult);
+  }
 });
 
 //post statistic movies

@@ -16,17 +16,66 @@
       let date_start = $('#date_start_cluster').val();
       let date_end = $('#date_end_cluster').val();
       let select_cluster = $("select[name=select_cluster]").children("option:selected").val();
-      console.log(date_start);
-      console.log(date_end);
-      console.log(select_cluster);
       $.ajax({
           type: "POST",
           url: "/admin/statistic/theater-cluster",
-          data: {date_start: date_start, date_end: date_end, select_cluster: select_cluster},
+          data: {date_start, date_end, select_cluster},
           dataType: "json",
           success: function(res){
-            $("#totalTicketCluster").text(res.ticketTotal);
-            $("#totalPriceCluster").text(res.priceTotal);
+            if(res.listLabels)
+            {     
+              $("#js-chart-cluster").removeAttr('data-hs-chartjs-options')   
+              let chart = $("#js-chart-cluster").get(0).getContext("2d");          
+              let myBarChart = new Chart(chart, {
+                type: 'line',
+                data: {
+                    labels: res.listLabels,
+                    datasets: [{
+                      data: res.listTicket,
+                      label: 'Số vé bán được',
+                      fill: false,
+                      borderColor: '#e7eaf3',
+                      tension: 0.1
+                    },
+                    {
+                      data: res.listPrice,
+                      label: 'Doanh thu',
+                      fill: false,
+                      borderColor: 'rgb(75, 192, 192)',
+                      tension: 0.1
+                    }]
+                },               
+              });
+        
+              $("#totalTicketCluster").text(res.ticketTotal);
+              $("#totalPriceCluster").text(res.priceTotal);
+            }
+            else
+            {
+              let chart_ctx = $("#js-chart-cluster").get(0).getContext("2d");  
+              let chart = new Chart(chart_ctx, {    
+                  type: "line",
+                  data: {
+                    labels: ["","", ""],
+                    datasets: [{
+                      data: [0,0,0],
+                      label: 'Số vé bán được',
+                      fill: false,
+                      borderColor: '#e7eaf3',
+                      tension: 0.1
+                    },
+                    {
+                      data: [0,0,0],
+                      label: 'Doanh thu',
+                      fill: false,
+                      borderColor: 'rgb(75, 192, 192)',
+                      tension: 0.1
+                    }]
+                },  
+              });
+              $("#totalTicketCluster").text(res.ticketTotal);
+              $("#totalPriceCluster").text(res.priceTotal);
+            }
           },        
       });
     });
@@ -458,8 +507,6 @@
         toast();
       </script> 
   <%  } %>
-
-
 </body>
 
 </html>
