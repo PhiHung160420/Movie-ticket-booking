@@ -1,6 +1,5 @@
 const Movie = require('../../models/movie');
 
-
 exports.getIndex = async (req, res, next) => {
     if(req.session.user_role == true) {
         const movieList = await Movie.findAll({
