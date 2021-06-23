@@ -114,14 +114,29 @@
                 <div class="section-header-3">
                     <h2 class="title">Đăng nhập</h2>
                 </div>
-                <form class="account-form">
+                <form action="/user/sign-in" method="POST" class="account-form">
+                    <% if(message) {%>
+                        <div class="alert alert-success" role="alert">
+                            <center>
+                                <%= message  %>
+                            </center>
+                        </div>
+                        <% } %>
+                            <% if(messageErr) {%>
+                                <div class="alert alert-danger" role="alert">
+                                    <center>
+                                        <%= messageErr  %>
+                                    </center>
+                                </div>
+                                <% } %>
+                    <div id="correct" style="display: block"> </div>
                     <div class="form-group">
-                        <label for="username">Tên đăng nhập</label>
-                        <input type="text" placeholder="Nhập vào tên đăng nhập" id="username" required>
+                        <label for="email">Email</label>
+                        <input type="email" placeholder="Nhập vào email" id="email" name="email" required>
                     </div>
                     <div class="form-group">
-                        <label for="pass3">Mật khẩu</label>
-                        <input type="password" placeholder="nhập vào mật khẩu" id="pass3" required>
+                        <label for="password">Mật khẩu</label>
+                        <input type="password" placeholder="nhập vào mật khẩu" id="password" name="password" required>
                     </div>
                     <div class="form-group checkgroup">
                         <input type="checkbox" id="bal2" required checked>

@@ -269,6 +269,9 @@
     $(".window-warning .lay").on("click", function () {
       $(".window-warning").addClass("inActive");
     });
+    $(".window-warning .seatPlanButton").on("click", function () {
+      $(".window-warning").addClass("inActive");
+    });
     $(".seat-plan-wrapper li .movie-schedule .item").on("click", function () {
       $(".window-warning").removeClass("inActive");
       let showtimeId = $(this).find("input[type=hidden]").val();
@@ -516,26 +519,7 @@
         },
       },
     });
-    var book = 0;
-    $(".seat-free img").on("click", function (e) {
-      if (book == 0) {
-        $(this).attr("src", "/user/images/movie/seat01-free.png");
-        book = 1;
-      } else if (book == 1) {
-        $(this).attr("src", "/user/images/movie/seat01.png");
-        book = 0;
-      }
-    });
-    var bookTwo = 1;
-    $(".seat-free-two img").on("click", function (e) {
-      if (bookTwo == 0) {
-        $(this).attr("src", "/user/images/movie/seat02-free.png");
-        bookTwo = 1;
-      } else if (bookTwo == 1) {
-        $(this).attr("src", "/user/images/movie/seat02-booked.png");
-        bookTwo = 0;
-      }
-    });
+
     // shop cart + - start here
     var CartPlusMinus = $(".cart-plus-minus");
     CartPlusMinus.prepend('<div class="dec qtybutton">-</div>');
@@ -656,8 +640,6 @@
       owlB.trigger("prev.owl.carousel", [300]);
     });
   });
-<<<<<<< HEAD
-=======
 
   // select seat
 
@@ -746,5 +728,4 @@
       $("#frmCheckout").submit();
     });
 
->>>>>>> ad95755a43ad0f7f8ce0bc781eab810b95a563c1
 })(jQuery);
