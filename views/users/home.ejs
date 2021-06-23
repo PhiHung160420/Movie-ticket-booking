@@ -71,18 +71,7 @@
                     </ul>
                 </li>
                 <li class="header-button pr-0">
-                    <% if(currentUser) { %>
-                        <a><%=currentUser.user_name%></a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="/user/logout">Đăng xuất</a>
-                            </li>
-                        </ul>
-                        <% } else { %>
-                                <a href="/user/sign-in">Đăng nhập</a>
-                            <% } %>
-
-                    
+                    <a href="/user/sign-in">Đăng nhập</a>
                 </li>
             </ul>
             <div class="header-bar d-lg-none">

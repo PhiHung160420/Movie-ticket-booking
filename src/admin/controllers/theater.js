@@ -1,14 +1,19 @@
 const Theater = require('../../models/theater');
-
+const TheaterClusters = require('../../models/theater_clusters');
 //INDEX
 exports.getIndex = async(req, res, next) => {
+
+    
     if(req.session.user_role == true) {
         res.locals.TheaterList = await Theater.findAll({order: [['id', 'ASC']]});
+        res.locals.TheaterClusters = await TheaterClusters.findAll({order: [['id', 'ASC']]});
         res.render("admin/theater/index");
+
     }
     else {
         res.redirect("/user");
     }
+
 };
 exports.getAdd = (req, res, next) => {
     if(req.session.user_role == true) {
@@ -21,8 +26,7 @@ exports.getAdd = (req, res, next) => {
 
 exports.postAdd = async (req, res, next) => {
     try {
-        const { name,id,kind,horizontial_size,vertical_size} = req.body;
-
+        const { name,theaterclusterid,kind,horizontial_size,vertical_size} = req.body;
         const found = await Theater.findOne({
             where: {
                 name: name
@@ -32,7 +36,7 @@ exports.postAdd = async (req, res, next) => {
 
         //else
         await Theater.create({
-            theater_cluster_id:id,
+            theater_cluster_id: theaterclusterid,
             name: name,
             kind:kind,
             horizontial_size:horizontial_size,
@@ -74,7 +78,7 @@ exports.postDetail = async (req, res, next) => {
         const updateTheater = await Theater.findByPk(id);
         if(!updateTheater) throw new Error('Rạp không tồn tại !');
 
-        // updateTheater.theater_cluster_id = theater_cluster_id;
+        updateTheater.theater_cluster_id = theaterclusterid;
         updateTheater.name = name;
         updateTheater.kind = kind;
         updateTheater.horizontial_size=horizontial_size;

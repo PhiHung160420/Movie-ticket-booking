@@ -19,7 +19,7 @@ const Movies = db.define("movies", {
     allowNull: true,
   },
   duration: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
   },
   trailer: {
     type: DataTypes.STRING,

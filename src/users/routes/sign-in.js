@@ -1,4 +1,5 @@
 const { request, response } = require("express");
+
 const asyncHandler = require('express-async-handler');
 const nodemailer = require('nodemailer');
 const User = require('../../models/user');
@@ -13,17 +14,9 @@ router.use((request, response, next) => {
 });
 
 router.get("/sign-in", (req, res) => {
-  const msg = req.query.valid;
-  const msgErr = req.query.validErr;
-  
-  if(req.session.user_id){
-    res.redirect("/user");
-  }
-  else{
-    res.render("users/sign-in", {message: msg, messageErr: msgErr});
-  }
-  
+  res.render("users/sign-in");
 });
+
 
 
 router.post("/sign-in", asyncHandler(async(req, res)=>{

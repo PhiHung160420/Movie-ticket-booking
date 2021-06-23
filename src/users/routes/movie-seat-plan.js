@@ -1,12 +1,13 @@
-const router = require('express').Router();
-const movieSeatPlanController = require('../controllers/movie-seat-plan');
+const { request, response } = require("express");
+var router = require("express").Router();
 
-router.use((req, res, next) => {
-  res.locals.layout = "users/layouts/layout";
+router.use((request, response, next) => {
+  response.locals.layout = "users/layouts/layout";
   next();
 });
 
-router.get("/movie-seat-plan/:showtimeId", movieSeatPlanController.getSeat);
-router.post("/movie-seat-plan/:showtimeId", movieSeatPlanController.postSeat)
+router.get("/movie-seat-plan", (req, res) => {
+  res.render("users/movie-seat-plan");
+});
 
 module.exports = router;

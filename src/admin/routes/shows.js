@@ -1,11 +1,16 @@
 const router = require("express").Router();
+const ShowsController = require('../controllers/shows');
 
-router.get('/shows', (req, res) => {
-    res.render("admin/shows/index");
-});
+//INDEX
+router.get("/shows", ShowsController.getIndex);
 
-router.get('/shows/add', (req, res) => {
-    res.render("admin/shows/add");
-});
+//ADD
+router.get("/shows/add", ShowsController.getAdd);
+router.post("/shows/add", ShowsController.postAdd);
 
+// DETAIL
+router.get("/shows/detail/:id", ShowsController.getDetail);
+router.post("/shows/detail/:id",ShowsController.postDetail);
+
+router.get("/shows/delete/:id", ShowsController.getDelete);
 module.exports = router;

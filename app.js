@@ -6,6 +6,7 @@ const cookieSession = require("cookie-session");
 
 const bodyParser = require("body-parser");
 
+
 const passport = require('passport');
 
 //get middlewares
@@ -13,6 +14,7 @@ const passport = require('passport');
 const authMiddlewares = require("./src/users/middlewares/auth");
 const getMiddlewares = require('./src/users/middlewares/middleware');
 //admin
+
 const setLayoutMiddleware = require("./src/admin/middlewares/set_layout");
 
 const flash = require('express-flash');
@@ -22,6 +24,10 @@ const theaterClustersRouter = require("./src/admin/routes/theater_clusters");
 const theaterRouter = require("./src/admin/routes/theater");
 
 const movieRouter = require("./src/admin/routes/movie");
+
+const showtimeRouter = require("./src/admin/routes/shows");
+
+//từ t đi lấy con chuột
 
 const app = express();
 
@@ -86,8 +92,9 @@ app.use(passport.session());
 //get connection database
 const db = require("./src/config/database/db");
 
+
+
 app.use(express.json());
-app.use(express.urlencoded({extended: false})); 
 
 //session 
 // app.use(cookieSession({
@@ -101,6 +108,7 @@ app.use(flash());
 //use middlewares 
 //user
 app.use(getMiddlewares);
+
 app.use(authMiddlewares);
 
 //express ejs-layouts
@@ -111,8 +119,13 @@ app.set("view engine", "ejs");
 
 app.set("views", "./views");
 
+//use body-parser
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 //khai báo static file
 app.use(express.static(__dirname + "/public"));
+
 
 // use body-parser
 // app.use(bodyParser.urlencoded({  extended: false })); 
@@ -125,6 +138,7 @@ app.use("/admin", require("./src/admin/routes/login"));
 app.use("/admin", theaterClustersRouter);
 app.use("/admin", theaterRouter);
 app.use("/admin", movieRouter);
+app.use("/admin", showtimeRouter);
 app.use("/admin", require("./src/admin/routes/theater"));
 app.use("/admin", require("./src/admin/routes/shows"));
 
@@ -144,6 +158,10 @@ app.use("/user", require("./src/users/routes/forgot"));
 app.use("/user", require("./src/users/routes/edit-info"));
 app.use("/user", require("./src/users/routes/change-password"));
 
+
+app.post('/getJson', function (req, res) {
+  console.log(req.body.select);
+});
 //connect to postgres
 db.sync()
   .then(function () {

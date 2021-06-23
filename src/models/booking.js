@@ -2,33 +2,32 @@ const { DataTypes} = require("sequelize");
 const db =require("../config/database/db");
 const User=require("./user");
 const Showtimes=require("./showtimes");
-
 const Booking=db.define("booking",{
   id: {
     type: DataTypes.UUID,
-    defaultValue:DataTypes.UUIDV4,
+    defaultValue:DataTypes.UUIDV1,
     primaryKey: true,
     allowNull:false,
   },
-  user_id: {
+  booking_user: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  showtimes_id: {
+  booking_showtime: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  booking_time: {
-    type: DataTypes.DATEONLY,
+  time: {
+    type: DataTypes.DATE,
     allowNull:false,
   },
-  booking_price: {
+  price: {
     type: DataTypes.FLOAT,
   },
 }, {timestamps: false, createdAt: false, updatedAt: false});
 
-User.hasMany(Booking, {foreignKey: "user_id"});
-Booking.belongsTo(User, {foreignKey: "user_id"});
+User.hasMany(Booking, {foreignKey: "booking_user"});
+Booking.belongsTo(User, {foreignKey: "booking_user"});
 
 Showtimes.hasMany(Booking, {foreignKey: "showtimes_id"});
 Booking.belongsTo(Showtimes, {foreignKey: "showtimes_id"});
