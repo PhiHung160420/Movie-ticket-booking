@@ -9,7 +9,7 @@
             </div>
             <ul class="menu">
                 <li>
-                    <a href="/user/">Trang chủ</a>
+                    <a href="/user/" class="active">Trang chủ</a>
                 </li>
                 <li>
                     <a href="#0">Phim</a>
@@ -44,10 +44,10 @@
                     <a href="/user/movie-ticket-plan">Lịch chiếu</a>
                 </li>
                 <li>
-                    <a href="/user/contact" class="active">Liên hệ</a>
+                    <a href="/user/contact">Liên hệ</a>
                 </li>
                 <li>
-                    <a href="/user/movie-customer-profile">Thành viên</a>
+                    <a href="#">Thành viên</a>
                     <ul class="submenu">
                         <% if(currentUser != null && currentUser.user_role == true) { %>
                             <li>
@@ -71,7 +71,18 @@
                     </ul>
                 </li>
                 <li class="header-button pr-0">
-                    <a href="/user/sign-in">Đăng nhập</a>
+                    <% if(currentUser) { %>
+                        <a><%=currentUser.user_name%></a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="/user/logout">Đăng xuất</a>
+                            </li>
+                        </ul>
+                        <% } else { %>
+                                <a href="/user/sign-in">Đăng nhập</a>
+                            <% } %>
+
+                    
                 </li>
             </ul>
             <div class="header-bar d-lg-none">
@@ -83,7 +94,6 @@
     </div>
 </header>
 <!-- ==========Header-Section========== -->
-
 <!-- ==========Banner-Section========== -->
 <section class="main-page-header speaker-banner bg_img" data-background="/user/images/banner/banner07.jpg">
     <div class="container">

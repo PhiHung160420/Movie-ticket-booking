@@ -1,5 +1,11 @@
 const { request, response } = require("express");
-var router = require("express").Router();
+const asyncHandler = require('express-async-handler');
+const nodemailer = require('nodemailer');
+const User = require('../../models/user');
+const bcrypt = require('bcrypt');
+const router = require("express").Router();
+const crypto = require('crypto');
+
 
 router.use((request, response, next) => {
   response.locals.layout = "users/layouts/layout";
@@ -7,7 +13,6 @@ router.use((request, response, next) => {
 });
 
 router.get("/sign-up", (req, res) => {
-
   const msg = req.query.valid;
   const msgErr = req.query.validErr;
   if(req.session.user_id){
