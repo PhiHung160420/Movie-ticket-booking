@@ -49,12 +49,25 @@
                 <li>
                     <a href="/user/movie-customer-profile">Thành viên</a>
                     <ul class="submenu">
-                        <li>
-                            <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
-                        </li>
-                        <li>
-                            <a href="blog-details.html">Vé của tôi</a>
-                        </li>
+                        <% if(currentUser != null && currentUser.user_role == true) { %>
+                            <li>
+                                <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
+                            </li>
+                            <li>
+                                <a href="#">Vé của tôi</a>
+                            </li>
+                            <li>
+                                <a href="/admin">Quản lý</a>
+                            </li>
+                            <% } else { %>
+                                <li>
+                                    <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
+                                </li>
+                                <li>
+                                    <a href="#">Vé của tôi</a>
+                                </li>
+                                
+                            <% } %>
                     </ul>
                 </li>
                 <li class="header-button pr-0">
@@ -76,8 +89,12 @@
     <div class="container">
         <div class="details-banner-wrapper">
             <div class="details-banner-thumb">
-                <img src="/user/images/movie/venus.jpg" alt="movie">
-                <a href="https://www.youtube.com/embed/KGeBMAgc46E" class="video-popup">
+                <% if(movie.poster) { %>
+                    <img src="data:image/png;base64,<%= movie.poster %>" alt="movie">
+                <% } else {%>
+                    <img src="/user/images/movie/movie01.jpg" alt="movie">
+                <% } %>
+                <a href="<%= movie.trailer %>" class="video-popup">
                     <img src="/user/images/movie/video-button.png" alt="movie">
                 </a>
             </div>

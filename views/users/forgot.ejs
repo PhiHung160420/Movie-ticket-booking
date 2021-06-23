@@ -112,24 +112,36 @@
         <div class="padding-top padding-bottom">
             <div class="account-area">
                 <div class="section-header-3">
-                    <h2 class="title">Đăng nhập</h2>
+                    <h2 class="title">QUÊN MẬT KHẨU</h2>
+                    <br>
+                    <p>Vui lòng nhập email của bạn.
+                        Đường dẫn khôi phục mật khẩu sẽ gửi tới email của bạn.
+                    </p>
+                    
                 </div>
-                <form class="account-form">
+                <form action="/user/forgot" method="POST" class="account-form">
+                    <% if(message) {%>
+                        <div class="alert alert-success" role="alert">
+                            <center>
+                                <%= message  %>
+                            </center>
+                        </div>
+                        <% } %>
+                            <% if(messageErr) {%>
+                                <div class="alert alert-danger" role="alert">
+                                    <center>
+                                        <%= messageErr  %>
+                                    </center>
+                                </div>
+                                <% } %>
+                    <div id="correct" style="display: block"> </div>
                     <div class="form-group">
-                        <label for="username">Tên đăng nhập</label>
-                        <input type="text" placeholder="Nhập vào tên đăng nhập" id="username" required>
+                        <label for="email">Email</label>
+                        <input type="email" placeholder="Nhập vào email" id="email" name="email" required>
                     </div>
-                    <div class="form-group">
-                        <label for="pass3">Mật khẩu</label>
-                        <input type="password" placeholder="nhập vào mật khẩu" id="pass3" required>
-                    </div>
-                    <div class="form-group checkgroup">
-                        <input type="checkbox" id="bal2" required checked>
-                        <label for="bal2">Lưu thông tin</label>
-                        <a href="/user/forgot" class="forget-pass">Quên mật khẩu</a>
-                    </div>
+                    
                     <div class="form-group text-center">
-                        <input type="submit" value="Đăng nhập">
+                        <input type="submit" value="GỬI">
                     </div>
                 </form>
                 <div class="option">
@@ -138,7 +150,7 @@
                 <div class="or"><span>Or</span></div>
                 <ul class="social-icons">
                     <li>
-                        <a href="/user/sign-in-facebook">
+                        <a href="#0">
                             <i class="fab fa-facebook-f"></i>
                         </a>
                     </li>

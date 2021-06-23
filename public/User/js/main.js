@@ -36,6 +36,122 @@
     });
   });
   $(document).ready(function () {
+    //prevent form submit
+    $('#form_search_ajax').submit(function(e) {
+      e.preventDefault(); // stop the submission
+    });
+
+    //when click btn search in home page
+    $('#btn_search').on('click', function() {
+      $('#seat_plan_wrapper').css('display','block');
+    });
+
+    //filter theater cluster when selected movie
+    $('select[name=select_movie]').on('change', function() {
+      $("select[name=select_theater_cluster]").prop('disabled', false);
+      let movie_selected = $(this).val();
+      if(movie_selected !== "")
+      {
+        $.ajax({
+          type: "POST",
+          url: "/user/movie-ticket-plan/filter-cluster",
+          data: {movie_id: movie_selected},
+          dataType: "json",
+          success: function(res){
+              let html = "";
+              $.each(res, function(index, val) {
+                  html += '<option value="'+ val.cluster_id +'">'+ val.cluster_name+'</option>';
+              });
+              if(html == "") {
+                  html = '<option value="">Venus</option>';
+              }
+              $('select[name=select_theater_cluster]').html(html);
+              $('select[name=select_theater_cluster]').niceSelect('destroy');
+              $('select[name=select_theater_cluster]').niceSelect();
+          },        
+        });
+      }
+    });
+
+    //filter date when selected movie and theater_cluster
+    $('select[name=select_theater_cluster]').on('change', function() {
+      $("select[name=select_date]").prop('disabled', false);
+      let cluster_selected = $(this).val();
+      let movie_selected = $("select[name=select_movie] :selected").val();
+      if(cluster_selected !== "" && movie_selected !== "")
+      {
+        $.ajax({
+          type: "POST",
+          url: "/user/movie-ticket-plan/filter-date",
+          data: {cluster: cluster_selected, movie: movie_selected},
+          dataType: "json",
+          success: function(res){
+              let html = "";
+              $.each(res, function(index, val) {
+                  html += '<option value="' + val.schedule_date + '">' + val.schedule_date + '</option>';
+              });
+              if(html == "") {
+                  html = '<option value="">10-10-2020</option>';
+              }
+              $('select[name=select_date]').html(html);
+              $('select[name=select_date]').niceSelect('destroy');
+              $('select[name=select_date]').niceSelect();
+          },        
+        });
+      }
+    });
+
+    // ajax when click button search movies
+    $('#btn_search_showtimes').on('click', function() {
+      $("select[name=select_date]").prop('disabled', false);
+      let movie_selected = $("select[name=select_movie] :selected").val();
+      let cluster_selected = $("select[name=select_theater_cluster] :selected").val();
+      let date_selected = $("select[name=select_date] :selected").val();
+      if(cluster_selected && movie_selected && date_selected)
+      {
+        $.ajax({
+          type: "POST",
+          url: "/user/movie-ticket-plan/search-showtimes",
+          data: {
+            select_movie: movie_selected,
+            select_cluster: cluster_selected,
+            select_date: date_selected
+          },
+          dataType: "json",
+          success: function(res){
+            let html = "";
+            $('#set_plan_wrapper_ajax').css('display','block');
+            $('#seat_plan_wrapper').css('display','none');
+            $.each(res, function(index, val) {
+                html += '<div class="item"><input type="hidden" value="' + val.id +'"/>' + val.start_time + ' - ' + val.end_time +'</div>';
+            });
+            if(html === "") {
+              $('#set_plan_wrapper_ajax').css('display','none');
+
+              /*customer-windown-warning*/
+              $(".custom-windown-warning").removeClass("inActive");
+              $("div#custom-warning-item h6").text("Thông báo");
+              $("div#custom-warning-item h4").text('Phim bạn chọn tạm thời không còn suất chiếu. Vui lòng chọn phim khác');
+              /*end customer-windown-warning*/
+            }
+            else 
+            {
+              $('#movie_search_ajax').text(res[0].movie.name);
+            }
+            $('#movie_schedule_ajax').html(html);
+          },        
+        });
+      }
+      else
+      {
+          /*customer windown-warning*/
+          $(".custom-windown-warning").removeClass("inActive");
+          $("div#custom-warning-item h6").text("Thông báo");
+          $("div#custom-warning-item h4").text('Hãy chọn đầy đủ tất cả thông tin');
+          /*end customer windown-warning*/
+      }
+    });
+
     // Nice Select
     $(".select-bar").niceSelect();
     // Lightcase
@@ -149,11 +265,28 @@
         headerOne.addClass("header-active");
       }
     });
+    // windown-warning
     $(".window-warning .lay").on("click", function () {
       $(".window-warning").addClass("inActive");
     });
     $(".seat-plan-wrapper li .movie-schedule .item").on("click", function () {
       $(".window-warning").removeClass("inActive");
+      let showtimeId = $(this).find("input[type=hidden]").val();
+      console.log('showtime id : ' + showtimeId);
+      $("div#warning-item a[href='/user/movie-seat-plan/']").attr('href', `/user/movie-seat-plan/${showtimeId}`);
+    }); 
+    $("#set_plan_wrapper_ajax li #movie_schedule_ajax").on("click",".item", function(){
+      $(".window-warning").removeClass("inActive");
+      let showtimeId = $(this).find("input[type=hidden]").val();
+      console.log('showtime id ajax: ' + showtimeId);
+      $("div#warning-item a[href='/user/movie-seat-plan/']").attr('href', `/user/movie-seat-plan/${showtimeId}`);
+    });
+    // custom-windown-warning  
+    $(".custom-windown-warning .lay").on("click", function () {
+      $(".custom-windown-warning").addClass("inActive");
+    });
+    $(".custom-windown-warning .continueButton").on("click", function () {
+      $(".custom-windown-warning").addClass("inActive");
     });
     //Tab Section
     $(".tab ul.tab-menu li").on("click", function (g) {
@@ -523,4 +656,95 @@
       owlB.trigger("prev.owl.carousel", [300]);
     });
   });
+<<<<<<< HEAD
+=======
+
+  // select seat
+
+  var srcImgSingleSeat;
+    $(".seat-free")
+      .mouseenter(function() {
+        srcImgSingleSeat = $(this).find("img").attr("src");
+        if(srcImgSingleSeat == "/user/images/movie/seat01-free.png") {
+          $(this).find("img").attr("src", "/user/images/movie/seat01-selecting.png");
+        }        
+      })
+      .mouseleave(function() {
+        if(srcImgSingleSeat == "/user/images/movie/seat01-free.png") {
+          $(this).find("img").attr("src", srcImgSingleSeat);
+        }         
+      });
+
+  var selectedSeatList = [];
+
+  function showListOfSeats() {
+    let strSeatList = "";
+    for(let i = 0; i < selectedSeatList.length; i++) {
+      if(i < selectedSeatList.length - 1){
+        strSeatList += selectedSeatList[i] + ", ";
+      } else {
+        strSeatList += selectedSeatList[i];
+      }
+    }
+    $("#currentSeatList").text(strSeatList);
+  }
+
+  function calTotalPrice() {
+    const price = $("#price").val();
+    const totalPrice = price * selectedSeatList.length;
+    $("#totalPrice").text(totalPrice);
+  }
+
+    
+    $(".seat-free").on("click", function (e) {
+      if(srcImgSingleSeat == "/user/images/movie/seat01-free.png") {
+        let seatCode = $(this).find("span").text();
+        let index = selectedSeatList.indexOf(seatCode);
+        if (index == -1) {
+          if(selectedSeatList.length < 8) {
+            // push seat selection into array
+            selectedSeatList.push(seatCode);
+            // change img of seat
+            $(this).find("img").attr("src", "/user/images/movie/seat01-selecting.png");
+            srcImgSingleSeat = "/user/images/movie/seat01-selecting.png";
+          } else {
+            $(".window-warning").removeClass("inActive");
+          }     
+        }
+
+        //show list of seats
+        showListOfSeats();
+        calTotalPrice();
+        console.log(selectedSeatList);
+      } else {
+        // change img of seat
+        $(this).find("img").attr("src", "/user/images/movie/seat01-free.png");
+        srcImgSingleSeat = "/user/images/movie/seat01-free.png";
+
+        // pop seat selection into array
+        let seatCode = $(this).find("span").text();
+        let index = selectedSeatList.indexOf(seatCode);
+        if (index > -1) {
+          selectedSeatList.splice(index, 1);
+        }
+
+        //show list of seats
+        showListOfSeats();
+        calTotalPrice();
+        console.log(selectedSeatList);
+      }
+    });
+
+    // submit form seat-plan
+    $("#submitSeatPlan").on("click", function (e) {
+      $("input[name^='currentSeatList']").val(JSON.stringify(selectedSeatList));   
+      $("#formSeatPlan").submit();
+    });
+
+    // submit form checkout
+    $("#submitCheckout").on("click", function (e) {
+      $("#frmCheckout").submit();
+    });
+
+>>>>>>> ad95755a43ad0f7f8ce0bc781eab810b95a563c1
 })(jQuery);

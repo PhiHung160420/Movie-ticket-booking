@@ -7,7 +7,22 @@ router.use((request, response, next) => {
 });
 
 router.get("/movie-customer-profile", (req, res) => {
-  res.render("users/movie-customer");
+
+  if(req.session.user_id){
+    res.render("users/movie-customer");
+  }
+  else{
+    res.redirect("/user/sign-in");
+  }
+});
+
+router.get("/edit-info", (req, res)=>{
+  if(req.session.user_id){
+    res.render("users/edit-info");
+  }
+  else{
+    res.redirect("user/sign-in");
+  }
 });
 
 module.exports = router;

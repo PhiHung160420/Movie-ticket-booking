@@ -42,34 +42,21 @@
                 </ul>
                 </li>
                 <li>
-                    <a href="/user/movie-ticket-plan">Lịch chiếu</a>
+                    <a href="/user/movie-ticket-plan">Đặt vé</a>
 
                 </li>
                 <li>
                     <a href="/user/contact">Liên hệ</a>
                 </li>
                 <li>
-                    <a href="/user/movie-customer-profile" class="active">Thành viên</a>
+                    <a href="/user/movie-customer-profile">Thành viên</a>
                     <ul class="submenu">
-                        <% if(currentUser != null && currentUser.user_role == true) { %>
-                            <li>
-                                <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
-                            </li>
-                            <li>
-                                <a href="#">Vé của tôi</a>
-                            </li>
-                            <li>
-                                <a href="/admin">Quản lý</a>
-                            </li>
-                            <% } else { %>
-                                <li>
-                                    <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
-                                </li>
-                                <li>
-                                    <a href="#">Vé của tôi</a>
-                                </li>
-                                
-                            <% } %>
+                        <li>
+                            <a href="/user/movie-customer-profile">Tài khoản</a>
+                        </li>
+                        <li>
+                            <a href="blog-details.html">Vé của tôi</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="header-button pr-0">
@@ -90,7 +77,7 @@
 <section class="speaker-banner bg_img" data-background="/user/images/banner/banner07.jpg">
     <div class="container">
         <div class="speaker-banner-content">
-            <h2 class="title">Thông tin của bạn</h2>
+            <h2 class="title">Thông tin vé</h2>
         </div>
     </div>
 </section>
@@ -101,40 +88,69 @@
     <div class="container">
         <div class="speaker-wrapper bg-six padding-top">
             <div class="speaker-thumb">
-                <img src="/user/images/speaker/speaker05.jpg" alt="speaker">
+                <img src="<%= qrCode %>" alt="speaker">
             </div>
             <div class="speaker-content">
                 <div class="author">
-                    <h2 class="title">Họ tên</h2>
-                </div>
-                <div class="speak-con-wrapper">
-                    <div class="speak-con-area">
-                        <div class="item">
-                            <div class="item-content">
-                                <span class="up">Email: <a href="MailTo:hello@Boleto .com">123@gmail.com</a></span>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="item-content">
-                                <span class="up">Số điện thoại: <a>123@gmail.com</a></span>
-                            </div>
-                        </div>
+                    <h2 class="title"><%= movieName %></h2>
+                    <div style="text-align: center; font-size: 20px; color: #31d7a9; margin-bottom: 10px;"> 
+                        <%= theater.kind %> 
                     </div>
                 </div>
-                <div style="margin-top: 180px;">
-                    <a style="margin-left: 20px; font-size: 18px; color: #81A9FF; display: inline;"
-                    href="/user/change-password">
-                        <img style="height: 18px; width: 15px;" src="/user/images/change-password.png" alt="password">
-                        Mật khẩu
-                    </a>
-                    <a  style="margin-left: 450px; font-size: 18px; color: #81A9FF; display: inline;"
-                         href="/user/edit-info">
-                        <img style="height: 18px; width: 15px;" src="/user/images/edit-info.png" alt="edit">
-                        Thay đổi thông tin 
-                    </a>
+                <div class="speak-con-wrapper">
+                    <div class="speak-con-area">                       
+                        <div class="item">
+                            <div class="item-content">
+                                <span class="up">
+                                    Rạp:
+                                    <a>
+                                        <%= theater.theater_cluster.name %>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <div class="item-content">
+                                <span class="up"> 
+                                    Ngày chiếu: 
+                                    <a>
+                                        <%= showtime.date.getDate() %>/<%= showtime.date.getMonth() + 1 %>/<%= showtime.date.getFullYear() %>, 
+                                        <%= showtime.start_time.substr(0, 5) %> ~ <%= showtime.end_time.substr(0, 5) %> 
+                                    </a>      
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <div class="item-content">
+                                <span class="up">Phòng chiếu: 
+                                    <a> <%= theater.name %> </a>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <div class="item-content">
+                                <span class="up">Ghế:
+                                    <%
+                                        for(let i = 0; i < seatList.length; i++) {
+                                            if (i == seatList.length - 1) { %>
+                                                <a> <%= seatList[i].seat_code; %> </a>
+                                            <% } else { %>
+                                                <a> <%= seatList[i].seat_code + ', ' %> </a>
+                                        <% } }
+                                    %>
+                                    <a> </a>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 <!-- ==========Speaker-Single========== -->
+

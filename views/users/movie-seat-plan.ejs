@@ -51,12 +51,25 @@
                 <li>
                     <a href="/user/movie-customer-profile">Thành viên</a>
                     <ul class="submenu">
-                        <li>
-                            <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
-                        </li>
-                        <li>
-                            <a href="blog-details.html">Vé của tôi</a>
-                        </li>
+                        <% if(currentUser != null && currentUser.user_role == true) { %>
+                            <li>
+                                <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
+                            </li>
+                            <li>
+                                <a href="#">Vé của tôi</a>
+                            </li>
+                            <li>
+                                <a href="/admin">Quản lý</a>
+                            </li>
+                            <% } else { %>
+                                <li>
+                                    <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
+                                </li>
+                                <li>
+                                    <a href="#">Vé của tôi</a>
+                                </li>
+                                
+                            <% } %>
                     </ul>
                 </li>
                 <li class="header-button pr-0">
@@ -78,10 +91,13 @@
     <div class="container">
         <div class="details-banner-wrapper">
             <div class="details-banner-content style-two">
-                <h3 class="title">SpiderMan</h3>
+                <h3 class="title"> <%= movie.name %> </h3>
                 <div class="tags">
-                    <a href="#0">09:40</a>
-                    <a href="#0">2D</a>
+                    <a> <%= showtime.date.getDate() %>/<%= showtime.date.getMonth() + 1 %>/<%= showtime.date.getFullYear() %>, </a>
+                    <a> <%= showtime.start_time.substr(0, 5) %> ~ <%= showtime.end_time.substr(0, 5) %> </a>
+                    <br>
+                    <a> <%= theater.name %> - </a>
+                    <a> <%= theater.kind %> </a>
                 </div>
             </div>
         </div>
@@ -125,6 +141,7 @@
                 <img src="/user/images/movie/screen-thumb.png" alt="movie">
             </div>
             <h5 class="subtitle">Ghế thường</h5>
+<<<<<<< HEAD
             <div class="screen-wrapper">
                 <ul class="seat-area">
                     <li class="seat-line">
@@ -144,10 +161,38 @@
                                     <li class="single-seat">
                                         <img src="/user/images/movie/seat01.png" alt="seat">
                                     </li>
+=======
+            <div class="screen-wrapper"> 
+                <ul class="seat-area">  
+                    <%
+                        for(let i = 65; i <= 65 + theater.vertical_size; i++) {
+                            const verticalAddress = String.fromCharCode(i);
+                    %>  
+                    <li class="seat-line"> <!-- chạy vòng for theo chiều dọc -->  
+                        <span> <%= verticalAddress %> </span>
+                        <ul class="seat--area"> <!-- chạy vòng for theo chiều ngang -->                          
+                            <li class="front-seat">
+                                <ul>
+                                    <% for(let j = 1; j <= 4; j++) { 
+                                        const state = bookedSeatList.find(s => s.vertical_address.charCodeAt(0) == i 
+                                            && s.horizontal_address == j);
+                                    %>
+                                    <%  if(state) {  %>
+                                            <li class="single-seat seat-booked" >
+                                                <img src="/user/images/movie/seat01-booked.png" alt="seat">
+                                    <%  } else { %>
+                                            <li class="single-seat seat-free">
+                                                <img src="/user/images/movie/seat01-free.png" alt="seat">
+                                    <%  } %>
+                                                <span class="sit-num"><%= verticalAddress + j %></span>
+                                            </li>
+                                    <% }  %>
+>>>>>>> ad95755a43ad0f7f8ce0bc781eab810b95a563c1
                                 </ul>
                             </li>
                             <li class="front-seat">
                                 <ul>
+<<<<<<< HEAD
                                     <li class="single-seat">
                                         <img src="/user/images/movie/seat01.png" alt="seat">
                                     </li>
@@ -307,10 +352,27 @@
                                     <li class="single-seat">
                                         <img src="/user/images/movie/seat02.png" alt="seat">
                                     </li>
+=======
+                                    <% for(let j = 5; j <= theater.horizontial_size - 4; j++) { 
+                                        const state = bookedSeatList.find(s => s.vertical_address.charCodeAt(0) == i 
+                                            && s.horizontal_address == j);
+                                    %>
+                                    <%  if(state) {  %>
+                                            <li class="single-seat seat-booked" >
+                                                <img src="/user/images/movie/seat01-booked.png" alt="seat">
+                                    <%  } else { %>
+                                            <li class="single-seat seat-free">
+                                                <img src="/user/images/movie/seat01-free.png" alt="seat">
+                                    <%  } %>
+                                                <span class="sit-num"><%= verticalAddress + j %></span>
+                                            </li>
+                                    <% }  %>
+>>>>>>> ad95755a43ad0f7f8ce0bc781eab810b95a563c1
                                 </ul>
                             </li>
                             <li class="front-seat">
                                 <ul>
+<<<<<<< HEAD
                                     <li class="single-seat">
                                         <img src="/user/images/movie/seat02.png" alt="seat">
                                     </li>
@@ -333,6 +395,25 @@
                                     </li>
                                 </ul>
                             </li>
+=======
+                                    <% for(let j = theater.horizontial_size - 3; j <= theater.horizontial_size; j++) { 
+                                        const state = bookedSeatList.find(s => s.vertical_address.charCodeAt(0) == i 
+                                            && s.horizontal_address == j);
+                                    %>
+                                    <%  if(state) {  %>
+                                            <li class="single-seat seat-booked" >
+                                                <img src="/user/images/movie/seat01-booked.png" alt="seat">
+                                    <%  } else { %>
+                                            <li class="single-seat seat-free">
+                                                <img src="/user/images/movie/seat01-free.png" alt="seat">
+                                    <%  } %>
+                                                <span class="sit-num"><%= verticalAddress + j %></span>
+                                            </li>
+                                    <% }  %>
+                                </ul>
+                            </li>                            
+                            
+>>>>>>> ad95755a43ad0f7f8ce0bc781eab810b95a563c1
                         </ul>
                         <span>d</span>
                     </li>
@@ -465,6 +546,7 @@
                 </ul>
             </div>
         </div>
+<<<<<<< HEAD
         <div class="proceed-book bg_img" data-background="/user/images/movie/movie-bg-proceed.jpg">
             <div class="proceed-to-book">
                 <div class="book-item">
@@ -477,6 +559,26 @@
                 </div>
                 <div class="book-item">
                     <a href="/user/movie-checkout" class="custom-button">Thanh toán</a>
+=======
+
+        <input value="<%= showtime.price %>" id="price" readonly hidden>
+
+        <form method="POST" id="formSeatPlan">
+            <div class="proceed-book bg_img" data-background="/user/images/movie/movie-bg-proceed.jpg">
+                <div class="proceed-to-book">
+                    <div class="book-item">
+                        <span>Ghế đã chọn:</span>
+                        <h3 class="title" id="currentSeatList" ></h3>
+                        <input name="currentSeatList" readonly hidden>
+                    </div>
+                    <div class="book-item">
+                        <span>Tổng tiền</span>
+                        <h3 class="title" id="totalPrice"></h3>
+                    </div>
+                    <div class="book-item">                      
+                        <a id="submitSeatPlan" class="custom-button" style="cursor: pointer;">Thanh toán</a>
+                    </div>
+>>>>>>> ad95755a43ad0f7f8ce0bc781eab810b95a563c1
                 </div>
             </div>
         </div>

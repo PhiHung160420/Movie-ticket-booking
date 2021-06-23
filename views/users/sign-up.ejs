@@ -1,3 +1,100 @@
+<!-- ==========Header-Section========== -->
+<header class="header-section">
+    <div class="container">
+        <div class="header-wrapper">
+            <div class="logo">
+                <a href="/user/">
+                    <img style="border-radius: 20px;" src="/user/images/logo/logo-cinema.png" alt="logo">
+                </a>
+            </div>
+            <ul class="menu">
+                <li>
+                    <a href="/user/" class="active">Trang chủ</a>
+                </li>
+                <li>
+                    <a href="#0">Phim</a>
+                    <ul class="submenu">
+                        <li>
+                            <a href="/user/movie-list">Tất cả phim</a>
+                        </li>
+                        <li>
+                            <a href="/user/movie-list">Phim đang chiếu</a>
+                        </li>
+                        <li>
+                            <a href="/user/movie-list">Phim sắp chiếu</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#0">Hệ thống rạp</a>
+                    <ul class="submenu">
+                        <li>
+                            <a href="/user/movie-seat-plan">Tất cả các rạp</a>
+                        </li>
+                        <li>
+                            <a href="#">Rạp đặc biệt</a>
+                        </li>
+                        <li>
+                            <a href="#">Rạp sắp mở</a>
+                        </li>
+                </li>
+                </ul>
+                </li>
+                <li>
+                    <a href="/user/movie-ticket-plan">Lịch chiếu</a>
+                </li>
+                <li>
+                    <a href="/user/contact">Liên hệ</a>
+                </li>
+                <li>
+                    <a href="#">Thành viên</a>
+                    <ul class="submenu">
+                        <% if(currentUser != null && currentUser.user_role == true) { %>
+                            <li>
+                                <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
+                            </li>
+                            <li>
+                                <a href="#">Vé của tôi</a>
+                            </li>
+                            <li>
+                                <a href="/admin">Quản lý</a>
+                            </li>
+                            <% } else { %>
+                                <li>
+                                    <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
+                                </li>
+                                <li>
+                                    <a href="#">Vé của tôi</a>
+                                </li>
+                                
+                            <% } %>
+                    </ul>
+                </li>
+                <li class="header-button pr-0">
+                    <% if(currentUser) { %>
+                        <a><%=currentUser.user_name%></a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="/user/logout">Đăng xuất</a>
+                            </li>
+                        </ul>
+                        <% } else { %>
+                                <a href="/user/sign-in">Đăng nhập</a>
+                            <% } %>
+
+                    
+                </li>
+            </ul>
+            <div class="header-bar d-lg-none">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- ==========Header-Section========== -->
+
 <!-- ==========Preloader========== -->
 <div class="preloader">
     <div class="preloader-inner">

@@ -5,14 +5,24 @@ const Booking = require('../../models/booking');
 
 //INDEX
 exports.getIndex = async (req, res, next) => {
-    res.locals.theaterClusterList = await TheaterClusters.findAll({order: [['id', 'ASC']]});
-    res.render("admin/theater-clusters/index");
+    if(req.session.user_role == true) {
+        res.locals.theaterClusterList = await TheaterClusters.findAll({order: [['id', 'ASC']]});
+        res.render("admin/theater-clusters/index");
+    }
+    else {
+        res.redirect("/user");
+    }
 };
 
 
 //ADD
 exports.getAdd = (req, res, next) => {
-    res.render("admin/theater-clusters/add");
+    if(req.session.user_role == true) {
+        res.render("admin/theater-clusters/add");
+    }
+    else {
+        res.redirect("/user");
+    }
 }
 
 exports.postAdd = async (req, res, next) => {
@@ -42,16 +52,21 @@ exports.postAdd = async (req, res, next) => {
 
 //DETAIL
 exports.getDetail = async (req, res, next) => {
-    try {
-        const { id } = req.params;
+    if(req.session.user_role == true) {
+        try {
+            const { id } = req.params;
 
-        const updateTheaterClusters = await TheaterClusters.findByPk(id);
-        if(!updateTheaterClusters) throw new Error('Theater Clusters doesn"t exist');
+            const updateTheaterClusters = await TheaterClusters.findByPk(id);
+            if(!updateTheaterClusters) throw new Error('Theater Clusters doesn"t exist');
 
-        res.locals.theaterClusters = updateTheaterClusters;
-        res.render("admin/theater-clusters/detail");
-    } catch(e) {
-        res.redirect("/admin/theater-clusters");
+            res.locals.theaterClusters = updateTheaterClusters;
+            res.render("admin/theater-clusters/detail");
+        } catch(e) {
+            res.redirect("/admin/theater-clusters");
+        }
+    }
+    else {
+        res.redirect("/user");
     }
 }
 
@@ -77,17 +92,22 @@ exports.postDetail = async (req, res, next) => {
 
 //DELETE
 exports.getDelete = async (req, res, next) => {
-    try {
-        const { id } = req.params;
+    if(req.session.user_role == true) {
+        try {
+            const { id } = req.params;
 
-        const deleteTheaterClusters = await TheaterClusters.findByPk(id);
-        if(!deleteTheaterClusters) throw new Error('Theater Clusters doesn"t exist');
+            const deleteTheaterClusters = await TheaterClusters.findByPk(id);
+            if(!deleteTheaterClusters) throw new Error('Theater Clusters doesn"t exist');
 
-        await deleteTheaterClusters.destroy();
-        req.session.toastMessage = { title: "Thành Công", msg: "Xóa cụm rạp thành công!" };
-    } catch (e) {
-        res.session.toastMessage = { title: "Thất Bại", msg: "Đã có lỗi xảy ra, vui lòng kiểm tra lại dữ liệu!" };
-    } finally {
-        res.redirect("/admin/theater-clusters");
-    } 
+            await deleteTheaterClusters.destroy();
+            req.session.toastMessage = { title: "Thành Công", msg: "Xóa cụm rạp thành công!" };
+        } catch (e) {
+            res.session.toastMessage = { title: "Thất Bại", msg: "Đã có lỗi xảy ra, vui lòng kiểm tra lại dữ liệu!" };
+        } finally {
+            res.redirect("/admin/theater-clusters");
+        } 
+    }
+    else {
+        res.redirect("/user");
+    }
 }
