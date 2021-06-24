@@ -5,7 +5,7 @@
   <div class="page-header">
     <div class="row align-items-center mb-3">
       <div class="col-sm mb-2 mb-sm-0">
-        <h1 class="page-header-title">Danh Sách Suất Chiếu<span class="badge badge-soft-dark ml-2">999,999</span></h1>     
+        <h1 class="page-header-title">Danh Sách Suất Chiếu<span class="badge badge-soft-dark ml-2"></span></h1>     
       </div>
 
       <div class="col-sm-auto">
@@ -103,6 +103,7 @@
             <th>ID</th>
             <th>Phim</th>
             <th>Rạp</th>
+            <th>Ngày</th>
             <th>Bắt Đầu</th>
             <th>Kết Thúc</th>
             <th>Giá Vé</th>
@@ -125,6 +126,7 @@
             </td>
             <td> <a class="media align-items-center ">  
               <h5 class="text-hover-primary mb-0"><%= showsList[i].theater_id %></h5></td> 
+            <td><%= showsList[i].date %></td>
             <td><%= showsList[i].start_time %></td> 
             <td><%= showsList[i].end_time %></td>
             <td><%= showsList[i].price %></td>  
