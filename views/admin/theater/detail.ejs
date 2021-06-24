@@ -48,11 +48,13 @@
                     "placeholder": "Chọn cụm rạp",
                     "searchInputPlaceholder": "Tìm cụm rạp"
                   }'>
-                    <option value="1">CGV</option>
-                    <option value="2">Cinestar</option>
-                    <option value="3">Lotte</option>
-                    <option value="4">Galaxy</option>
-                    <option value="5">BHD</option>
+                  <option value="">Bất kỳ</option>
+                  <% if(lstTheaterCluster) {%>
+                    <% lstTheaterCluster.forEach(item => { %>
+                      <option value="<%=item.id %>"><%=item.name %></option>
+                    <% }) %>
+                  <% } else { %>
+                  <% } %>
                 </select>
                 <!-- End Select2 -->
               </div>
