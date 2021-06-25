@@ -257,14 +257,14 @@
                                         <div class="movie-thumb c-thumb">
                                             <a href="/user/movie-detail/<%= movie.id %>">
                                                 <% if(movie.poster) { %>
-                                                    <img src="data:image/png;base64,<%= movie.poster %>" alt="movie">
+                                                    <img src="data:image/png;base64,<%= movie.poster %>" height="300" alt="movie">
                                                 <% } else {%>
                                                     <img src="/user/images/movie/movie01.jpg" alt="movie">
                                                 <% } %>
                                             </a>
                                         </div>
                                         <div class="movie-content bg-one">
-                                            <h5 class="title m-0">
+                                            <h5 id="div2" class="title m-0">
                                                 <a href="/user/movie-detail/<%= movie.id %>">
                                                     <%= movie.name %>
                                                 </a>
@@ -336,7 +336,7 @@
                                         <div class="movie-thumb c-thumb">
                                             <a href="/user/movie-detail/<%= movie.id %>">
                                                 <% if(movie.poster) { %>
-                                                    <img src="data:image/png;base64,<%= movie.poster %>" alt="movie">
+                                                    <img src="data:image/png;base64,<%= movie.poster %>" height="300"  alt="movie">
                                                 <% } else {%>
                                                     <img src="/user/images/movie/movie01.jpg" alt="movie">
                                                 <% } %>
@@ -415,7 +415,7 @@
                                         <div class="movie-thumb c-thumb">
                                             <a href="/user/movie-detail/<%= movie.id %>">
                                                 <% if(movie.poster) { %>
-                                                    <img src="data:image/png;base64,<%= movie.poster %>" alt="movie">
+                                                    <img src="data:image/png;base64,<%= movie.poster %>" height="300" alt="movie">
                                                 <% } else {%>
                                                     <img src="/user/images/movie/movie01.jpg" alt="movie">
                                                 <% } %>
