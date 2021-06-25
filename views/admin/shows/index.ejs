@@ -120,12 +120,11 @@
               <a class="media align-items-center">
                 <img class="avatar avatar-lg mr-3" src="/admin/assets\img\400x400\theater.png" alt="Image Description">
                 <div class="media-body">
-                  <h5 class="text-hover-primary mb-0"><%=showsList[i].movie_id %></h5>
+                  <h5 class="text-hover-primary mb-0"><%= xyz[i].movie.name %></h5>
                 </div>
               </a>
             </td>
-            <td> <a class="media align-items-center ">  
-              <h5 class="text-hover-primary mb-0"><%= showsList[i].theater_id %></h5></td> 
+            <td><%= showsList[i].theater.name%></td>
             <td><%= showsList[i].date %></td>
             <td><%= showsList[i].start_time %></td> 
             <td><%= showsList[i].end_time %></td>

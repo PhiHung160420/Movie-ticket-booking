@@ -5,8 +5,16 @@ const db = require("../../config/database/db");
 //INDEX
 exports.getIndex = async (req, res, next) => {
     if(req.session.user_role == true) {
-        res.locals.TheaterList = await Theater.findAll({order: [['id', 'ASC']]});
-        res.locals.TheaterClusterList =await TheaterCluster.findAll({order: [['id', 'ASC']]});
+        const theaterList = await Theater.findAll({
+            include: [{
+                model: TheaterCluster,
+                attributes: ['name']
+            }],
+        });
+        res.locals.TheaterList = theaterList;
+        res.locals.lstTheaterCluster = await TheaterCluster.findAll({
+            attributes: [[db.fn("DISTINCT", db.col("name")), "name"], "id"],
+          });
         res.render("admin/theater/index");
     }
     else {

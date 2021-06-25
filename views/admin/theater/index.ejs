@@ -70,11 +70,12 @@
                       "width": true
                     }'>
               <option value="">Bất Kỳ</option>
-              <option value="Accountant">CGV</option>
-              <option value="Co-founder">Cinestar</option>
-              <option value="Designer">Lotte</option>
-              <option value="Developer">Galaxy</option>
-              <option value="Director">BHD</option>
+                <% if(lstTheaterCluster) {%>
+                <% lstTheaterCluster.forEach(item => { %>
+                  <option value="<%=item.id %>"><%=item.name %></option>
+                <% }) %>
+                <% } else { %>
+              <% } %>
             </select>
                 </div>
             </div>
@@ -126,7 +127,7 @@
                   </div>
                 </a>
               </td>  
-              <td><%= TheaterList[i].theater_cluster_id %></td>
+              <td><%= TheaterList[i].theater_cluster.name %></td>
               <td><%= TheaterList[i].kind %></td>            
               <td>
                 <div class="btn-group" role="group">

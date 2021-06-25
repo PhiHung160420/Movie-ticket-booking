@@ -1,4 +1,4 @@
-const Movies = require('../../models/movie');
+const Movie = require('../../models/movie');
 const Theater = require('../../models/theater');
 const Showtimes = require('../../models/showtimes');
 const db = require('../../config/database/db');
@@ -6,21 +6,34 @@ const db = require('../../config/database/db');
 exports.getIndex = async (req, res, next) => {
     if(req.session.user_role == true)
     {
-        res.locals.showsList = await Showtimes.findAll({order: [['id', 'ASC']]});
-        res.locals.movieList = await Movies.findAll({order: [['id', 'ASC']]});
-        res.locals.theaterList = await Theater.findAll({order: [['id', 'ASC']]});
+        const ShowsList = await Showtimes.findAll({
+            
+            include:[{
+                model: Theater,
+                attributes: ['name']
+            }],
+        });
+
+        const abc = await Showtimes.findAll({
+            include: [{
+                model: Movie,
+                attributes: ['name']
+            }],
+        });
+        res.locals.xyz = abc;
+        res.locals.showsList = ShowsList;
         res.render("admin/shows/index");
     }
     else
     {
         res.redirect("/user");
-    }
+    }  
 };
 exports.getAdd = async (req, res, next) => {
     if(req.session.user_role == true) {
 
         //get list movies
-        res.locals.lstMovies = await Movies.findAll({
+        res.locals.lstMovies = await Movie.findAll({
             attributes: [[db.fn("DISTINCT", db.col("name")), "name"], "id"],
         });
 
@@ -38,7 +51,7 @@ exports.getAdd = async (req, res, next) => {
 
 exports.postAdd = async (req, res, next) => {
     try {
-        res.locals.lstMovies = await Movies.findAll({
+        res.locals.lstMovies = await Movie.findAll({
             attributes: [[db.fn("DISTINCT", db.col("name")), "name"], "id"],
         });
 
