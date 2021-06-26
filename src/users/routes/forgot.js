@@ -126,7 +126,7 @@ router.post("/reset-password", asyncHandler(async(req, res) =>{
     }
     if (errors!=null) {
         const string = encodeURIComponent(errors);
-        return res.redirect('/user/reset-password/?validErr=' + string);  
+        return res.redirect('/user/reset-password/?token='+token+'&validErr='+string);   
     }
 
     const user = await User.findOne({where:{'user_codereset': token} });
