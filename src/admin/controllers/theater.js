@@ -90,7 +90,7 @@ exports.postDetail = async (req, res, next) => {
         res.locals.lstTheaterCluster = await TheaterCluster.findAll({
             attributes: [[db.fn("DISTINCT", db.col("name")), "name"], "id"],
           });
-        const { name, theater_cluster_ID,kind,horizontial_size,vertical_size } = req.body;
+        const { id,name, theater_cluster_ID,kind,horizontial_size,vertical_size } = req.body;
 
         const updateTheater = await Theater.findByPk(id);
         if(!updateTheater) throw new Error('Rạp không tồn tại !');
