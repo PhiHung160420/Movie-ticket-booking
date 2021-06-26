@@ -5,16 +5,16 @@
     <div class="page-header">
       <div class="row align-items-center mb-3">
         <div class="col-sm mb-2 mb-sm-0">
-          <h1 class="page-header-title">Danh Sách Rạp<span class="badge badge-soft-dark ml-2" >999,999</span></h1>     
+          <h1 class="page-header-title">Danh Sách Rạp<span class="badge badge-soft-dark ml-2" ></span></h1>     
           
         </div>
         <!-- <div class="col-sm-auto">
           <a class="btn btn-primary" href="/admin/theater">Danh Sách Rạp</a>
-        </div>
+        </div> -->
 
         <div class="col-sm-auto">
           <a class="btn btn-primary" href="/admin/theater/add">Thêm Rạp</a>
-        </div> -->
+        </div>
       </div>
       <!-- End Row -->
 
@@ -70,11 +70,12 @@
                       "width": true
                     }'>
               <option value="">Bất Kỳ</option>
-              <option value="Accountant">CGV</option>
-              <option value="Co-founder">Cinestar</option>
-              <option value="Designer">Lotte</option>
-              <option value="Developer">Galaxy</option>
-              <option value="Director">BHD</option>
+                <% if(lstTheaterCluster) {%>
+                <% lstTheaterCluster.forEach(item => { %>
+                  <option value="<%=item.id %>"><%=item.name %></option>
+                <% }) %>
+                <% } else { %>
+              <% } %>
             </select>
                 </div>
             </div>
@@ -126,13 +127,13 @@
                   </div>
                 </a>
               </td>  
-              <td><%= TheaterList[i].theater_cluster_id %></td>
+              <td><%= TheaterList[i].theater_cluster.name %></td>
               <td><%= TheaterList[i].kind %></td>            
               <td>
                 <div class="btn-group" role="group">
-                  <a class="btn btn-sm btn-success" href="/admin/theater/detail/<%= TheaterList[i].id %>">
+                  <!-- <a class="btn btn-sm btn-success" href="/admin/theater/detail/<%= TheaterList[i].id %>">
                     <i class="tio-edit"></i> Sửa
-                  </a>
+                  </a> -->
                   <a class="btn btn-sm btn-danger" href="/admin/theater/delete/<%= TheaterList[i].id %>" data-toggle="modal" data-target="#exampleModalCenter">
                     <i class="tio-delete"></i> Xóa
                   </a>               

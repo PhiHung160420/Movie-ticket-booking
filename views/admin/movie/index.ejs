@@ -4,13 +4,13 @@
     <!-- Page Header -->
     <div class="page-header">
       <div class="row align-items-center mb-3">
-        <!-- <div class="col-sm mb-2 mb-sm-0">
-          <h1 class="page-header-title">Danh Sách Phim<span class="badge badge-soft-dark ml-2">999,999</span></h1>     
-        </div> -->
+        <div class="col-sm mb-2 mb-sm-0">
+          <h1 class="page-header-title">Danh Sách Phim<span class="badge badge-soft-dark ml-2"></span></h1>     
+        </div>
 
-        <!-- <div class="col-sm-auto">
+        <div class="col-sm-auto">
           <a class="btn btn-primary" href="/admin/movie/add">Thêm Phim</a>
-        </div> -->
+        </div>
       </div>
       <!-- End Row -->
 
@@ -131,9 +131,9 @@
               <td> <%= movieList[i].liked %></td> 
               <td>
                 <div class="btn-group" role="group">
-                  <a class="btn btn-sm btn-success" href="/admin/movie/detail/<%= movieList[i].id %>">
+                  <!-- <a class="btn btn-sm btn-success" href="/admin/movie/detail/<%= movieList[i].id %>">
                     <i class="tio-edit"></i> Sửa
-                  </a>
+                  </a> -->
                   <a class="btn btn-sm btn-danger" href="/admin/movie/delete/<%= movieList[i].id %>" data-toggle="modal" data-target="#exampleModalCenter">
                     <i class="tio-delete"></i> Xóa
                   </a>               

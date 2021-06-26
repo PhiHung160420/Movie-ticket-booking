@@ -7,7 +7,7 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb breadcrumb-no-gutter">
             <li class="breadcrumb-item">
-              <a class="breadcrumb-link" href="/admin/shows">Suất Chiếu</a>
+              <a class="breadcrumb-link" href="/admin/showtimes">Suất Chiếu</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">
               Thêm Suất Chiếu
@@ -21,7 +21,7 @@
     <!-- End Row -->
   </div>
   <!-- End Page Header -->
-
+<form method="POST" id="frm">
   <div class="row">
     <div class="col-lg">
       <!-- Card -->
@@ -39,30 +39,35 @@
           <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="SKULabel" class="input-label">Phim</label>
-                <!-- Select2 -->
+                <label for="SKULabel" class="input-label">Phim</label >
                 <select
+                  name="movieID"
+                  id="movieID"
                   class="js-select2-custom custom-select"
                   size="1"
                   style="opacity: 0"
                   data-hs-select2-options='{
                       "placeholder": "Chọn phim",
                       "searchInputPlaceholder": "Tìm phim"
-                    }'
-                >
-                  <option value="1">Vincenzo Cassano</option>
-                  <option value="2">Doraemon</option>
-                  <option value="3">Conan</option>
+                    }'>
+                <option value="">Bất kỳ</option>
+                <% if(lstMovies) {%>
+                  <% lstMovies.forEach(item => { %>
+                    <option value="<%=item.id %>"><%=item.name %></option>
+                  <% }) %>
+                <% } else { %>
+                <% } %>
                 </select>
-                <!-- End Select2 -->
               </div>
-            </div>
+            </div> 
 
-            <div class="col-sm-6">
+            <div class="col-sm-6"> 
               <div class="form-group">
                 <label for="SKULabel" class="input-label">Rạp</label>
-                <!-- Select2 -->
+                
                 <select
+                  name="theaterID"
+                  id="theaterID"
                   class="js-select2-custom custom-select"
                   size="1"
                   style="opacity: 0"
@@ -71,35 +76,55 @@
                       "searchInputPlaceholder": "Tìm rạp"
                     }'
                 >
-                  <optgroup label="CGV">
-                    <option value="item-1-1">CGV 1</option>
-                    <option value="item-1-2">CGV 2</option>
-                  </optgroup>
-                  <optgroup label="Cinestar">
-                    <option value="item-2-1">Cinestar 1</option>
-                    <option value="item-2-2">Cinestar 2</option>
-                  </optgroup>
+                <option value="">Bất kỳ</option>
+                <% if(lstTheater) {%>
+                  <% lstTheater.forEach(item => { %>
+                    <option value="<%=item.id %>"><%=item.name %></option>
+                  <% }) %>
+                <% } else { %>
+                <% } %>
                 </select>
-                <!-- End Select2 -->
+                
               </div>
             </div>
           </div>
 
           <div class="row">
             <div class="col-sm-6">
+
+              <div class="form-group">
+                <label for="SKULabel" class="input-label">Ngày</label>
+                <div id="projectDeadlineNewProjectFlatpickr" class="js-flatpickr flatpickr-custom input-group input-group-merge"
+                data-hs-flatpickr-options='{
+                 "appendTo": "#projectDeadlineNewProjectFlatpickr",
+                 "dateFormat": "d/m/Y",
+                 "wrap": true
+               }'>
+                  <div class="input-group-prepend" data-toggle>
+                    <div class="input-group-text">
+                      <i class="tio-date-range"></i>
+                    </div>
+                  </div>
+         
+                  <input type="text" class="flatpickr-custom-form-control form-control" id="date" name="date" placeholder="Chọn ngày" data-input>
+                </div>
+              </div>
+
+
               <div class="form-group">
                 <label for="SKULabel" class="input-label">Bắt Đầu</label>
                 <div
-                  id="projectDeadlineNewProjectFlatpickr1"
+                  id="projectDeadlineNewProjectFlatpickr"
                   class="
                     js-flatpickr
                     flatpickr-custom
                     input-group input-group-merge
                   "
                   data-hs-flatpickr-options='{
-                   "appendTo": "#projectDeadlineNewProjectFlatpickr1",
+                   "appendTo": "#projectDeadlineNewProjectFlatpickr",
                    "enableTime": "true",
-                   "dateFormat": "d/m/Y H:i",
+                   "data-enable-seconds": "true",
+                   "data-no-calendar" = "true",
                    "wrap": true
                  }'
                 >
@@ -110,31 +135,34 @@
                   </div>
 
                   <input
-                    type="text"
+                    type="time"
                     class="flatpickr-custom-form-control form-control"
-                    id="projectDeadlineFlatpickrNewProjectLabel"
-                    placeholder="Select dates"
+                    placeholder="Chọn giờ"
                     data-input
-                    value="29/06/2020"
+                    name="start"
+                    id="start"
                   />
                 </div>
               </div>
+
+              
             </div>
 
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="SKULabel" class="input-label">Kết Thúc</label>
                 <div
-                  id="projectDeadlineNewProjectFlatpickr2"
+                  id="projectDeadlineNewProjectFlatpickr"
                   class="
                     js-flatpickr
                     flatpickr-custom
                     input-group input-group-merge
                   "
                   data-hs-flatpickr-options='{
-                   "appendTo": "#projectDeadlineNewProjectFlatpickr2",
+                   "appendTo": "#projectDeadlineNewProjectFlatpickr",
                    "enableTime": "true",
-                   "dateFormat": "d/m/Y H:i",
+                   "data-enable-seconds": "true",
+                   "data-no-calendar" = "true",
                    "wrap": true
                  }'
                 >
@@ -145,38 +173,21 @@
                   </div>
 
                   <input
-                    type="text"
+                    type="time"
                     class="flatpickr-custom-form-control form-control"
-                    id="projectDeadlineFlatpickrNewProjectLabel"
-                    placeholder="Select dates"
                     data-input
-                    value="29/06/2020"
+                    name="end"
+                    id="end"
                   />
                 </div>
               </div>
+              <div class="form-group">
+                <label for="SKULabel" class="input-label">Giá Vé</label>
+                <input type="text" class="form-control" name="price" id="price" placeholder="" aria-label="Shirt, t-shirts, etc.">
+              </div>
             </div>
-          </div>
-
-          <div class="form-group">
-            <label for="productNameLabel" class="input-label">Giá Vé
-              <i
-                class="tio-help-outlined text-body ml-1"
-                data-toggle="tooltip"
-                data-placement="top"
-                title=""
-              ></i
-            ></label>
-
-            <input
-              type="number"
-              class="form-control"
-              name="productName"
-              id="productNameLabel"
-              placeholder=""
-              aria-label="Shirt, t-shirts, etc."
-            />
-          </div>
-
+            
+          </div>         
           <!-- Body -->
         </div>
         <!-- End Card -->
@@ -196,17 +207,12 @@
               <button type="button" class="btn btn-ghost-danger">Xóa</button>
             </div>
             <div class="col-auto">
-              <button type="button" class="btn btn-ghost-light mr-2">
-                Nháp
-              </button>
-              <button type="button" class="btn btn-primary">Lưu</button>
-            </div>
+              <button type="button" class="btn btn-primary" onclick="submitFrm()">Lưu</button>
           </div>
           <!-- End Row -->
         </div>
       </div>
       <!-- End Card -->
     </div>
-  </div>
-  <!-- End Content -->
+  </form> 
 </div>

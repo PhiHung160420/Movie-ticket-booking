@@ -1,17 +1,32 @@
 const Theater = require('../../models/theater');
+const TheaterCluster = require('../../models/theater_clusters');
+const db = require("../../config/database/db");
 
 //INDEX
-exports.getIndex = async(req, res, next) => {
+exports.getIndex = async (req, res, next) => {
     if(req.session.user_role == true) {
-        res.locals.TheaterList = await Theater.findAll({order: [['id', 'ASC']]});
+        const theaterList = await Theater.findAll({
+            include: [{
+                model: TheaterCluster,
+                attributes: ['name']
+            }],
+        });
+        res.locals.TheaterList = theaterList;
+        res.locals.lstTheaterCluster = await TheaterCluster.findAll({
+            attributes: [[db.fn("DISTINCT", db.col("name")), "name"], "id"],
+          });
         res.render("admin/theater/index");
     }
     else {
         res.redirect("/user");
     }
 };
-exports.getAdd = (req, res, next) => {
+exports.getAdd = async (req, res, next) => {
     if(req.session.user_role == true) {
+        
+        res.locals.lstTheaterCluster = await TheaterCluster.findAll({
+            attributes: [[db.fn("DISTINCT", db.col("name")), "name"], "id"],
+          });
         res.render("admin/theater/add");
     }
     else {
@@ -21,7 +36,7 @@ exports.getAdd = (req, res, next) => {
 
 exports.postAdd = async (req, res, next) => {
     try {
-        const { name,id,kind,horizontial_size,vertical_size} = req.body;
+        const { name,theater_cluster_ID,kind,horizontial_size,vertical_size} = req.body;
 
         const found = await Theater.findOne({
             where: {
@@ -32,7 +47,7 @@ exports.postAdd = async (req, res, next) => {
 
         //else
         await Theater.create({
-            theater_cluster_id:id,
+            theater_cluster_id:theater_cluster_ID,
             name: name,
             kind:kind,
             horizontial_size:horizontial_size,
@@ -51,6 +66,9 @@ exports.postAdd = async (req, res, next) => {
 exports.getDetail = async (req, res, next) => {
     if(req.session.user_role == true) {
         try {
+            res.locals.lstTheaterCluster = await TheaterCluster.findAll({
+                attributes: [[db.fn("DISTINCT", db.col("name")), "name"], "id"],
+              });
             const { id } = req.params;
 
             const updateTheater = await Theater.findByPk(id);
@@ -69,12 +87,15 @@ exports.getDetail = async (req, res, next) => {
 
 exports.postDetail = async (req, res, next) => {
     try {
-        const { id, name, theater_cluster_id,kind,horizontial_size,vertical_size } = req.body;
+        res.locals.lstTheaterCluster = await TheaterCluster.findAll({
+            attributes: [[db.fn("DISTINCT", db.col("name")), "name"], "id"],
+          });
+        const { id,name, theater_cluster_ID,kind,horizontial_size,vertical_size } = req.body;
 
         const updateTheater = await Theater.findByPk(id);
         if(!updateTheater) throw new Error('Rạp không tồn tại !');
 
-        // updateTheater.theater_cluster_id = theater_cluster_id;
+        updateTheater.theater_cluster_id = theater_cluster_ID;
         updateTheater.name = name;
         updateTheater.kind = kind;
         updateTheater.horizontial_size=horizontial_size;
