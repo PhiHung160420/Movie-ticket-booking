@@ -16,8 +16,10 @@ exports.listMovies = asyncHandler(async (req, res) => {
 
 exports.ListMoviesSort = asyncHandler(async (req, res) => {
     const sort = req.params.sort;
+    console.log(sort);
     res.locals.moment = moment;
     if (sort === "releaseDate") {
+      console.log('into releaseDate');
       const data = await Movies.findAll({
         order: [["releaseDate", "DESC"]],
       });
@@ -27,6 +29,7 @@ exports.ListMoviesSort = asyncHandler(async (req, res) => {
           movie.poster = Buffer.from(movie.poster, 'binary').toString('base64');
         }
       });
+      console.log(data);
       res.render("users/movie-list", { movies: data });
     }
     if (sort === "mostViewed") {

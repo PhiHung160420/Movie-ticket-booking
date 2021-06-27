@@ -102,6 +102,7 @@
           <tr>              
             <th>ID</th>
             <th>Phim</th>
+            <th>Cụm rạp</th>
             <th>Rạp</th>
             <th>Ngày</th>
             <th>Bắt Đầu</th>
@@ -124,8 +125,9 @@
                 </div>
               </a>
             </td>
-            <td><%= showsList[i].theater.name%></td>
-            <td><%= showsList[i].date %></td>
+            <td><%= showsList[i].theater.theater_cluster.name%></td>
+            <td><%= showsList[i].theater.name%></td>    
+            <td><%= moment(showsList[i].date).format('DD-MM-YYYY') %></td>
             <td><%= showsList[i].start_time %></td> 
             <td><%= showsList[i].end_time %></td>
             <td><%= showsList[i].price %></td>  

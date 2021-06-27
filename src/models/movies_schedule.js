@@ -13,7 +13,7 @@ const Movies_schedule = db.define("movies_schedule", {
     primaryKey: true,
   },
   schedule_date: {
-    type: DataTypes.DATE,
+    type: DataTypes.DATEONLY,
     primaryKey: true,
   },
 }, {timestamps: false, createdAt: false, updatedAt: false});

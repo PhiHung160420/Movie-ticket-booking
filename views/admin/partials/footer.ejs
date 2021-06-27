@@ -14,7 +14,33 @@
     }
   $(document).on('ready', function () {
 
-    
+    //filter theater then select theater cluster
+    $('#cluster_seleted').on('change', function() {
+      let cluster = $(this).val();
+      console.log(cluster);
+      if(cluster !== "")
+      {
+        $.ajax({
+          type: "POST",
+          url: "/admin/shows/add/filter-theater",
+          data: {cluster},
+          dataType: "json",
+          success: function(res){
+              let html = "";
+              console.log(res);
+              $.each(res, function(index, val) {
+                  console.log(val.id);
+                  console.log(val.name);
+                  html += '<option value="'+ val.id +'">'+ val.name+'</option>';
+              });
+              if(html == "") {
+                  html = '<option value="">Bất kỳ</option>';
+              }
+              $('#theater_selected').html(html);
+          },        
+        });
+      }
+    });
 
     // AJAX FOR STATISTICS THEATER CLUSTER
     $('#btn_statis_cluster').on('click', function() {

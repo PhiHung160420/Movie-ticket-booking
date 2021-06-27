@@ -8,6 +8,9 @@ router.get("/shows", ShowsController.getIndex);
 router.get("/shows/add", ShowsController.getAdd);
 router.post("/shows/add", ShowsController.postAdd);
 
+//FILTER THEATER
+router.post("/shows/add/filter-theater", ShowsController.filterTheater);
+
 // DETAIL
 router.get("/shows/detail/:id", ShowsController.getDetail);
 router.post("/shows/detail/:id",ShowsController.postDetail);
