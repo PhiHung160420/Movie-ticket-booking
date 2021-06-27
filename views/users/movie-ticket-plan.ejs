@@ -116,8 +116,6 @@
     <div class="custom-warning-item" id="custom-warning-item">
         <h6 class="subtitle"></h6>
         <h4 class="title"></h4>
-        <a href="/user/movie-ticket-plan" class="custom-button continueButton">Tiếp tục<i
-                class="fas fa-angle-right"></i></a> 
     </div>
 </section>
 <!-- ==========Custom-Window-Warning-Section========== -->
@@ -148,7 +146,9 @@
                     <% if(listMovies) {%>
                         <% listMovies.map(movie => { %>
                     <option value="<%= movie.id %>"><%= movie.name %></option>
-                    <% })} %>
+                    <% })} else { %>
+                        <option value=""></option>
+                    <% } %>
                 </select>
             </div>
             <div class="form-group">
@@ -157,7 +157,6 @@
                 </div>
                 <span class="type">Chọn rạp</span>
                 <select disabled class="select-bar" name="select_theater_cluster">
-                    <option value=""></option>
                 </select>
             </div>
             <div class="form-group">
@@ -166,7 +165,6 @@
                 </div>
                 <span class="type">Chọn ngày</span>
                 <select disabled class="select-bar" name="select_date">
-                    <option value=""> </option>
                 </select>
             </div>
             <button name="btn_search_showtimes" id="btn_search_showtimes" class="custom-button btn-search">Tìm kiếm</button>

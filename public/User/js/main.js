@@ -63,11 +63,27 @@
                   html += '<option value="'+ val.cluster_id +'">'+ val.cluster_name+'</option>';
               });
               if(html == "") {
-                  html = '<option value="">Venus</option>';
+                  //set value default date when theater cluster empty
+                  html = '<option value=""></option>';
+                  $('select[name=select_date]').html(html);
+                  $('select[name=select_theater_cluster]').html(html);
+                  $('select[name=select_date]').niceSelect('destroy');
+                  $('select[name=select_date]').niceSelect();
+                  $('select[name=select_theater_cluster]').niceSelect('destroy');
+                  $('select[name=select_theater_cluster]').niceSelect();
+
+                  /*customer windown-warning*/
+                  $(".custom-windown-warning").removeClass("inActive");
+                  $("div#custom-warning-item h6").text("Thông báo");
+                  $("div#custom-warning-item h4").text('Phim bạn chọn tạm thời chưa có suất chiếu. Vui lòng chọn phim khác');
+                  /*end customer windown-warning*/
               }
-              $('select[name=select_theater_cluster]').html(html);
-              $('select[name=select_theater_cluster]').niceSelect('destroy');
-              $('select[name=select_theater_cluster]').niceSelect();
+              else
+              {
+                $('select[name=select_theater_cluster]').html(html);
+                $('select[name=select_theater_cluster]').niceSelect('destroy');
+                $('select[name=select_theater_cluster]').niceSelect();
+              }
           },        
         });
       }
@@ -76,8 +92,8 @@
     //filter date when selected movie and theater_cluster
     $('select[name=select_theater_cluster]').on('change', function() {
       $("select[name=select_date]").prop('disabled', false);
-      let cluster_selected = $(this).val();
       let movie_selected = $("select[name=select_movie] :selected").val();
+      let cluster_selected = $(this).val();    
       if(cluster_selected !== "" && movie_selected !== "")
       {
         $.ajax({
@@ -88,14 +104,22 @@
           success: function(res){
               let html = "";
               $.each(res, function(index, val) {
-                  html += '<option value="' + val.schedule_date + '">' + val.schedule_date + '</option>';
+                  html += '<option value="' + val.schedule_date + '">' + val.schedule_date_frm + '</option>';
               });
               if(html == "") {
-                  html = '<option value="">10-10-2020</option>';
+                  html = '<option value=""></option>'
+                  /*customer windown-warning*/
+                  $(".custom-windown-warning").removeClass("inActive");
+                  $("div#custom-warning-item h6").text("Thông báo");
+                  $("div#custom-warning-item h4").text('Phim bạn chọn tạm thời chưa có suất chiếu. Vui lòng chọn phim khác');
+                  /*end customer windown-warning*/
               }
-              $('select[name=select_date]').html(html);
-              $('select[name=select_date]').niceSelect('destroy');
-              $('select[name=select_date]').niceSelect();
+              else
+              {
+                $('select[name=select_date]').html(html);
+                $('select[name=select_date]').niceSelect('destroy');
+                $('select[name=select_date]').niceSelect();
+              }
           },        
         });
       }
@@ -107,7 +131,7 @@
       let movie_selected = $("select[name=select_movie] :selected").val();
       let cluster_selected = $("select[name=select_theater_cluster] :selected").val();
       let date_selected = $("select[name=select_date] :selected").val();
-      if(cluster_selected && movie_selected && date_selected)
+      if(movie_selected && cluster_selected && date_selected)
       {
         $.ajax({
           type: "POST",

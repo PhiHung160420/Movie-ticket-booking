@@ -67,11 +67,11 @@ exports.filterDate = asyncHandler(async (req, res) => {
         ]
     });
     let lstSendAjax = []
-    lstResult.forEach(item => lstSendAjax.push({schedule_date: moment(item.schedule_date).format( 'DD-MM-YYYY')}));
+    lstResult.forEach(item => lstSendAjax.push({schedule_date_frm: moment(item.schedule_date).format( 'DD-MM-YYYY'), schedule_date: item.schedule_date}));
     return res.status(200).json(lstSendAjax);
 });
 
-//lấy dữ liệu từ post và xử lý
+//lấy dữ liệu từ request và xử lý
 exports.postShowTimes = asyncHandler(async (req, res) => {
     res.locals.moment = moment;
 
@@ -83,7 +83,6 @@ exports.postShowTimes = asyncHandler(async (req, res) => {
         req.flash('info', 'Hãy chọn đầy đủ các thông tin');
         res.redirect('/user/');
     }
-
     //lấy danh sách các rạp theo cụm rạp
     const getListTheater = await Theater.findAll({
         where: {
