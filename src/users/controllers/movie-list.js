@@ -1,9 +1,7 @@
-const moment = require("moment");
 const asyncHandler = require("express-async-handler");
 const Movies = require('../../models/movie');
 
 exports.listMovies = asyncHandler(async (req, res) => {
-    res.locals.moment = moment;
     const data = await Movies.findAll();
     data.forEach( movie => {
       if(movie.poster)
@@ -17,7 +15,6 @@ exports.listMovies = asyncHandler(async (req, res) => {
 exports.ListMoviesSort = asyncHandler(async (req, res) => {
     const sort = req.params.sort;
     console.log(sort);
-    res.locals.moment = moment;
     if (sort === "releaseDate") {
       console.log('into releaseDate');
       const data = await Movies.findAll({

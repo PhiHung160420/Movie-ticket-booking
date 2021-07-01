@@ -6,6 +6,7 @@ const Booking = require('../../models/booking');
 const Ticket = require('../../models/ticket');
 const User = require('../../models/user');
 const db = require('../../config/database/db');
+const moment = require('moment');
 
 const nodemailer = require('nodemailer');
 const QRCode = require('qrcode');
@@ -146,7 +147,7 @@ exports.postCheckout = async (req, res, next) => {
                                 </tr>
                                 <tr>
                                     <td>Thời gian:</td>
-                                    <th align="left">${currentShowtime.showtime.date.getDate()}/${currentShowtime.showtime.date.getMonth() + 1}/${currentShowtime.showtime.date.getFullYear()}, 
+                                    <th align="left">${moment(currentShowtime.showtime).format('DD/MM/YYYY')}, 
                                     ${currentShowtime.showtime.start_time.substr(0, 5)} ~ ${currentShowtime.showtime.end_time.substr(0, 5)}</th>
                                 </tr>
                                 <tr>

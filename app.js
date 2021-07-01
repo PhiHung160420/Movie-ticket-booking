@@ -12,6 +12,7 @@ const passport = require('passport');
 //user
 const authMiddlewares = require("./src/users/middlewares/auth");
 const getMiddlewares = require('./src/users/middlewares/middleware');
+const moment = require('./src/users/middlewares/moment');
 //admin
 const setLayoutMiddleware = require("./src/admin/middlewares/set_layout");
 
@@ -102,6 +103,7 @@ app.use(flash());
 //user
 app.use(getMiddlewares);
 app.use(authMiddlewares);
+app.use(moment);
 
 //express ejs-layouts
 app.use(expressLayouts);

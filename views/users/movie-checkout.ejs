@@ -184,8 +184,8 @@
                             </li>
                             <li>
                                 <h6 class="subtitle"><span><%= currentShowtime.theater.theater_cluster.name %></span></h6>
-                                <div class="info"><span><%= currentShowtime.showtime.date.getDate() %>/<%= currentShowtime.showtime.date.getMonth() + 1 %>/<%= currentShowtime.showtime.date.getFullYear() %>
-                                    , <%= currentShowtime.showtime.start_time.substr(0, 5) %> ~ <%= currentShowtime.showtime.end_time.substr(0, 5) %> </span></div>
+                                <div class="info"><span><%= moment(currentShowtime.showtime.date).format('DD/MM/YYYY') %>
+                                , <%= currentShowtime.showtime.start_time.substr(0, 5) %> ~ <%= currentShowtime.showtime.end_time.substr(0, 5) %> </span></div>
                             </li>
                             <li>
                                 <h6 class="subtitle"><span><%= currentShowtime.theater.name %></span></h6>

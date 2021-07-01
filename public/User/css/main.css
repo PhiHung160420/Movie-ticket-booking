@@ -7215,24 +7215,15 @@ input[type="submit"] {
   margin-bottom: 20px;
 }
 
-.speak-con-wrapper::before {
-  height: calc(100% - 30px);
-  width: 1px;
-  background: #1e3c7e;
-}
+
 
 @media (max-width: 991px) {
-  .speak-con-wrapper::before {
-    display: none;
-  }
+
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
   .speak-con-wrapper {
     padding: 24px 20px;
-  }
-  .speak-con-wrapper::before {
-    left: 45%;
   }
 }
 
@@ -7268,10 +7259,6 @@ input[type="submit"] {
 
 .speak-con-area .item .item-thumb img {
   max-width: 100%;
-}
-
-.speak-con-area .item .item-content {
-  padding-left: 13px;
 }
 
 .speak-con-area .item .item-content span,
