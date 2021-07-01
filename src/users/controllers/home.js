@@ -1,6 +1,5 @@
 const db = require('../../config/database/db');
 const asyncHandler = require("express-async-handler");
-const moment = require("moment");
 const Movies = require('../../models/movie');
 const Showtimes = require("../../models/showtimes");
 const Theater = require("../../models/theater");
@@ -8,8 +7,6 @@ const Theater_clusters = require("../../models/theater_clusters");
 const Movies_schedule = require('../../models/movies_schedule')
 
 exports.getMovies = asyncHandler(async (req, res) => {
-    res.locals.moment = moment; 
-
     //get message from query
     const message = req.query.message;
     console.log("message: " + message);

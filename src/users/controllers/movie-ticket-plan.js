@@ -1,6 +1,6 @@
 const { Op } = require("sequelize");
+const moment = require('moment');
 const db = require('../../config/database/db');
-const moment = require("moment");
 const asyncHandler = require("express-async-handler");
 const Movies = require('../../models/movie');
 const Showtimes = require("../../models/showtimes");
@@ -12,8 +12,6 @@ const Ticket = require('../../models/ticket');
 const User = require('../../models/user');
 
 exports.getShowTimes = asyncHandler(async (req, res) => {
-    res.locals.moment = moment;
-
     //lấy danh sách các phim
     res.locals.listMovies = await Movies.findAll({
         attributes: [
@@ -73,8 +71,6 @@ exports.filterDate = asyncHandler(async (req, res) => {
 
 //lấy dữ liệu từ request và xử lý
 exports.postShowTimes = asyncHandler(async (req, res) => {
-    res.locals.moment = moment;
-
     const { select_movie, select_theater_cluster, select_date } = req.body;
 
     //kiểm tra nếu không tồn tại dữ liệu
@@ -148,7 +144,6 @@ exports.postShowTimes = asyncHandler(async (req, res) => {
 
 // ajax search showtimes
 exports.ajaxSearchShowtimes = asyncHandler(async (req, res) => {
-    res.locals.moment = moment;
     res.locals.listShowTimes = null;
     
     const select_movie = req.body.select_movie;

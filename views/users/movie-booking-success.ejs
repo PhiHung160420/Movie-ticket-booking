@@ -99,50 +99,54 @@
                 </div>
                 <div class="speak-con-wrapper">
                     <div class="speak-con-area">                       
-                        <div class="item">
-                            <div class="item-content">
-                                <span class="up">
-                                    Rạp:
-                                    <a>
-                                        <%= theater.theater_cluster.name %>
-                                    </a>
-                                </span>
+                        <div class="item-content-left">
+                            <div class="item">
+                                <div class="item-content">
+                                    <span class="up">
+                                        Rạp:
+                                        <a>
+                                            <%= theater.theater_cluster.name %>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+    
+                            <div class="item">
+                                <div class="item-content">
+                                    <span class="up">Phòng chiếu: 
+                                        <a> <%= theater.name %> </a>
+                                    </span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="item">
-                            <div class="item-content">
-                                <span class="up"> 
-                                    Ngày chiếu: 
-                                    <a>
-                                        <%= showtime.date.getDate() %>/<%= showtime.date.getMonth() + 1 %>/<%= showtime.date.getFullYear() %>, 
-                                        <%= showtime.start_time.substr(0, 5) %> ~ <%= showtime.end_time.substr(0, 5) %> 
-                                    </a>      
-                                </span>
+                        <div class="item-content-right">
+                            <div class="item">
+                                <div class="item-content">
+                                    <span class="up"> 
+                                        Ngày chiếu: 
+                                        <a>
+                                            <%= moment(showtime.date).format('DD/MM/YYYY') %>, 
+                                            <%= showtime.start_time.substr(0, 5) %> ~ <%= showtime.end_time.substr(0, 5) %> 
+                                        </a>      
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="item">
-                            <div class="item-content">
-                                <span class="up">Phòng chiếu: 
-                                    <a> <%= theater.name %> </a>
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="item">
-                            <div class="item-content">
-                                <span class="up">Ghế:
-                                    <%
-                                        for(let i = 0; i < seatList.length; i++) {
-                                            if (i == seatList.length - 1) { %>
-                                                <a> <%= seatList[i].seat_code; %> </a>
-                                            <% } else { %>
-                                                <a> <%= seatList[i].seat_code + ', ' %> </a>
-                                        <% } }
-                                    %>
-                                    <a> </a>
-                                </span>
+    
+                            <div class="item">
+                                <div class="item-content">
+                                    <span class="up">Ghế:
+                                        <%
+                                            for(let i = 0; i < seatList.length; i++) {
+                                                if (i == seatList.length - 1) { %>
+                                                    <a> <%= seatList[i].seat_code; %> </a>
+                                                <% } else { %>
+                                                    <a> <%= seatList[i].seat_code + ', ' %> </a>
+                                            <% } }
+                                        %>
+                                        <a> </a>
+                                    </span>
+                                </div>
                             </div>
                         </div>
 

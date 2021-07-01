@@ -111,7 +111,7 @@
             <div class="details-banner-content style-two">
                 <h3 class="title"> <%= movie.name %> </h3>
                 <div class="tags">
-                    <a> <%= showtime.date.getDate() %>/<%= showtime.date.getMonth() + 1 %>/<%= showtime.date.getFullYear() %>, </a>
+                    <a> <%= moment(showtime.date).format('DD/MM/YYYY') %>, </a>
                     <a> <%= showtime.start_time.substr(0, 5) %> ~ <%= showtime.end_time.substr(0, 5) %> </a>
                     <br>
                     <a> <%= theater.name %> - </a>
