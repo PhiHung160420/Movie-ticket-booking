@@ -12,33 +12,10 @@
                     <a href="/user/" class="active">Trang chủ</a>
                 </li>
                 <li>
-                    <a href="#0">Phim</a>
-                    <ul class="submenu">
-                        <li>
-                            <a href="/user/movie-list">Tất cả phim</a>
-                        </li>
-                        <li>
-                            <a href="/user/movie-list">Phim đang chiếu</a>
-                        </li>
-                        <li>
-                            <a href="/user/movie-list">Phim sắp chiếu</a>
-                        </li>
-                    </ul>
+                    <a href="/user/movie-list">Phim</a>
                 </li>
                 <li>
-                    <a href="#0">Hệ thống rạp</a>
-                    <ul class="submenu">
-                        <li>
-                            <a href="/user/movie-seat-plan">Tất cả các rạp</a>
-                        </li>
-                        <li>
-                            <a href="#">Rạp đặc biệt</a>
-                        </li>
-                        <li>
-                            <a href="#">Rạp sắp mở</a>
-                        </li>
-                </li>
-                </ul>
+                    <a href="/user/movie-seat-plan">Hệ thống rạp</a>
                 </li>
                 <li>
                     <a href="/user/movie-ticket-plan">Lịch chiếu</a>
@@ -186,19 +163,19 @@
                     <div class="widget-1-body">
                         <ul>
                             <li>
-                                <a href="/user/movie-list/releaseDate">
+                                <a href="/user/movie-list?sort=releaseDate">
                                     <span class="img"><img src="/user/images/ticket/cinema.png" alt="sidebar"></span>
                                     <span class="cate">Top phim mới</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="/user/movie-list/mostViewed">
+                                <a href="/user/movie-list?sort=mostViewed">
                                     <span class="img"><img src="/user/images/ticket/cinema.png" alt="sidebar"></span>
                                     <span class="cate">Top phim xem nhiều</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="/user/movie-list/mostLiked">
+                                <a href="/user/movie-list?sort=mostLiked">
                                     <span class="img"><img src="/user/images/ticket/cinema.png" alt="sidebar"></span>
                                     <span class="cate">Top phim yêu thích</span>
                                 </a>
@@ -256,7 +233,7 @@
                 <div class="article-section padding-bottom">
                     <div class="section-header-1">
                         <h2 class="title">Top phim mới</h2>
-                        <a class="view-all" href="/user/movie-list/releaseDate">Xem tất cả</a>
+                        <a class="view-all" href="/user/movie-list?sort=releaseDate">Xem tất cả</a>
                     </div>
                     <div class="row mb-30-none justify-content-center">
                         <% if(justRelease.length !==0) { %>
@@ -335,7 +312,7 @@
                 <div class="article-section padding-bottom">
                     <div class="section-header-1">
                         <h2 class="title">Top phim xem nhiều</h2>
-                        <a class="view-all" href="/user/movie-list/mostViewed">Xem tất cả</a>
+                        <a class="view-all" href="/user/movie-list?sort=mostViewed">Xem tất cả</a>
                     </div>
                     <div class="row mb-30-none justify-content-center">
                         <% if(mostViewed.length !==0) { %>
@@ -414,7 +391,7 @@
                 <div class="article-section">
                     <div class="section-header-1">
                         <h2 class="title">Top phim yêu thích</h2>
-                        <a class="view-all" href="/user/movie-list/mostLiked">Xem tất cả</a>
+                        <a class="view-all" href="/user/movie-list?sort=mostLiked">Xem tất cả</a>
                     </div>
                     <div class="row mb-30-none justify-content-center">
                         <% if(mostLiked.length !==0) { %>

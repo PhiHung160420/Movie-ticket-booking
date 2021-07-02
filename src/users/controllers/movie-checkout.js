@@ -123,7 +123,7 @@ exports.postCheckout = async (req, res, next) => {
 
                 await transporter.sendMail({
                     from: process.env.EMAIL || 'ltw2nnd@gmail.com',
-                    to: 'minhhuy243@gmail.com',
+                    to: 'hungphanlk@gmail.com',
                     subject: "Đặt vé thành công",
                     textEncoding:"base64",
                     html: `<h1> Xin chào DisplayName </h1>

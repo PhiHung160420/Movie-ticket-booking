@@ -1202,7 +1202,7 @@ input[type="submit"] {
   width: 100%;
   -webkit-transition: all ease 0.3s;
   transition: all ease 0.3s;
-  max-height: 380px;
+  height: 380px;
 }
 
 .bg-one {
@@ -4219,6 +4219,12 @@ input[type="submit"] {
 .pagination-area {
   font-size: 18px;
   margin: 0 -15px;
+}
+
+.pagination-area .disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.6;
 }
 
 .pagination-area a {

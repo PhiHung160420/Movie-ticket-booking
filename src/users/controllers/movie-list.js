@@ -1,66 +1,239 @@
 const asyncHandler = require("express-async-handler");
-const Movies = require('../../models/movie');
+const db = require("../../config/database/db");
+const Movies = require("../../models/movie");
 
+//lấy tất cả các phim
 exports.listMovies = asyncHandler(async (req, res) => {
-    const data = await Movies.findAll();
-    data.forEach( movie => {
-      if(movie.poster)
-      {
-        movie.poster = Buffer.from(movie.poster, 'binary').toString('base64');
-      }
-    });
-    res.render("users/movie-list", { movies: data });
-})
+    //lấy yêu cầu lọc phim
+    let sort = req.query?.sort;
 
-exports.ListMoviesSort = asyncHandler(async (req, res) => {
-    const sort = req.params.sort;
-    console.log(sort);
-    if (sort === "releaseDate") {
-      console.log('into releaseDate');
-      const data = await Movies.findAll({
-        order: [["releaseDate", "DESC"]],
-      });
-      data.forEach( movie => {
-        if(movie.poster)
-        {
-          movie.poster = Buffer.from(movie.poster, 'binary').toString('base64');
-        }
-      });
-      console.log(data);
-      res.render("users/movie-list", { movies: data });
+    let page = 1;
+    let size = 6;
+
+    //hiển thị danh sách phim theo ngày ra mắt
+    if (typeof sort !== 'undefined' && sort === "releaseDate") {
+
+        const movies = await Movies.findAll({
+            offset: page * size - size,
+            limit: size,
+            order: [["releaseDate", "DESC"]],
+        });
+
+        const countMovies = await Movies.findAndCountAll();
+
+        movies.forEach((movie) => {
+            if (movie.poster) {
+                movie.poster = Buffer.from(movie.poster, "binary").toString(
+                    "base64"
+                );
+            }
+        });
+
+        res.render("users/movie-list", {
+            movies,
+            current: page,
+            sort,
+            totalPage: Math.ceil(countMovies.count / size),
+        });
     }
-    if (sort === "mostViewed") {
-      const data = await Movies.findAll({
-        order: [["viewed", "DESC"]],
-      });
-      data.forEach( movie => {
-        if(movie.poster)
-        {
-          movie.poster = Buffer.from(movie.poster, 'binary').toString('base64');
-        }
-      });
-      res.render("users/movie-list", { movies: data });
+    //hiển thị danh sách phim theo lượt xem
+    if (typeof sort !== 'undefined' && sort === "mostViewed") {
+        const movies = await Movies.findAll({
+            offset: page * size - size,
+            limit: size,
+            order: [["viewed", "DESC"]],
+        });
+
+        const countMovies = await Movies.findAndCountAll();
+
+        movies.forEach((movie) => {
+            if (movie.poster) {
+                movie.poster = Buffer.from(movie.poster, "binary").toString(
+                    "base64"
+                );
+            }
+        });
+
+        res.render("users/movie-list", {
+            movies,
+            current: page,
+            sort,
+            totalPage: Math.ceil(countMovies.count / size),
+        });
     }
-    if (sort === "mostLiked") {
-      const data = await Movies.findAll({
-        order: [["liked", "DESC"]],
-      });
-      data.forEach( movie => {
-        if(movie.poster)
-        {
-          movie.poster = Buffer.from(movie.poster, 'binary').toString('base64');
-        }
-      });
-      res.render("users/movie-list", { movies: data });
-    } else {
-      const data = await Movies.findAll();
-      data.forEach( movie => {
-        if(movie.poster)
-        {
-          movie.poster = Buffer.from(movie.poster, 'binary').toString('base64');
-        }
-      });
-      res.render("users/movie-list", { movies: data });
+    //hiển thị danh sách phim theo lượt yêu thích
+    if (typeof sort !== 'undefined' && sort === "mostLiked") {
+        const movies = await Movies.findAll({
+            offset: page * size - size,
+            limit: size,
+            order: [["liked", "DESC"]],
+        });
+
+        const countMovies = await Movies.findAndCountAll();
+
+        movies.forEach((movie) => {
+            if (movie.poster) {
+                movie.poster = Buffer.from(movie.poster, "binary").toString(
+                    "base64"
+                );
+            }
+        });
+
+        res.render("users/movie-list", {
+            movies,
+            current: page,
+            sort,
+            totalPage: Math.ceil(countMovies.count / size),
+        });
+    }
+    else
+    {
+        const movies = await Movies.findAll({
+            limit: size,
+            offset: page * size - size,
+        });
+    
+        const countMovies = await Movies.findAndCountAll();
+    
+        movies.forEach((movie) => {
+            if (movie.poster) {
+                movie.poster = Buffer.from(movie.poster, "binary").toString(
+                    "base64"
+                );
+            }
+        });
+    
+        res.render("users/movie-list", {
+            movies,
+            current: page,
+            sort: null,
+            totalPage: Math.ceil(countMovies.count / size),
+        });
     }
 });
 
+//phân trang
+exports.Pagination = asyncHandler(async (req, res) => {
+    //lấy số trang
+    const pageAsNumber = Number.parseInt(req.params.page);
+
+    let page = 1;
+    let size = 6;
+
+    if (!Number.isNaN(pageAsNumber) && pageAsNumber > 0) {
+        page = pageAsNumber;
+    }
+
+    const movies = await Movies.findAll({
+        limit: size,
+        offset: page * size - size,
+    });
+
+    const countMovies = await Movies.findAndCountAll();
+
+    movies.forEach((movie) => {
+        if (movie.poster) {
+            movie.poster = Buffer.from(movie.poster, "binary").toString(
+                "base64"
+            );
+        }
+    });
+
+    res.render("users/movie-list", {
+        movies,
+        current: page,
+        sort: null,
+        totalPage: Math.ceil(countMovies.count / size),
+    });
+});
+
+exports.PaginationSort = asyncHandler(async (req, res) => {
+    //lấy số trang
+    const pageAsNumber = Number.parseInt(req.params.page);
+
+    //lấy nội dung lọc
+    const sort = req.params?.sort;
+
+    let page = 1;
+    let size = 6;
+
+    if (!Number.isNaN(pageAsNumber) && pageAsNumber > 0) {
+        page = pageAsNumber;
+    }
+
+    if(typeof sort !== 'undefined' && sort === 'releaseDate')
+    {
+        const movies = await Movies.findAll({
+            offset: page * size - size,
+            limit: size,
+            order: [["releaseDate", "DESC"]],
+        });
+
+        const countMovies = await Movies.findAndCountAll();
+
+        movies.forEach((movie) => {
+            if (movie.poster) {
+                movie.poster = Buffer.from(movie.poster, "binary").toString(
+                    "base64"
+                );
+            }
+        });
+
+        res.render("users/movie-list", {
+            movies,
+            current: page,
+            sort,
+            totalPage: Math.ceil(countMovies.count / size),
+        });
+    }
+    if(typeof sort !== 'undefined' && sort === 'mostViewed')
+    {
+        const movies = await Movies.findAll({
+            offset: page * size - size,
+            limit: size,
+            order: [["mostViewed", "DESC"]],
+        });
+
+        const countMovies = await Movies.findAndCountAll();
+
+        movies.forEach((movie) => {
+            if (movie.poster) {
+                movie.poster = Buffer.from(movie.poster, "binary").toString(
+                    "base64"
+                );
+            }
+        });
+
+        res.render("users/movie-list", {
+            movies,
+            current: page,
+            sort,
+            totalPage: Math.ceil(countMovies.count / size),
+        });
+    }
+    if(typeof sort !== 'undefined' && sort === "mostLiked")
+    {
+        const movies = await Movies.findAll({
+            offset: page * size - size,
+            limit: size,
+            order: [["liked", "DESC"]],
+        });
+
+        const countMovies = await Movies.findAndCountAll();
+
+        movies.forEach((movie) => {
+            if (movie.poster) {
+                movie.poster = Buffer.from(movie.poster, "binary").toString(
+                    "base64"
+                );
+            }
+        });
+
+        res.render("users/movie-list", {
+            movies,
+            current: page,
+            sort,
+            totalPage: Math.ceil(countMovies.count / size),
+        });
+    }
+});

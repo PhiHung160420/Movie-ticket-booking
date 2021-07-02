@@ -71,10 +71,5 @@ exports.getMovies = asyncHandler(async (req, res) => {
       }
     });
 
-    res.render("users/home", {
-      justRelease: justRelease,
-      mostViewed: mostViewed,
-      mostLiked: mostLiked,
-      message: message
-    });
+    res.render("users/home", { justRelease, mostViewed, mostLiked, message });
 });
