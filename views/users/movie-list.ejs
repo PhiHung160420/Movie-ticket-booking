@@ -266,7 +266,7 @@
                                             <div class="release">
                                                 <span>Ngày ra mắt: </span>
                                                 <a href="#0">
-                                                    <%= moment(movie.releaseDate).format( 'DD-MM-YYYY')%>
+                                                    <%= moment(movie.releaseDate).format('DD-MM-YYYY')%>
                                                 </a>
                                             </div>
                                             <ul class="movie-rating-percent">
@@ -316,15 +316,66 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- pagination -->
+                    <!-- hiển thị phân trang nếu có trang -->
+                    <% if(totalPage > 0) { %>
                     <div class="pagination-area text-center">
-                        <a href="#0"><i class="fas fa-angle-double-left"></i><span>Prev</span></a>
-                        <a href="#0" class="active">1</a>
-                        <a href="#0">2</a>
-                        <a href="#0">3</a>
-                        <a href="#0">4</a>
-                        <a href="#0">5</a>
-                        <a href="#0"><span>Next</span><i class="fas fa-angle-double-right"></i></a>
+
+                        <!-- FIRST -->
+                        <!-- Nếu trang hiện tại bằng 1 thì Prev disable -->
+                        <% if(current == 1) { %>
+                            <a href="#0" class="disabled"><i class="fas fa-angle-double-left"></i><span>First</span></a>
+                        <% } else { %>
+                            <% if(sort !== null) { %>
+                                <a href="/user/movie-list/<%= sort %>/1"><i class="fas fa-angle-double-left"></i><span>First</span></a>
+                            <% } else { %>
+                                <a href="/user/movie-list/1"><i class="fas fa-angle-double-left"></i><span>First</span></a>
+                            <% } %>
+                        <% } %>
+                        <!-- FIRST -->
+
+                        <!-- ITEMS -->
+                        <% var i = (Number(current) > 3 ? Number(current) - 2 : 1) %>
+                        <% if (i !== 1) { %>
+                            <a href="#0" class="disabled">...</a>
+                        <% } %>
+                        <!-- lặp qua từng trang và tăng số trang -->
+                        <% for(; i <= (Number(current) + 2) && i <= totalPage; i++) { %>
+                        <% if(i == current) { %>
+                            <% if(sort !== null) { %>
+                                <a href="/user/movie-list/<%= sort %>/<%= i %>" class="active"><%= i %></a>
+                            <% } else { %>
+                                <a href="/user/movie-list/<%= i %>" class="active"><%= i %></a>
+                            <% } %>
+                        <% } else { %>   
+                            <% if(sort !== null) { %>   
+                                <a href="/user/movie-list/<%= sort %>/<%= i %>"><%= i %></a>
+                            <% } else { %>   
+                                <a href="/user/movie-list/<%= i %>"><%= i %></a>
+                            <% } %>      
+                        <% } %>
+                        <% if (i == Number(current) + 2 && i < totalPage) { %>
+                            <a href="#0" class="disabled">...</a>
+                        <% } %>
+                        <% } %> 
+                        <!-- ITEMS -->
+
+                        <!-- LAST -->
+                        <!-- Nếu trang hiện tại bằng tổng số trang thì Next disable -->
+                        <% if(current == totalPage) { %>
+                            <a href="#0" class="disabled"><span>Last</span><i class="fas fa-angle-double-right"></i></a>
+                        <% } else { %> 
+                            <% if(sort !== null) { %>
+                                <a href="/user/movie-list/<%= sort %>/<%= totalPage %>"><span>Last</span><i class="fas fa-angle-double-right"></i></a>
+                            <% } else { %>
+                                <a href="/user/movie-list/<%= totalPage %>"><span>Last</span><i class="fas fa-angle-double-right"></i></a>
+                            <% } %>
+                        <% } %>
+                        <!-- LAST -->
                     </div>
+                    <% } %>
+                    <!-- pagination -->
                 </div>
             </div>
         </div>

@@ -4221,6 +4221,12 @@ input[type="submit"] {
   margin: 0 -15px;
 }
 
+.pagination-area .disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.6;
+}
+
 .pagination-area a {
   color: #7a89bb;
   margin: 0 15px;
