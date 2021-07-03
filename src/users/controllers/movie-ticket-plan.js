@@ -137,7 +137,7 @@ exports.postShowTimes = asyncHandler(async (req, res) => {
     }
     else {
         res.locals.listShowTimes = null;
-        req.flash('info', 'Phim bạn chọn tạm thời không còn suất chiếu. Xin vui lòng chọn phim khác')
+        req.flash('info', 'Phim bạn chọn tạm thời chưa có suất chiếu. Xin vui lòng chọn phim khác')
         res.redirect('/user/');
     }
 });

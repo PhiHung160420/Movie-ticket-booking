@@ -36,6 +36,7 @@ exports.listMovies = asyncHandler(async (req, res) => {
             totalPage: Math.ceil(countMovies.count / size),
         });
     }
+
     //hiển thị danh sách phim theo lượt xem
     if (typeof sort !== 'undefined' && sort === "mostViewed") {
         const movies = await Movies.findAll({
@@ -61,6 +62,7 @@ exports.listMovies = asyncHandler(async (req, res) => {
             totalPage: Math.ceil(countMovies.count / size),
         });
     }
+
     //hiển thị danh sách phim theo lượt yêu thích
     if (typeof sort !== 'undefined' && sort === "mostLiked") {
         const movies = await Movies.findAll({
@@ -147,6 +149,7 @@ exports.Pagination = asyncHandler(async (req, res) => {
     });
 });
 
+// phân trang với các bộ phim được lọc theo yêu cầu
 exports.PaginationSort = asyncHandler(async (req, res) => {
     //lấy số trang
     const pageAsNumber = Number.parseInt(req.params.page);
@@ -191,7 +194,7 @@ exports.PaginationSort = asyncHandler(async (req, res) => {
         const movies = await Movies.findAll({
             offset: page * size - size,
             limit: size,
-            order: [["mostViewed", "DESC"]],
+            order: [["viewed", "DESC"]],
         });
 
         const countMovies = await Movies.findAndCountAll();

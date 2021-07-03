@@ -155,7 +155,7 @@
               /*customer-windown-warning*/
               $(".custom-windown-warning").removeClass("inActive");
               $("div#custom-warning-item h6").text("Thông báo");
-              $("div#custom-warning-item h4").text('Phim bạn chọn tạm thời không còn suất chiếu. Vui lòng chọn phim khác');
+              $("div#custom-warning-item h4").text('Phim bạn chọn tạm thời chưa có suất chiếu. Vui lòng chọn phim khác');
               /*end customer-windown-warning*/
             }
             else 
