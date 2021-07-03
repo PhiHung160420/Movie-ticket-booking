@@ -1,40 +1,64 @@
+// express
 const express = require("express");
 
+// app
+const app = express();
+
+// express layouts
 const expressLayouts = require("express-ejs-layouts");
 
+// cookie-session
 const cookieSession = require("cookie-session");
 
+// session
+const session = require('express-session');
+
+// body parser
 const bodyParser = require("body-parser");
 
+// passport
 const passport = require('passport');
 
-//get middlewares
-//user
+// flash
+const flash = require('express-flash');
+app.use(flash());
+
+//express ejs-layouts
+app.use(expressLayouts);
+
+//use ejs
+app.set("view engine", "ejs");
+app.set("views", "./views");
+
+//khai báo static file
+app.use(express.static(__dirname + "/public"));
+
+//get connection database
+const db = require("./src/config/database/db");
+
+// url admin
+const URL_ADMIN = "./src/admin/routes";
+
+// url user
+const URL_USER = "./src/users/routes";
+
+/* MIDDLEWARE USER */
 const authMiddlewares = require("./src/users/middlewares/auth");
 const getMiddlewares = require('./src/users/middlewares/middleware');
 const moment = require('./src/users/middlewares/moment');
-//admin
+/* MIDDLEWARE USER */
+
+/* MIDDLEWARE ADMIN */
 const setLayoutMiddleware = require("./src/admin/middlewares/set_layout");
+/* MIDDLEWARE ADMIN */
 
-const flash = require('express-flash');
-
-const theaterClustersRouter = require("./src/admin/routes/theater_clusters");
-
-const theaterRouter = require("./src/admin/routes/theater");
-
-const movieRouter = require("./src/admin/routes/movie");
-
-const app = express();
-
-var session = require('express-session')
-
+// model User
 const User = require("./src/models/user");
 
-
+/* LOGIN FACEBOOK */
 const FacebookStrategy = require('passport-facebook').Strategy;
 const FACEBOOK_APP_ID = '327168129007877';
 const FACEBOOK_APP_SECRET = '69f3b6032555944d0337b80b486bf403';
-
 
 passport.use(new FacebookStrategy({
   clientID: FACEBOOK_APP_ID,
@@ -77,74 +101,55 @@ passport.deserializeUser(function(facebookid, done) {
       done(null, user);
   }).catch(done); 
 });
+/* LOGIN FACEBOOK */
 
+// use session
 app.use(session({
     secret: 'secret', 
     cookie: { maxAge: 24*60*60*1000  }})); 
 app.use(passport.initialize());
 app.use(passport.session());
 
-//get connection database
-const db = require("./src/config/database/db");
-
 app.use(express.json());
 app.use(express.urlencoded({extended: false})); 
 
-//session 
-// app.use(cookieSession({
-//   name: 'session',
-//   keys: [process.env.COOKIE_KEY || 'secret'],
-//   maxAge: 24*60*60*1000
-// }));
+/* use middleware for user */
+app.use("/user", getMiddlewares);
+app.use("/user", authMiddlewares);
+app.use("/user", moment);
+/* use middleware for user */
 
-app.use(flash());
-
-//use middlewares 
-//user
-app.use(getMiddlewares);
-app.use(authMiddlewares);
-app.use(moment);
-
-//express ejs-layouts
-app.use(expressLayouts);
-
-//use ejs
-app.set("view engine", "ejs");
-
-app.set("views", "./views");
-
-//khai báo static file
-app.use(express.static(__dirname + "/public"));
-
-// use body-parser
-// app.use(bodyParser.urlencoded({  extended: false })); 
-// app.use(bodyParser.json());
-
-//use router for admin
+/* use middleware for admin */
 app.use("/admin", setLayoutMiddleware);
-app.use("/admin", require("./src/admin/routes/home"));
-app.use("/admin", require("./src/admin/routes/login"));
-app.use("/admin", theaterClustersRouter);
-app.use("/admin", theaterRouter);
-app.use("/admin", movieRouter);
-app.use("/admin", require("./src/admin/routes/theater"));
-app.use("/admin", require("./src/admin/routes/shows"));
+app.use("/admin", moment);
+/* use middleware for admin */
 
-//use router for user
-app.use("/user", require("./src/users/routes/home"));
-app.use("/user", require("./src/users/routes/movie-checkout"));
-app.use("/user", require("./src/users/routes/movie-booking-success"));
-app.use("/user", require("./src/users/routes/movie-customer"));
-app.use("/user", require("./src/users/routes/movie-detail"));
-app.use("/user", require("./src/users/routes/movie-list"));
-app.use("/user", require("./src/users/routes/movie-seat-plan"));
-app.use("/user", require("./src/users/routes/movie-ticket-plan"));
-app.use("/user", require("./src/users/routes/movie-contact"));
-app.use("/user", require("./src/users/routes/sign-in"));
-app.use("/user", require("./src/users/routes/sign-up"));
-app.use("/user", require("./src/users/routes/forgot"));
-app.use("/user", require("./src/users/routes/edit-info"));
-app.use("/user", require("./src/users/routes/change-password"));
+/* use router for admin */
+app.use("/admin", require(`${URL_ADMIN}/home`));
+app.use("/admin", require(`${URL_ADMIN}/login`));
+app.use("/admin", require(`${URL_ADMIN}/theater_clusters`));
+app.use("/admin", require(`${URL_ADMIN}/theater`));
+app.use("/admin", require(`${URL_ADMIN}/movie`));
+app.use("/admin", require(`${URL_ADMIN}/theater`));
+app.use("/admin", require(`${URL_ADMIN}/shows`));
+/* use router for admin */
+
+/* use router for user */
+app.use("/user", require(`${URL_USER}/home`));
+app.use("/user", require(`${URL_USER}/movie-checkout`));
+app.use("/user", require(`${URL_USER}/movie-booking-success`));
+app.use("/user", require(`${URL_USER}/movie-customer`));
+app.use("/user", require(`${URL_USER}/movie-detail`));
+app.use("/user", require(`${URL_USER}/movie-list`));
+app.use("/user", require(`${URL_USER}/movie-seat-plan`));
+app.use("/user", require(`${URL_USER}/movie-ticket-plan`));
+app.use("/user", require(`${URL_USER}/movie-contact`));
+app.use("/user", require(`${URL_USER}/sign-in`));
+app.use("/user", require(`${URL_USER}/sign-up`));
+app.use("/user", require(`${URL_USER}/forgot`));
+app.use("/user", require(`${URL_USER}/edit-info`));
+app.use("/user", require(`${URL_USER}/change-password`));
+/* use router for user */
 
 //connect to postgres
 db.sync()

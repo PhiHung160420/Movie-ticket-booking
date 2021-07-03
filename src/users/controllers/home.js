@@ -34,7 +34,7 @@ exports.getMovies = asyncHandler(async (req, res) => {
     
     //top movie just release
     const justRelease = await Movies.findAll({
-      order: [["releaseDate", "DESC"]],
+      order: [['releaseDate', 'DESC']],
       limit: 6,
     });
 

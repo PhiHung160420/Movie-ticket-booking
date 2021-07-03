@@ -6,11 +6,12 @@ const Theater = require("../../models/theater");
 const Showtimes = require("../../models/showtimes");
 const Theater_clusters = require("../../models/theater_clusters");
 const Movies_schedule = require("../../models/movies_schedule");
+const Movies = require("../../models/movie");
 
 //INDEX
 exports.getIndex = async (req, res, next) => {
     if (req.session.user_role == true) {
-        const ShowsList = await Showtimes.findAll({
+        res.locals.showsList = await Showtimes.findAll({
             include: [
                 {
                     model: Theater,
@@ -22,18 +23,12 @@ exports.getIndex = async (req, res, next) => {
                         },
                     ],
                 },
-            ],
-        });
-        const abc = await Showtimes.findAll({
-            include: [
                 {
-                    model: Movie,
-                    attributes: ["name"],
-                },
-            ],
+                    model: Movies,
+                    attributes: ["name"]
+                }
+            ]
         });
-        res.locals.xyz = abc;
-        res.locals.showsList = ShowsList;
         res.render("admin/shows/index");
     } else {
         res.redirect("/user");

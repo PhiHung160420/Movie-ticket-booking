@@ -11,12 +11,12 @@ exports.listMovies = asyncHandler(async (req, res) => {
     let size = 6;
 
     //hiển thị danh sách phim theo ngày ra mắt
-    if (typeof sort !== 'undefined' && sort === "releaseDate") {
-
+    if (typeof sort !== 'undefined' && sort === "releaseDate") 
+    {
         const movies = await Movies.findAll({
             offset: page * size - size,
             limit: size,
-            order: [["releaseDate", "DESC"]],
+            order: [['releaseDate', 'DESC']],
         });
 
         const countMovies = await Movies.findAndCountAll();
@@ -64,7 +64,8 @@ exports.listMovies = asyncHandler(async (req, res) => {
     }
 
     //hiển thị danh sách phim theo lượt yêu thích
-    if (typeof sort !== 'undefined' && sort === "mostLiked") {
+    if (typeof sort !== 'undefined' && sort === "mostLiked") 
+    {
         const movies = await Movies.findAll({
             offset: page * size - size,
             limit: size,
@@ -88,7 +89,7 @@ exports.listMovies = asyncHandler(async (req, res) => {
             totalPage: Math.ceil(countMovies.count / size),
         });
     }
-    else
+    if(typeof sort === 'undefined')
     {
         const movies = await Movies.findAll({
             limit: size,
