@@ -124,8 +124,8 @@
                   </div>
                 </a>
               </td>
-              <td> <%= movieList[i].releaseDate %></td>
-              <td> <%= movieList[i].duration %></td>       
+              <td> <%= moment(movieList[i].releaseDate).format('DD-MM-YYYY') %></td>
+              <td> <%= movieList[i].duration %> phút</td>       
               <td> <%= movieList[i].trailer %></td>    
               <td> <%= movieList[i].viewed %></td>
               <td> <%= movieList[i].liked %></td> 
@@ -141,8 +141,7 @@
               </td>
             </tr>
             <% } %>
-            
-           
+        
           </tbody>
         </table>
       </div>

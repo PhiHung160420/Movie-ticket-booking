@@ -53,6 +53,11 @@ exports.getBookingSuccess = async (req, res, next) => {
         }
     });
 
+    // lấy danh sách tất cả phim để update viewed
+    const movieList = await Movies.findAll({
+        order: [["id", "ASC"]],
+    });
+
     const dataQRCode = {
         userId: "1",
         bookingId: booking_id,
@@ -64,6 +69,47 @@ exports.getBookingSuccess = async (req, res, next) => {
     let stringDataQRCode = JSON.stringify(dataQRCode);
 
     let qrCode = await QRCode.toDataURL(stringDataQRCode);
+
+    // thống kê lượt xem của các bộ phim
+    const lstViewed = await Ticket.findAll({
+        attributes: [
+            [db.col("booking.showtime.movie_id"), "movieId"],
+            [db.fn("COUNT", db.col("ticket.id")), "countView"],
+        ],
+        include: [
+            {
+                model: Booking,
+                as: "booking",
+                attributes: [],
+                include: [
+                    {
+                        model: Showtimes,
+                        as: "showtime",
+                        attributes: [],
+                    },
+                ],
+            },
+        ],
+        group: ["booking.showtime.movie_id"],
+    });
+
+    lstViewed.forEach(e => console.log(e));
+
+    //cập nhật lại lượt xem cho các bộ phim
+    lstViewed.map(async (item) => {
+        try {
+            let updateMovie = await Movies.update(
+                { viewed: item.getDataValue("countView") },
+                {
+                    where: {
+                        id: item.getDataValue("movieId"),
+                    },
+                }
+            );
+        } catch (error) {
+            console.log(error);
+        }
+    });
 
     res.locals.qrCode = qrCode;
     res.locals.showtime = showtime;

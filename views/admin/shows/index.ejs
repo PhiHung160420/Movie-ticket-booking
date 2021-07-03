@@ -114,14 +114,14 @@
 
         <tbody>
           
-          <% for (let i = 0;i< showsList.length; i++){ %>
+          <% for (let i = 0; i< showsList.length; i++){ %>
           <tr> 
             <td><%= i + 1 %></td>            
             <td>
               <a class="media align-items-center">
                 <img class="avatar avatar-lg mr-3" src="/admin/assets\img\400x400\theater.png" alt="Image Description">
                 <div class="media-body">
-                  <h5 class="text-hover-primary mb-0"><%= xyz[i].movie.name %></h5>
+                  <h5 class="text-hover-primary mb-0"><%= showsList[i].movie.name %></h5>
                 </div>
               </a>
             </td>

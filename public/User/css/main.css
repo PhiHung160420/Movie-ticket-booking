@@ -3454,6 +3454,7 @@ input[type="submit"] {
 .event-grid .movie-rating-percent,
 .movie-grid .movie-rating-percent {
   padding: 17px 0;
+  justify-content: space-between;
 }
 
 .sports-grid:hover .c-thumb img,
