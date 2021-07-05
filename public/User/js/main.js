@@ -41,6 +41,16 @@
       e.preventDefault(); // stop the submission
     });
 
+    // set timeout alert danger
+    $("#alert-danger").fadeTo(3000, 500).slideUp(500, 'swing', function(){
+      $("#alert-danger").alert('close');
+    });
+
+    // set timeout alert success
+    $("#alert-success").fadeTo(3000, 500).slideUp(500, 'swing', function(){
+      $("#alert-success").alert('close');
+    });
+
     //when click btn search in home page
     $('#btn_search').on('click', function() {
       $('#seat_plan_wrapper').css('display','block');
@@ -161,6 +171,7 @@
             else 
             {
               $('#movie_search_ajax').text(res[0].movie.name);
+              $("#movie_search_ajax").attr("href", `/user/movie-detail/${res[0].movie.id}`);
             }
             $('#movie_schedule_ajax').html(html);
           },        
@@ -698,7 +709,8 @@
   function calTotalPrice() {
     const price = $("#price").val();
     const totalPrice = price * selectedSeatList.length;
-    $("#totalPrice").text(totalPrice);
+    //$("#totalPrice").text(totalPrice);
+    $("#totalPrice").text(parseFloat(totalPrice, 10).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.") + ' VNĐ');
   }
 
     

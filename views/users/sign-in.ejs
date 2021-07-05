@@ -93,14 +93,14 @@
                 </div>
                 <form action="/user/sign-in" method="POST" class="account-form">
                     <% if(message) {%>
-                        <div class="alert alert-success" role="alert">
+                        <div class="alert alert-success" id="alert-success" role="alert">
                             <center>
                                 <%= message  %>
                             </center>
                         </div>
                         <% } %>
                             <% if(messageErr) {%>
-                                <div class="alert alert-danger" role="alert">
+                                <div class="alert alert-danger" id="alert-danger" role="alert">
                                     <center>
                                         <%= messageErr  %>
                                     </center>
