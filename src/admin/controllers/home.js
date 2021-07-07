@@ -80,10 +80,7 @@ exports.postStatisticCluster = asyncHandler(async (req, res) => {
     }
 
     lstResult.ticketTotal = String(ticket).replace(/(.)(?=(\d{3})+$)/g, "$1,");
-    lstResult.priceTotal = price.toLocaleString("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    });
+    lstResult.priceTotal = String(price).replace(/(.)(?=(\d{3})+$)/g, "$1,");
 
     return res.status(200).json(lstResult);
   }
@@ -138,10 +135,7 @@ exports.postStatisticCluster = asyncHandler(async (req, res) => {
     }
 
     ticketTotal = String(ticket).replace(/(.)(?=(\d{3})+$)/g, "$1,");
-    priceTotal = price.toLocaleString("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    });
+    priceTotal = String(price).replace(/(.)(?=(\d{3})+$)/g, "$1,");
 
     //get list labels
     let listLabels=[];
@@ -153,8 +147,8 @@ exports.postStatisticCluster = asyncHandler(async (req, res) => {
 
     //get list total price
     let listPrice = [];
-    listBooking.forEach(item => listPrice.push(item.TotalPrice));
-
+    listBooking.forEach(item => listPrice.push(item.TotalPrice)); 
+    
     lstResult = {
       listLabels,
       listTicket,
@@ -211,10 +205,7 @@ exports.postStatisticMovies = asyncHandler(async (req, res) => {
     }
 
     lstResult.ticketTotal = String(ticket).replace(/(.)(?=(\d{3})+$)/g, "$1,");
-    lstResult.priceTotal = price.toLocaleString("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    });
+    lstResult.priceTotal = String(price).replace(/(.)(?=(\d{3})+$)/g, "$1,");
 
     return res.status(200).json(lstResult);
   }
@@ -261,10 +252,7 @@ exports.postStatisticMovies = asyncHandler(async (req, res) => {
     }
 
     ticketTotal = String(ticket).replace(/(.)(?=(\d{3})+$)/g, "$1,");
-    priceTotal = price.toLocaleString("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    });
+    priceTotal = String(price).replace(/(.)(?=(\d{3})+$)/g, "$1,");
 
     //get list labels
     let listLabels=[];

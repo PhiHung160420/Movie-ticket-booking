@@ -54,9 +54,9 @@
           dataType: "json",
           success: function(res){
             if(res.listLabels)
-            {     
-              $("#js-chart-cluster").removeAttr('data-hs-chartjs-options')   
-              let chart = $("#js-chart-cluster").get(0).getContext("2d");          
+            {    
+              $("#js-chart-cluster").removeAttr('data-hs-chartjs-options'); 
+              let chart = $("#js-chart-cluster").get(0).getContext("2d");   
               let myBarChart = new Chart(chart, {
                 type: 'line',
                 data: {
@@ -75,16 +75,27 @@
                       borderColor: 'rgb(75, 192, 192)',
                       tension: 0.1
                     }]
-                },               
+                },
+                options: {
+                tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            return 'Doanh thu: ' + tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    }
+                  }
+                }                 
               });
-        
+              
               $("#totalTicketCluster").text(res.ticketTotal);
-              $("#totalPriceCluster").text(res.priceTotal);
+              $("#totalPriceCluster").text(res.priceTotal + ' VNĐ');
+              
             }
             else
             {
+              $("#js-chart-cluster").removeAttr('data-hs-chartjs-options');
               let chart_ctx = $("#js-chart-cluster").get(0).getContext("2d");  
-              let chart = new Chart(chart_ctx, {    
+              /* let chart = new Chart(chart_ctx, {    
                   type: "line",
                   data: {
                     labels: ["","", ""],
@@ -103,9 +114,9 @@
                       tension: 0.1
                     }]
                 },  
-              });
+              }); */
               $("#totalTicketCluster").text(res.ticketTotal);
-              $("#totalPriceCluster").text(res.priceTotal);
+              $("#totalPriceCluster").text(res.priceTotal + ' VNĐ');
             }
           },        
       });
@@ -125,7 +136,7 @@
           success: function(res){
             if(res.listLabels)
             {
-              $("#js-chart-movies").removeAttr('data-hs-chartjs-options')   
+              $("#js-chart-movies").removeAttr('data-hs-chartjs-options');
               let chart = $("#js-chart-movies").get(0).getContext("2d");          
               let myBarChart = new Chart(chart, {
                 type: 'line',
@@ -145,15 +156,25 @@
                       borderColor: 'rgb(75, 192, 192)',
                       tension: 0.1
                     }]
-                },               
+                },  
+               options: {
+                tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            return 'Doanh thu: ' + tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    }
+                  }
+                }  
               });
         
               $("#totalTicketMovies").text(res.ticketTotal);
-              $("#totalPriceMovies").text(res.priceTotal);
+              $("#totalPriceMovies").text(res.priceTotal + ' VNĐ');
             }
             else
             {
-              let chart_ctx = $("#js-chart-movies").get(0).getContext("2d");  
+              $("#js-chart-movies").removeAttr('data-hs-chartjs-options');
+              /* let chart_ctx = $("#js-chart-movies").get(0).getContext("2d");  
               let chart = new Chart(chart_ctx, {    
                   type: "line",
                   data: {
@@ -173,9 +194,9 @@
                       tension: 0.1
                     }]
                 },  
-              });
+              }); */
               $("#totalTicketMovies").text(res.ticketTotal);
-              $("#totalPriceMovies").text(res.priceTotal);
+              $("#totalPriceMovies").text(res.priceTotal + ' VNĐ');
             }
           },        
       });
