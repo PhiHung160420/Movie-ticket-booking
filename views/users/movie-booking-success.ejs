@@ -25,18 +25,40 @@
                     <a href="/user/contact">Liên hệ</a>
                 </li>
                 <li>
-                    <a href="/user/movie-customer-profile">Thành viên</a>
+                    <a href="#">Thành viên</a>
                     <ul class="submenu">
-                        <li>
-                            <a href="/user/movie-customer-profile">Tài khoản</a>
-                        </li>
-                        <li>
-                            <a href="blog-details.html">Vé của tôi</a>
-                        </li>
+                        <% if(currentUser != null && currentUser.user_role == true) { %>
+                            <li>
+                                <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
+                            </li>
+                            <li>
+                                <a href="/user/ticket-list">Vé của tôi</a>
+                            </li>
+                            <li>
+                                <a href="/admin">Quản lý</a>
+                            </li>
+                        <% } else { %>
+                            <li>
+                                <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
+                            </li>
+                            <li>
+                                <a href="/user/ticket-list">Vé của tôi</a>
+                            </li>
+                            
+                        <% } %>
                     </ul>
                 </li>
                 <li class="header-button pr-0">
-                    <a href="/user/sign-in">Đăng nhập</a>
+                    <% if(currentUser) { %>
+                        <a><%=currentUser.user_name%></a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="/user/logout">Đăng xuất</a>
+                            </li>
+                        </ul>
+                    <% } else { %>
+                        <a href="/user/sign-in">Đăng nhập</a>
+                    <% } %>  
                 </li>
             </ul>
             <div class="header-bar d-lg-none">

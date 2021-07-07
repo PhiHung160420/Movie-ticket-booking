@@ -40,7 +40,7 @@
                                 <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
                             </li>
                             <li>
-                                <a href="#">Vé của tôi</a>
+                                <a href="/user/ticket-list">Vé của tôi</a>
                             </li>
                             <li>
                                 <a href="/admin">Quản lý</a>
@@ -50,7 +50,7 @@
                                     <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
                                 </li>
                                 <li>
-                                    <a href="#">Vé của tôi</a>
+                                    <a href="/user/ticket-list">Vé của tôi</a>
                                 </li>
                                 
                             <% } %>
@@ -110,12 +110,9 @@
                 </a>
             </div>
             <div class="item date-item">
-                <span class="date">MON, SEP 09 2020</span>
+                <span class="date"><%= moment(showtime.date).format('DD/MM/YYYY') %></span>
                 <select class="select-bar">
-                    <option value="sc1">09:40</option>
-                    <option value="sc2">13:45</option>
-                    <option value="sc3">15:45</option>
-                    <option value="sc4">19:50</option>
+                    <option selected value="sc1"><%= showtime.start_time.substr(0, 5) %> ~ <%= showtime.end_time.substr(0, 5) %></option>
                 </select>
             </div>
             <div class="item">

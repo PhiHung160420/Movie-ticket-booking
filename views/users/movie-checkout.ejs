@@ -31,7 +31,7 @@
                                 <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
                             </li>
                             <li>
-                                <a href="#">Vé của tôi</a>
+                                <a href="/user/ticket-list">Vé của tôi</a>
                             </li>
                             <li>
                                 <a href="/admin">Quản lý</a>
@@ -41,7 +41,7 @@
                                     <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
                                 </li>
                                 <li>
-                                    <a href="#">Vé của tôi</a>
+                                    <a href="/user/ticket-list">Vé của tôi</a>
                                 </li>
                                 
                             <% } %>
@@ -55,11 +55,9 @@
                                 <a href="/user/logout">Đăng xuất</a>
                             </li>
                         </ul>
-                        <% } else { %>
-                                <a href="/user/sign-in">Đăng nhập</a>
-                            <% } %>
-
-                    
+                    <% } else { %>
+                        <a href="/user/sign-in">Đăng nhập</a>
+                    <% } %>      
                 </li>
             </ul>
             <div class="header-bar d-lg-none">
@@ -145,7 +143,7 @@
                         </div>
                     </form>
                     <p class="notice">
-                        Khi nhấp vào "Thanh Toán" thì bạn đã chấp nhận<a href="#0">các điều khoản và điệu kiện</a> của chúng tôi
+                        Khi nhấp vào "Thanh Toán" thì bạn đã chấp nhận <a href="#0">các điều khoản và điệu kiện</a> của chúng tôi
                     </p>
                 </div>
             </div>
@@ -169,18 +167,17 @@
                                 <div class="info"><span><%= currentSeatList.join(', ') %></span></div>
                             </li>
                             <li>
-                                <h6 class="subtitle mb-0"><span>Giá vé</span><span><%= currentShowtime.showtime.price %></span></h6>
+                                <h6 class="subtitle mb-0"><span>Giá vé</span><span><%= String(currentShowtime.showtime.price).replace(/(.)(?=(\d{3})+$)/g,'$1,')%> VNĐ</span></h6>
                             </li>
                         </ul>
                         <ul class="side-shape">
                             <li>
-                                <h6 class="subtitle"><span>combos</span><span>$57</span></h6>
-                                <span class="info"><span>MILO COMBO</span></span>
+                                <h6 class="subtitle"><span>Số ghế</span><span><%= currentShowtime.countSeat %></span></h6>
                             </li>
                         </ul>
                     </div>
                     <div class="proceed-area  text-center">
-                        <h6 class="subtitle"><span>Tổng tiền</span><span><%= currentShowtime.totalPrice %></span></h6>
+                        <h6 class="subtitle"><span>Tổng tiền</span><span><%= String(currentShowtime.totalPrice).replace(/(.)(?=(\d{3})+$)/g,'$1,') %> VNĐ</span></h6>
                         <a id="submitCheckout" class="custom-button" style="cursor: pointer;">Thanh toán</a>
                     </div>
                 </form>              

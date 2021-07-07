@@ -105,7 +105,7 @@ exports.postShowTimes = asyncHandler(async (req, res) => {
         include: [
             {
                 model: Movies,
-                attributes: ['name']
+                attributes: ['name', 'id']
             },
             {
                 model: Theater,
@@ -186,7 +186,7 @@ exports.ajaxSearchShowtimes = asyncHandler(async (req, res) => {
         include: [
             {
                 model: Movies,
-                attributes: ['name']
+                attributes: ['name', 'id']
             },
             {
                 model: Theater,

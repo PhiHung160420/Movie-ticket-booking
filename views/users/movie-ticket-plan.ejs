@@ -31,7 +31,7 @@
                                 <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
                             </li>
                             <li>
-                                <a href="#">Vé của tôi</a>
+                                <a href="/user/ticket-list">Vé của tôi</a>
                             </li>
                             <li>
                                 <a href="/admin">Quản lý</a>
@@ -41,7 +41,7 @@
                                     <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
                                 </li>
                                 <li>
-                                    <a href="#">Vé của tôi</a>
+                                    <a href="/user/ticket-list">Vé của tôi</a>
                                 </li>
                                 
                             <% } %>
@@ -180,7 +180,7 @@
                                     <i class="far fa-heart"></i>
                                     <i class="fas fa-heart"></i>
                                 </div>
-                                <a href="#0" class="name">
+                                <a href="/user/movie-detail/<%= listShowTimes[0].movie.id %>" class="name">
                                     <%=listShowTimes[0].movie.name %>
                                 </a>
                                 <div class="location-icon">
