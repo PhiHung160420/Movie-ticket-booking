@@ -141,6 +141,7 @@ app.use("/user", require(`${URL_USER}/movie-booking-success`));
 app.use("/user", require(`${URL_USER}/movie-customer`));
 app.use("/user", require(`${URL_USER}/movie-detail`));
 app.use("/user", require(`${URL_USER}/movie-list`));
+app.use("/user", require(`${URL_USER}/ticket-list`));
 app.use("/user", require(`${URL_USER}/movie-seat-plan`));
 app.use("/user", require(`${URL_USER}/movie-ticket-plan`));
 app.use("/user", require(`${URL_USER}/movie-contact`));
