@@ -19,7 +19,7 @@
                     <a href="/user/movie-list">Phim</a>
                 </li>
                 <li>
-                    <a href="/user/cluster-list">Cụm rạp</a>
+                    <a href="/user/cluster-list" class="active">Cụm rạp</a>
                 </li>
                 <li>
                     <a href="/user/movie-ticket-plan">Lịch chiếu</a>
@@ -28,7 +28,7 @@
                     <a href="/user/contact">Liên hệ</a>
                 </li>
                 <li>
-                    <a href="#" class="active">Thành viên</a>
+                    <a href="#">Thành viên</a>
                     <ul class="submenu">
                         <% if(currentUser != null && currentUser.user_role ==
                         true) { %>
@@ -40,7 +40,7 @@
                             >
                         </li>
                         <li>
-                            <a href="#">Vé của tôi</a>
+                            <a href="/user/ticket-list">Vé của tôi</a>
                         </li>
                         <li>
                             <a href="/admin">Quản lý</a>
@@ -83,73 +83,62 @@
 </header>
 <!-- ==========Header-Section========== -->
 
-<!-- ==========Preloader========== -->
-<div class="preloader">
-    <div class="preloader-inner">
-        <div class="preloader-icon">
-            <span></span>
-            <span></span>
-        </div>
-    </div>
-</div>
-<!-- ==========Preloader========== -->
-
-<!-- ==========Sign-In-Section========== -->
-<section
-    class="account-section bg_img"
-    data-background="/user/images/account/account-bg.jpg"
->
+<!-- ==========Movie-Section========== -->
+<section class="movie-section padding-top padding-bottom">
     <div class="container">
-        <div class="padding-top padding-bottom">
-            <div class="account-area">
-                <div class="section-header-3">
-                    <h2 class="title">Thay đổi thông tin</h2>
+        <div class="tab">
+            <div class="section-header-2">
+                <div class="left">
+                    <h2 class="title">Danh sách cụm rạp</h2>
                 </div>
-                <form
-                    action="/user/edit-info"
-                    class="account-form"
-                    method="POST"
-                >
-                    <div class="form-group">
-                        <label for="username">Họ Tên</label>
-                        <input
-                            type="text"
-                            value="<%=currentUser.user_name%>"
-                            placeholder="Nhập vào họ tên"
-                            id="username"
-                            name="username"
-                            required
-                        />
+            </div>
+            <div class="tab-area mb-30-none">
+                <div class="tab-item active">
+                    <div class="owl-carousel owl-theme tab-slider">
+                        <div class="item">
+                            <div class="movie-grid">
+                                <div class="movie-thumb c-thumb">
+                                    <a href="/user/cluster-detail">
+                                        <img
+                                            src="/user/images/movie/movie01.jpg"
+                                            alt="movie"
+                                        />
+                                    </a>
+                                </div>
+                                <div class="movie-content bg-one">
+                                    <h5 class="title m-0">
+                                        <a href="#0">CGV Parson</a>
+                                    </h5>
+                                    <ul class="movie-rating-percent">
+                                        <span class="content">188 Hung Vuong, Quan 5, TP.HCM</span>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="movie-grid">
+                                <div class="movie-thumb c-thumb">
+                                    <a href="#0">
+                                        <img
+                                            src="/user/images/movie/movie02.jpg"
+                                            alt="movie"
+                                        />
+                                    </a>
+                                </div>
+                                <div class="movie-content bg-one">
+                                    <h5 class="title m-0">
+                                        <a href="#0">CGV Parson</a>
+                                    </h5>
+                                    <ul class="movie-rating-percent">
+                                        <span class="content">188 Hung Vuong, Quan 5, TP.HCM</span>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="phonenumber">Số điện thoại</label>
-                        <input
-                            type="text"
-                            value="<%=currentUser.user_phone%>"
-                            placeholder="Nhập vào số điện thoại"
-                            id="phonenumber"
-                            name="phonenumber"
-                            required
-                        />
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input
-                            type="text"
-                            placeholder="Nhập vào email"
-                            value="<%=currentUser.user_email%>"
-                            id="email"
-                            name="email"
-                            readonly
-                        />
-                    </div>
-
-                    <div class="form-group text-center">
-                        <input type="submit" value="Lưu" />
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
 </section>
-<!-- ==========Edit-Info-Section========== -->
+<!-- ==========Movie-Section========== -->
