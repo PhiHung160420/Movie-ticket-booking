@@ -76,15 +76,15 @@
                       tension: 0.1
                     }]
                 },
-                options: {
+                /* options: {
                 tooltips: {
                     callbacks: {
                         label: function(tooltipItem, data) {
-                            return 'Doanh thu: ' + tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                         }
                     }
                   }
-                }                 
+                } */           
               });
               
               $("#totalTicketCluster").text(res.ticketTotal);
@@ -157,7 +157,7 @@
                       tension: 0.1
                     }]
                 },  
-               options: {
+               /* options: {
                 tooltips: {
                     callbacks: {
                         label: function(tooltipItem, data) {
@@ -165,7 +165,7 @@
                         }
                     }
                   }
-                }  
+                } */  
               });
         
               $("#totalTicketMovies").text(res.ticketTotal);
