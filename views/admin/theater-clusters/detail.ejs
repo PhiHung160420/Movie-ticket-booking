@@ -7,11 +7,11 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-no-gutter">
               <li class="breadcrumb-item"><a class="breadcrumb-link" href="/admin/theater-clusters">Cụm Rạp</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Thêm Cụm Rạp</li>
+              <li class="breadcrumb-item active" aria-current="page">Cập Nhật Cụm Rạp</li>
             </ol>
           </nav>
 
-          <h1 class="page-header-title">Thêm Cụm Rạp</h1>
+          <h1 class="page-header-title">Cập Nhật Cụm Rạp</h1>
         </div>
       </div>
       <!-- End Row -->
@@ -58,7 +58,7 @@
         <div class="card mb-3 mb-lg-5">
           <!-- Header -->
           <div class="card-header">
-            <h4 class="card-header-title">Ảnh đại diện</h4>
+            <h4 class="card-header-title">Hình ảnh cụm rạp</h4>
           </div>
           <!-- End Header -->
 
@@ -67,7 +67,10 @@
             <!-- Form Group -->
             <div id="attachFilesLabel" class="js-dropzone dropzone-custom custom-file-boxed">
               <div class="dz-message custom-file-boxed-label">
-                <img class="avatar avatar-xl avatar-4by3 mb-3" src="../assets/svg/illustrations/browse.svg" alt="Image Description">
+
+                <input type="file" id="pictureUpdate" name="pictureUpdate" hidden >
+
+                <img class="avatar avatar-xl avatar-4by3 mb-3" src="data:image/png;base64,<%= theaterClusters.picture %>" alt="Image Description">
             
                 <h5>Kéo và thả ảnh của bạn vào đây</h5>
             

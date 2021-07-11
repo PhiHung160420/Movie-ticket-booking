@@ -13,7 +13,6 @@ router.post("/movie/add", movieController.postAdd);
 // UPLOAD
 router.post("/movie/upload", upload.single('file'), movieController.postUpload);
 
-
 // DETAIL
 router.get("/movie/detail/:id", movieController.getDetail);
 router.post("/movie/detail/:id", movieController.postDetail);

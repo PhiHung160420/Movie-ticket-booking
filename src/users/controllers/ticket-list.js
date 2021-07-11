@@ -100,7 +100,7 @@ exports.getListTicket = asyncHandler( async (req, res) => {
     
                 // lấy tên cụm rạp
                 const cluster = await Theater_clusters.findOne({
-                    attributes: ['name'], 
+                    attributes: ['name', 'id'], 
                     where: {
                         id: theater.theater_cluster_id
                     }
@@ -115,6 +115,7 @@ exports.getListTicket = asyncHandler( async (req, res) => {
                 ticketItem.movie = movie;
                 ticketItem.theaterName = theater.name;
                 ticketItem.clusterName = cluster.name;
+                ticketItem.clusterId = cluster.id;
 
                 // kiểm tra vé còn hiệu lực hay không
                 if(showtime.date < moment(moment()).format("YYYY-MM-DD"))

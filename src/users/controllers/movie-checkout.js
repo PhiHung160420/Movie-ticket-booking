@@ -31,8 +31,6 @@ exports.getCheckout = async (req, res, next) => {
 
     currentSeatList = req.session.currentSeatList;
 
-    console.log('user: ' + currentUser);
-
     if(!currentUser)
     {
         const string = encodeURIComponent('Vui lòng đăng nhập để thực hiện thanh toán');
