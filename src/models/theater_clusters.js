@@ -14,6 +14,10 @@ const Theater_clusters = db.define("theater_clusters", {
   address: {
     type: DataTypes.STRING,
   },
+  picture: {
+    type: DataTypes.BLOB,
+    allowNull: true,
+  }
 }, {timestamps: false, createdAt: false, updatedAt: false});
 
 module.exports = Theater_clusters;

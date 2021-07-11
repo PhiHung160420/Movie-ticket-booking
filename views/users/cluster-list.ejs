@@ -83,62 +83,30 @@
 </header>
 <!-- ==========Header-Section========== -->
 
-<!-- ==========Movie-Section========== -->
-<section class="movie-section padding-top padding-bottom">
+<!-- ==========Client-Section========== -->
+<section class="client-section padding-bottom padding-top bg_img" data-background="./assets/images/client/client-bg.jpg">
     <div class="container">
-        <div class="tab">
-            <div class="section-header-2">
-                <div class="left">
-                    <h2 class="title">Danh sách cụm rạp</h2>
-                </div>
-            </div>
-            <div class="tab-area mb-30-none">
-                <div class="tab-item active">
-                    <div class="owl-carousel owl-theme tab-slider">
-                        <div class="item">
-                            <div class="movie-grid">
-                                <div class="movie-thumb c-thumb">
-                                    <a href="/user/cluster-detail">
-                                        <img
-                                            src="/user/images/movie/movie01.jpg"
-                                            alt="movie"
-                                        />
-                                    </a>
-                                </div>
-                                <div class="movie-content bg-one">
-                                    <h5 class="title m-0">
-                                        <a href="#0">CGV Parson</a>
-                                    </h5>
-                                    <ul class="movie-rating-percent">
-                                        <span class="content">188 Hung Vuong, Quan 5, TP.HCM</span>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="movie-grid">
-                                <div class="movie-thumb c-thumb">
-                                    <a href="#0">
-                                        <img
-                                            src="/user/images/movie/movie02.jpg"
-                                            alt="movie"
-                                        />
-                                    </a>
-                                </div>
-                                <div class="movie-content bg-one">
-                                    <h5 class="title m-0">
-                                        <a href="#0">CGV Parson</a>
-                                    </h5>
-                                    <ul class="movie-rating-percent">
-                                        <span class="content">188 Hung Vuong, Quan 5, TP.HCM</span>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+        <div class="section-header-3">
+            <h2 class="title">Danh sách các cụm rạp của hệ thống</h2>
+        </div>
+        <div class="client-slider owl-carousel owl-theme">
+            <% if(lstCluster) { %>
+            <% lstCluster.forEach(cluster => { %>
+                <div class="client-item">
+                    <div class="client-thumb">
+                        <a href="/user/cluster-detail/<%= cluster.id %>">
+                            <img src="data:image/png;base64,<%= cluster.picture %>" alt="client">
+                        </a>
+                    </div>
+                    <div class="client-content">
+                        <h5 class="title">
+                            <a href="/user/cluster-detail/<%= cluster.id %>"><%= cluster.name %></a>
+                        </h5>
+                        <span class="content"><%= cluster.address %></span>
                     </div>
                 </div>
-            </div>
+            <% }) } %>
         </div>
     </div>
 </section>
-<!-- ==========Movie-Section========== -->
+<!-- ==========Client-Section========== -->

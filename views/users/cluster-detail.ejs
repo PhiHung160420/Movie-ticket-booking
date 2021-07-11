@@ -89,8 +89,18 @@
             <div class="container">
                 <div class="details-banner-wrapper">
                     <div class="details-banner-content style-two">
-                        <h3 class="title"><span class="d-block">CGV Parkson</span></h3>
-                        <span>223 Paster, Quan 1, TPHCM</span>
+                        <h3 class="title">
+                            <span class="d-block">
+                                <% if(cluster) { %>
+                                    <%= cluster && cluster.name %>
+                                <% } %>
+                            </span>
+                        </h3>
+                        <span>
+                            <% if(cluster) { %>
+                                <%= cluster && cluster.address %>
+                            <% } %>        
+                        </span>
                     </div>
                 </div>
             </div>
@@ -102,58 +112,50 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-12 mb-50 mb-lg-0">
-                        <article>
-                            <div class="post-item">
-                                <div class="post-thumb">
-                                    <div
-                                        class="
-                                            owl-carousel owl-theme
-                                            blog-slider
-                                        "
-                                    >
-                                        <img
-                                            src="/user//images/blog/blog02.jpg"
-                                            alt="blog"
-                                        />
-                                        <img
-                                            src="/user//images/blog/blog03.jpg"
-                                            alt="blog"
-                                        />
-                                        <img
-                                            src="/user//images/blog/blog04.jpg"
-                                            alt="blog"
-                                        />
-                                        <img
-                                            src="/user//images/blog/blog01.jpg"
-                                            alt="blog"
-                                        />
-                                    </div>
-                                    <div class="blog-prev">
-                                        <i
+                        <% if(cluster) { %>
+                            <article>
+                                <div class="post-item">
+                                    <div class="post-thumb">
+                                        <div
                                             class="
-                                                flaticon-double-right-arrows-angles
+                                                owl-carousel owl-theme
+                                                blog-slider
                                             "
-                                        ></i>
+                                        >
+                                        <% lstClusterImg.forEach(image => { %>
+                                            <img src="data:image/png;base64,<%= image %>" alt="blog" />
+                                        <% }) %> 
+                                        </div>
+                                        <div class="blog-prev">
+                                            <i
+                                                class="
+                                                    flaticon-double-right-arrows-angles
+                                                "
+                                            ></i>
+                                        </div>
+                                        <div class="blog-next active">
+                                            <i
+                                                class="
+                                                    flaticon-double-right-arrows-angles
+                                                "
+                                            ></i>
+                                        </div>
                                     </div>
-                                    <div class="blog-next active">
-                                        <i
-                                            class="
-                                                flaticon-double-right-arrows-angles
-                                            "
-                                        ></i>
+                                    <div class="post-content">
+                                        <div class="post-header">
+                                            <h4 class="title">
+                                                <a href="blog-details.html">
+                                                    Một số hình ảnh chi tiết cụm rạp
+                                                    <% if(cluster) { %>
+                                                        <%= cluster && cluster.name %>
+                                                    <% } %>
+                                                </a>
+                                            </h4>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="post-content">
-                                    <div class="post-header">
-                                        <h4 class="title">
-                                            <a href="blog-details.html">
-                                                Một số hình ảnh chi tiết cụm rạp
-                                            </a>
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
+                            </article>
+                        <% } %>
                     </div>
                 </div>
             </div>
@@ -162,7 +164,15 @@
 
         <!-- ==========Event-Section========== -->
         <div class="section-header-3">
-            <span class="cate">Danh sách các rạp thuộc cụm rạp</span>
+            <% if(theaterList) { %>
+                <span class="cate">Danh sách các rạp thuộc cụm rạp 
+                    <% if(cluster) { %>
+                        <%= cluster && cluster.name %>
+                    <% } %>
+                </span>
+            <% } else { %>
+                <span class="cate">Hiện chưa có danh sách rạp cho cụm rạp này</span>
+            <% } %>
         </div>
         <!-- ==========Event-Section========== -->
 
@@ -171,27 +181,31 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-12 mb-5 mb-lg-0">
-                        <ul class="seat-plan-wrapper bg-five">
-                            <li>
-                                <div class="movie-name">       
-                                    <span class="name">Tên rạp</span>
-                                </div>
-                                <div class="movie-schedule">
-                                    <span class="theater-size">Kích thước</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="movie-name">       
-                                    <a href="#0" class="name">CGV Hung Vuong</a>
-                                </div>
-                                <div class="movie-schedule">
-                                    <span>Chiều Dài : 50m</span>
-                                    <span class="distance"> - </span>
-                                    <span>Chiều Rộng : 50m</span>
-                                </div>
-                            </li>
-                            
-                        </ul>
+                        <% if(theaterList) { %>
+                            <ul class="seat-plan-wrapper bg-five">
+                                <li>
+                                    <div class="movie-name">       
+                                        <span class="name">Mã rạp</span>
+                                    </div>
+                                    <div class="movie-schedule">
+                                        <span class="theater-size">Kích thước rạp</span>
+                                    </div>
+                                </li>
+                                
+                                <% theaterList.forEach((theater) => {  %>
+                                    <li>
+                                        <div class="movie-name">       
+                                            <a href="#0" class="name"><%= theater.name %></a>
+                                        </div>
+                                        <div class="movie-schedule">
+                                            <span>Chiều Dài : <%=theater.vertical_size %>m</span>
+                                            <span class="distance"> - </span>
+                                            <span>Chiều Rộng : <%=theater.horizontial_size %>m</span>
+                                        </div>
+                                    </li>       
+                                <% }) %>            
+                            </ul>
+                        <% } %>
                     </div>
                 </div>
             </div>

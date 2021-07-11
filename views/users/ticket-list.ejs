@@ -91,7 +91,7 @@
                             <span class="ticket-title">Vé của bạn</span>
                             <ul>
                                 <li>Phim: <a href="/user/movie-detail/<%= item.movie.id %>" class="item-list-ticket"><%= item.movie.name %></a></li>
-                                <li>Cụm rạp: <a href="#0" class="item-list-ticket"><%= item.clusterName %></a></li>
+                                <li>Cụm rạp: <a href="/user/cluster-detail/<%= item.clusterId %>" class="item-list-ticket"><%= item.clusterName %></a></li>
                                 <li>Rạp: <span><%= item.theaterName %></span></li>
                                 <li>Ngày: <span><%= moment(item.date).format('DD/MM/YYYY') %></span></li>
                                 <li>Giờ bắt đầu:  <span><%= moment(item.start_time, "HH:mm:ss").format("HH:mm") %></span></li> 
@@ -119,7 +119,7 @@
                                 <span class="ticket-title">Vé của bạn</span>
                                 <ul>
                                     <li>Phim: <a href="/user/movie-detail/<%= item.movie.id %>" class="item-list-ticket"><%= item.movie.name %></a></li>
-                                    <li>Cụm rạp: <a href="#0" class="item-list-ticket"><%= item.clusterName %></a></li>
+                                    <li>Cụm rạp: <a href="/user/cluster-detail/<%= item.clusterId %>" class="item-list-ticket"><%= item.clusterName %></a></li>
                                     <li>Rạp: <span><%= item.theaterName %></span></li>
                                     <li>Ngày: <span><%= moment(item.date).format('DD/MM/YYYY') %></span></li>
                                     <li>Giờ bắt đầu:  <span><%= moment(item.start_time, "HH:mm:ss").format("HH:mm") %></span></li> 

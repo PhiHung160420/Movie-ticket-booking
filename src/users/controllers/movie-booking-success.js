@@ -93,8 +93,6 @@ exports.getBookingSuccess = async (req, res, next) => {
         group: ["booking.showtime.movie_id"],
     });
 
-    lstViewed.forEach(e => console.log(e));
-
     //cập nhật lại lượt xem cho các bộ phim
     lstViewed.map(async (item) => {
         try {
