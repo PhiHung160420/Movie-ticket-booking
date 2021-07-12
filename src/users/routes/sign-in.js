@@ -47,7 +47,16 @@ router.post("/sign-in", asyncHandler(async(req, res)=>{
       {
           req.session.user_id = user.user_id;
           req.session.user_role = user.user_role;
-          res.redirect("/user");
+          req.session.currentUser = user;
+          if(req.session.prevUrl)
+          {
+            res.redirect(`${req.session.prevUrl}`);
+            delete req.session.prevUrl;
+          }
+          else
+          {
+            res.redirect("/user");
+          }
       }
       else
       { 
@@ -117,6 +126,8 @@ router.get('/sign-in/google/success',isLoggedIn, (req, res, next) => {
 router.get("/logout", (req, res) => {
   delete req.session.user_facebookid;
   delete req.session.user_id;
+  delete req.session.currentUser;
+  delete req.session.prevUrl;
   res.redirect("/user");
 });
 

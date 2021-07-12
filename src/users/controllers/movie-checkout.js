@@ -6,6 +6,7 @@ const Booking = require('../../models/booking');
 const Ticket = require('../../models/ticket');
 const User = require('../../models/user');
 const db = require('../../config/database/db');
+const moment = require('moment');
 
 const nodemailer = require('nodemailer');
 const QRCode = require('qrcode');
@@ -25,61 +26,73 @@ const transporter = nodemailer.createTransport({
 let currentShowtime = null;
 
 exports.getCheckout = async (req, res, next) => {
-    const showtimeId = req.session.showtimeId;
+
+    const { showtimeId, currentUser } = req.session;
+
     currentSeatList = req.session.currentSeatList;
 
+    if(!currentUser)
+    {
+        const string = encodeURIComponent('Vui lòng đăng nhập để thực hiện thanh toán');
+        res.redirect('/user/sign-in/?valid=' + string);  
+    }
     if(!showtimeId || !currentSeatList) {
         res.redirect("/user")
     }
+    else
+    {
+        const showtime = await Showtimes.findOne({        
+            where: {
+                id: showtimeId
+            }
+        });
+    
+        const movie = await Movies.findOne({
+            attributes: ['name'],
+            where: {
+                id: showtime.movie_id
+            }
+        });
+    
+        const theater = await Theater.findOne({
+            attributes: [
+                'name', 
+                'kind'
+            ],
+            include: [{
+                model: TheaterClusters,
+                attributes: ['name']
+            }],
+            where: {
+                id: showtime.theater_id,
+            }
+        });
+        const totalPrice = showtime.price * currentSeatList.length;
 
-    const showtime = await Showtimes.findOne({        
-        where: {
-            id: showtimeId
+        // đếm số ghế đã đặt
+        const countSeat = currentSeatList.length;
+    
+        currentShowtime = {
+            showtime: showtime,
+            theater: theater,
+            movieName: movie.name,
+            totalPrice: totalPrice,
+            countSeat,
         }
-    });
-
-    const movie = await Movies.findOne({
-        attributes: ['name'],
-        where: {
-            id: showtime.movie_id
-        }
-    });
-
-    const theater = await Theater.findOne({
-        attributes: [
-            'name', 
-            'kind'
-        ],
-        include: [{
-            model: TheaterClusters,
-            attributes: ['name']
-        }],
-        where: {
-            id: showtime.theater_id,
-        }
-    });
-
-    const totalPrice = showtime.price * currentSeatList.length;
-
-    currentShowtime = {
-        showtime: showtime,
-        theater: theater,
-        movieName: movie.name,
-        totalPrice: totalPrice
+    
+        res.locals.currentShowtime = currentShowtime;
+        res.locals.currentSeatList = currentSeatList;
+        res.render("users/movie-checkout");
     }
-
-    res.locals.currentShowtime = currentShowtime;
-    res.locals.currentSeatList = currentSeatList;
-    res.render("users/movie-checkout");
 };
 
 exports.postCheckout = async (req, res, next) => {
-    const userId = 1;
-
+    const user = req.session.currentUser;
+    
     try {
         const result = await db.transaction(async (t) => {
             const booking = await Booking.create({
-                user_id: userId,
+                user_id: user.user_id,
                 showtimes_id: currentShowtime.showtime.id,
                 booking_time: new Date(),
                 booking_price: currentShowtime.totalPrice
@@ -113,7 +126,7 @@ exports.postCheckout = async (req, res, next) => {
                 delete req.session.currentSeatList;
 
                 const dataQRCode = {
-                    userId: "1",
+                    userId: user.user_id,
                     bookingId: booking.id,
                     showtimeId: currentShowtime.showtime.id,
                 }
@@ -122,10 +135,10 @@ exports.postCheckout = async (req, res, next) => {
 
                 await transporter.sendMail({
                     from: process.env.EMAIL || 'ltw2nnd@gmail.com',
-                    to: 'minhhuy243@gmail.com',
+                    to: `${user.user_email}`,
                     subject: "Đặt vé thành công",
                     textEncoding:"base64",
-                    html: `<h1> Xin chào DisplayName </h1>
+                    html: `<h1> Xin chào ${user.user_name} </h1>
                         <table align="left">
                             <tbody>
                                 <tr>
@@ -146,7 +159,7 @@ exports.postCheckout = async (req, res, next) => {
                                 </tr>
                                 <tr>
                                     <td>Thời gian:</td>
-                                    <th align="left">${currentShowtime.showtime.date.getDate()}/${currentShowtime.showtime.date.getMonth() + 1}/${currentShowtime.showtime.date.getFullYear()}, 
+                                    <th align="left">${moment(currentShowtime.showtime.date).format('DD/MM/YYYY')}, 
                                     ${currentShowtime.showtime.start_time.substr(0, 5)} ~ ${currentShowtime.showtime.end_time.substr(0, 5)}</th>
                                 </tr>
                                 <tr>

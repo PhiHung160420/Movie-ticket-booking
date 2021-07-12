@@ -9,36 +9,13 @@
             </div>
             <ul class="menu">
                 <li>
-                    <a href="/user/" class="active">Trang chủ</a>
+                    <a href="/user/">Trang chủ</a>
                 </li>
                 <li>
-                    <a href="#0">Phim</a>
-                    <ul class="submenu">
-                        <li>
-                            <a href="/user/movie-list">Tất cả phim</a>
-                        </li>
-                        <li>
-                            <a href="/user/movie-list">Phim đang chiếu</a>
-                        </li>
-                        <li>
-                            <a href="/user/movie-list">Phim sắp chiếu</a>
-                        </li>
-                    </ul>
+                    <a href="/user/movie-list">Phim</a>
                 </li>
                 <li>
-                    <a href="#0">Hệ thống rạp</a>
-                    <ul class="submenu">
-                        <li>
-                            <a href="/user/movie-seat-plan">Tất cả các rạp</a>
-                        </li>
-                        <li>
-                            <a href="#">Rạp đặc biệt</a>
-                        </li>
-                        <li>
-                            <a href="#">Rạp sắp mở</a>
-                        </li>
-                </li>
-                </ul>
+                    <a href="/user/cluster-list">Cụm rạp</a>
                 </li>
                 <li>
                     <a href="/user/movie-ticket-plan">Lịch chiếu</a>
@@ -47,14 +24,14 @@
                     <a href="/user/contact">Liên hệ</a>
                 </li>
                 <li>
-                    <a href="#">Thành viên</a>
+                    <a href="#" class="active">Thành viên</a>
                     <ul class="submenu">
                         <% if(currentUser != null && currentUser.user_role == true) { %>
                             <li>
                                 <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
                             </li>
                             <li>
-                                <a href="#">Vé của tôi</a>
+                                <a href="/user/ticket-list">Vé của tôi</a>
                             </li>
                             <li>
                                 <a href="/admin">Quản lý</a>
@@ -64,7 +41,7 @@
                                     <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
                                 </li>
                                 <li>
-                                    <a href="#">Vé của tôi</a>
+                                    <a href="/user/ticket-list">Vé của tôi</a>
                                 </li>
                                 
                             <% } %>

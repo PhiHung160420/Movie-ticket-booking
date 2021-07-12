@@ -9,36 +9,13 @@
             </div>
             <ul class="menu">
                 <li>
-                    <a href="/user/" class="active">Trang chủ</a>
+                    <a href="/user/">Trang chủ</a>
                 </li>
                 <li>
-                    <a href="#0">Phim</a>
-                    <ul class="submenu">
-                        <li>
-                            <a href="/user/movie-list">Tất cả phim</a>
-                        </li>
-                        <li>
-                            <a href="/user/movie-list">Phim đang chiếu</a>
-                        </li>
-                        <li>
-                            <a href="/user/movie-list">Phim sắp chiếu</a>
-                        </li>
-                    </ul>
+                    <a href="/user/movie-list" class="active">Phim</a>
                 </li>
                 <li>
-                    <a href="#0">Hệ thống rạp</a>
-                    <ul class="submenu">
-                        <li>
-                            <a href="/user/movie-seat-plan">Tất cả các rạp</a>
-                        </li>
-                        <li>
-                            <a href="#">Rạp đặc biệt</a>
-                        </li>
-                        <li>
-                            <a href="#">Rạp sắp mở</a>
-                        </li>
-                </li>
-                </ul>
+                    <a href="/user/cluster-list">Cụm rạp</a>
                 </li>
                 <li>
                     <a href="/user/movie-ticket-plan">Lịch chiếu</a>
@@ -54,7 +31,7 @@
                                 <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
                             </li>
                             <li>
-                                <a href="#">Vé của tôi</a>
+                                <a href="/user/ticket-list">Vé của tôi</a>
                             </li>
                             <li>
                                 <a href="/admin">Quản lý</a>
@@ -64,7 +41,7 @@
                                     <a href="/user/movie-customer-profile" class="active">Tài khoản</a>
                                 </li>
                                 <li>
-                                    <a href="#">Vé của tôi</a>
+                                    <a href="/user/ticket-list">Vé của tôi</a>
                                 </li>
                                 
                             <% } %>
@@ -289,7 +266,7 @@
                                             <div class="release">
                                                 <span>Ngày ra mắt: </span>
                                                 <a href="#0">
-                                                    <%= moment(movie.releaseDate).format( 'DD-MM-YYYY')%>
+                                                    <%= moment(movie.releaseDate).format('DD-MM-YYYY')%>
                                                 </a>
                                             </div>
                                             <ul class="movie-rating-percent">
@@ -339,15 +316,66 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- pagination -->
+                    <!-- hiển thị phân trang nếu có trang -->
+                    <% if(totalPage > 0) { %>
                     <div class="pagination-area text-center">
-                        <a href="#0"><i class="fas fa-angle-double-left"></i><span>Prev</span></a>
-                        <a href="#0">1</a>
-                        <a href="#0">2</a>
-                        <a href="#0" class="active">3</a>
-                        <a href="#0">4</a>
-                        <a href="#0">5</a>
-                        <a href="#0"><span>Next</span><i class="fas fa-angle-double-right"></i></a>
+
+                        <!-- FIRST -->
+                        <!-- Nếu trang hiện tại bằng 1 thì Prev disable -->
+                        <% if(current == 1) { %>
+                            <a href="#0" class="disabled"><i class="fas fa-angle-double-left"></i><span>First</span></a>
+                        <% } else { %>
+                            <% if(sort !== null) { %>
+                                <a href="/user/movie-list/<%= sort %>/1"><i class="fas fa-angle-double-left"></i><span>First</span></a>
+                            <% } else { %>
+                                <a href="/user/movie-list/1"><i class="fas fa-angle-double-left"></i><span>First</span></a>
+                            <% } %>
+                        <% } %>
+                        <!-- FIRST -->
+
+                        <!-- ITEMS -->
+                        <% var i = (Number(current) > 3 ? Number(current) - 2 : 1) %>
+                        <% if (i !== 1) { %>
+                            <a href="#0" class="disabled">...</a>
+                        <% } %>
+                        <!-- lặp qua từng trang và tăng số trang -->
+                        <% for(; i <= (Number(current) + 2) && i <= totalPage; i++) { %>
+                        <% if(i == current) { %>
+                            <% if(sort !== null) { %>
+                                <a href="/user/movie-list/<%= sort %>/<%= i %>" class="active"><%= i %></a>
+                            <% } else { %>
+                                <a href="/user/movie-list/<%= i %>" class="active"><%= i %></a>
+                            <% } %>
+                        <% } else { %>   
+                            <% if(sort !== null) { %>   
+                                <a href="/user/movie-list/<%= sort %>/<%= i %>"><%= i %></a>
+                            <% } else { %>   
+                                <a href="/user/movie-list/<%= i %>"><%= i %></a>
+                            <% } %>      
+                        <% } %>
+                        <% if (i == Number(current) + 2 && i < totalPage) { %>
+                            <a href="#0" class="disabled">...</a>
+                        <% } %>
+                        <% } %> 
+                        <!-- ITEMS -->
+
+                        <!-- LAST -->
+                        <!-- Nếu trang hiện tại bằng tổng số trang thì Next disable -->
+                        <% if(current == totalPage) { %>
+                            <a href="#0" class="disabled"><span>Last</span><i class="fas fa-angle-double-right"></i></a>
+                        <% } else { %> 
+                            <% if(sort !== null) { %>
+                                <a href="/user/movie-list/<%= sort %>/<%= totalPage %>"><span>Last</span><i class="fas fa-angle-double-right"></i></a>
+                            <% } else { %>
+                                <a href="/user/movie-list/<%= totalPage %>"><span>Last</span><i class="fas fa-angle-double-right"></i></a>
+                            <% } %>
+                        <% } %>
+                        <!-- LAST -->
                     </div>
+                    <% } %>
+                    <!-- pagination -->
                 </div>
             </div>
         </div>

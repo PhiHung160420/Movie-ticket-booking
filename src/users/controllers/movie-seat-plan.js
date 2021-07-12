@@ -1,11 +1,7 @@
 const Movies = require('../../models/movie');
 const Showtimes = require("../../models/showtimes");
 const Theater = require("../../models/theater");
-
-//const Theater_clusters = require("../../models/theater_clusters");
-
 const TheaterClusters = require("../../models/theater_clusters");
-
 const Booking = require('../../models/booking');
 const Ticket = require('../../models/ticket');
 const User = require('../../models/user');
@@ -80,7 +76,7 @@ exports.postSeat = async (req, res, next) => {
     const { showtimeId } = req.params;
 
     let currentSeatList = JSON.parse(req.body.currentSeatList);
-
+    
     bookedSeatList.forEach(e => {
         const index = currentSeatList.indexOf(e.ticket_seat_code);
         if (index > -1) {
@@ -89,6 +85,7 @@ exports.postSeat = async (req, res, next) => {
     });
 
     req.session.showtimeId = showtimeId;  
-    req.session.currentSeatList = currentSeatList;  
+    req.session.currentSeatList = currentSeatList; 
+    req.session.prevUrl = req.originalUrl;
     res.redirect('/user/movie-checkout');
 };

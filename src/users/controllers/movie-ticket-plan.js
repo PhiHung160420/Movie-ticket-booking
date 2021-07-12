@@ -1,6 +1,6 @@
 const { Op } = require("sequelize");
+const moment = require('moment');
 const db = require('../../config/database/db');
-const moment = require("moment");
 const asyncHandler = require("express-async-handler");
 const Movies = require('../../models/movie');
 const Showtimes = require("../../models/showtimes");
@@ -12,8 +12,6 @@ const Ticket = require('../../models/ticket');
 const User = require('../../models/user');
 
 exports.getShowTimes = asyncHandler(async (req, res) => {
-    res.locals.moment = moment;
-
     //lấy danh sách các phim
     res.locals.listMovies = await Movies.findAll({
         attributes: [
@@ -67,14 +65,12 @@ exports.filterDate = asyncHandler(async (req, res) => {
         ]
     });
     let lstSendAjax = []
-    lstResult.forEach(item => lstSendAjax.push({schedule_date: moment(item.schedule_date).format( 'DD-MM-YYYY')}));
+    lstResult.forEach(item => lstSendAjax.push({schedule_date_frm: moment(item.schedule_date).format( 'DD-MM-YYYY'), schedule_date: item.schedule_date}));
     return res.status(200).json(lstSendAjax);
 });
 
-//lấy dữ liệu từ post và xử lý
+//lấy dữ liệu từ request và xử lý
 exports.postShowTimes = asyncHandler(async (req, res) => {
-    res.locals.moment = moment;
-
     const { select_movie, select_theater_cluster, select_date } = req.body;
 
     //kiểm tra nếu không tồn tại dữ liệu
@@ -83,7 +79,6 @@ exports.postShowTimes = asyncHandler(async (req, res) => {
         req.flash('info', 'Hãy chọn đầy đủ các thông tin');
         res.redirect('/user/');
     }
-
     //lấy danh sách các rạp theo cụm rạp
     const getListTheater = await Theater.findAll({
         where: {
@@ -110,7 +105,7 @@ exports.postShowTimes = asyncHandler(async (req, res) => {
         include: [
             {
                 model: Movies,
-                attributes: ['name']
+                attributes: ['name', 'id']
             },
             {
                 model: Theater,
@@ -142,14 +137,13 @@ exports.postShowTimes = asyncHandler(async (req, res) => {
     }
     else {
         res.locals.listShowTimes = null;
-        req.flash('info', 'Phim bạn chọn tạm thời không còn suất chiếu. Xin vui lòng chọn phim khác')
+        req.flash('info', 'Phim bạn chọn tạm thời chưa có suất chiếu. Xin vui lòng chọn phim khác')
         res.redirect('/user/');
     }
 });
 
 // ajax search showtimes
 exports.ajaxSearchShowtimes = asyncHandler(async (req, res) => {
-    res.locals.moment = moment;
     res.locals.listShowTimes = null;
     
     const select_movie = req.body.select_movie;
@@ -192,7 +186,7 @@ exports.ajaxSearchShowtimes = asyncHandler(async (req, res) => {
         include: [
             {
                 model: Movies,
-                attributes: ['name']
+                attributes: ['name', 'id']
             },
             {
                 model: Theater,

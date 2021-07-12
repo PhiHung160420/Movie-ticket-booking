@@ -5,7 +5,7 @@
     <div class="page-header">
       <div class="row align-items-center mb-3">
         <div class="col-sm mb-2 mb-sm-0">
-          <h1 class="page-header-title">Danh Sách Cụm Rạp<span class="badge badge-soft-dark ml-2">999,999</span></h1>     
+          <h1 class="page-header-title">Danh Sách Cụm Rạp<span class="badge badge-soft-dark ml-2"></span></h1>     
         </div>
 
         <div class="col-sm-auto">
@@ -90,6 +90,7 @@
 
                 <td>
                   <a class="media align-items-center" href="/admin/theater-clusters/detail/<%= theaterClusterList[i].id %>">                   
+                    <img class="avatar avatar-lg mr-3" src="data:image/png;base64,<%= theaterClusterList[i].picture %>" alt="Image Description">
                     <div class="media-body">
                       <h5 class="text-hover-primary mb-0"> <%= theaterClusterList[i].name %> </h5>
                     </div>
@@ -100,9 +101,9 @@
 
                 <td>
                   <div class="btn-group" role="group">
-                    <a class="btn btn-sm btn-success" href="/admin/theater-clusters/detail/<%= theaterClusterList[i].id %>">
+                    <!-- <a class="btn btn-sm btn-success" href="/admin/theater-clusters/detail/<%= theaterClusterList[i].id %>">
                       <i class="tio-edit"></i> Sửa
-                    </a>
+                    </a> -->
                     <a class="btn btn-sm btn-danger" href="/admin/theater-clusters/delete/<%= theaterClusterList[i].id %>" data-toggle="modal" data-target="#exampleModalCenter">
                       <i class="tio-delete"></i> Xóa
                     </a>               
