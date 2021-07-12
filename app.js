@@ -60,15 +60,61 @@ function(accessToken, refreshToken, profile, done) {
       }
       user.user_facebookid = profile.id;
       user.user_verify = true;
-      user.user_accessToken = accessToken;
+      user.user_accessTokenFB = accessToken;
       await user.save();
       done(null, user);
   }).catch(done);
 }
 ));
 
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
+const GOOGLE_CLIENT_ID = '244364713349-kvq4hols6u2o4aq7eh2i4m7th4rm8me1.apps.googleusercontent.com';
+const GOOGLE_CLIENT_SECRET = 'mQ_NkMs6zH1VU1dunl-XUYlZ';
+
+passport.use(new GoogleStrategy({
+  clientID: GOOGLE_CLIENT_ID,
+  clientSecret: GOOGLE_CLIENT_SECRET,
+  callbackURL: "http://localhost:3000/user/sign-in/google/callback"
+},function(accessToken, refreshToken, profile, done) {
+  User.findOne({
+      where: {
+          user_email: profile.emails[0].value,
+      },
+  }).then(async function (user) {
+    console.log(user);
+    console.log(profile);
+      if(!user)
+      {
+          user = await User.create({
+              user_email:  profile.emails[0].value,
+              user_googleid: profile.id,
+              user_name: profile.name.familyName + ' ' + profile.name.givenName,
+              user_verify: true
+          });
+      }
+      user.user_googleid = profile.id;
+      user.user_verify = true;
+      user.user_accessTokenGG = accessToken;
+      await user.save();
+      done(null, user);
+  }).catch(done);
+}
+));
+
+
 passport.serializeUser(function(user, done) {
   done(null, user.user_facebookid);
+});
+
+passport.serializeUser((user, done) => {
+  done(null, user.user_googleid);
+});
+
+
+passport.deserializeUser(function(googleid, done) {
+  User.findOne({where:{"user_googleid":googleid}}).then(function (user){
+      done(null, user);
+  }).catch(done); 
 });
 
 passport.deserializeUser(function(facebookid, done) {
@@ -76,6 +122,7 @@ passport.deserializeUser(function(facebookid, done) {
       done(null, user);
   }).catch(done); 
 });
+
 
 app.use(session({
     secret: 'secret', 

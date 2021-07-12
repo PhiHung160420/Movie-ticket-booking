@@ -111,6 +111,9 @@ router.get("/reset-password", asyncHandler(async(req, res) => {
 router.post("/reset-password", asyncHandler(async(req, res) =>{
     const { password, repassword, token } = req.body;
     console.log(req.body);
+    console.log(token);
+    const user = await User.findOne({where:{'user_codereset': token} });
+    
     let errors = null;
     if(password.length<6){
         errors = "Mật khẩu phải có ít nhất 6 ký tự";
@@ -126,10 +129,8 @@ router.post("/reset-password", asyncHandler(async(req, res) =>{
     }
     if (errors!=null) {
         const string = encodeURIComponent(errors);
-        return res.redirect('/user/reset-password/?validErr=' + string);  
+        return res.redirect('/user/reset-password/?token='+token+'&validErr='+string);  
     }
-
-    const user = await User.findOne({where:{'user_codereset': token} });
     
     if(!user)
     {

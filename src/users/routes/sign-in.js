@@ -93,6 +93,27 @@ router.get('/sign-in/facebook/success',isLoggedIn, (req, res, next) => {
     // });
 });
 
+router.get("/sign-in-google", passport.authenticate('google', 
+  { scope:['profile', 'email']}));
+
+router.get("/sign-in/google/callback", passport.authenticate('google',{
+  successRedirect: '/user/sign-in/google/success',
+  failureRedirect: '/user/sign-in'
+}));
+
+router.get('/sign-in/google/success',isLoggedIn, (req, res, next) => {
+  console.log(req.user);
+  if(req.user)
+  {
+      req.session.user_id = req.user.user_id;
+      res.redirect('/user');
+  }
+  else {
+      const string = "Đã có lỗi sảy ra"
+      res.redirect('/user/sign-in/?validErr=' + string);
+  }
+});
+
 router.get("/logout", (req, res) => {
   delete req.session.user_facebookid;
   delete req.session.user_id;
