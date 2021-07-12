@@ -13,6 +13,9 @@ const User=db.define(
     user_facebookid: {
       type: DataTypes.STRING,
     },
+    user_googleid:{
+      type: DataTypes.STRING,
+    },
     user_email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -32,7 +35,10 @@ const User=db.define(
       type: DataTypes.STRING,
       allowNull: true
     },
-    user_accessToken: {
+    user_accessTokenFB: {
+      type: DataTypes.STRING,
+    },
+    user_accessTokenGG: {
       type: DataTypes.STRING,
     },
     user_codereset:{
@@ -67,6 +73,14 @@ User.findUserByFacebookId = async function (user_facebookid){
   return User.findOne({
     where:{
       user_facebookid,
+    }
+  })
+};
+
+User.findUserByGoogleId = async function (user_googleid){
+  return User.findOne({
+    where:{
+      user_googleid,
     }
   })
 };
