@@ -91,7 +91,17 @@ router.get('/sign-in/facebook/success',isLoggedIn, (req, res, next) => {
   if(req.user)
   {
       req.session.user_id = req.user.user_id;
-      res.redirect('/user');
+      req.session.user_role = req.user.user_role;
+      req.session.currentUser = req.user;
+      if(req.session.prevUrl)
+          {
+            res.redirect(`${req.session.prevUrl}`);
+            delete req.session.prevUrl;
+          }
+      else
+          {
+            res.redirect("/user");
+          }
   }
   else {
       const string = "Đã có lỗi sảy ra"
@@ -115,7 +125,17 @@ router.get('/sign-in/google/success',isLoggedIn, (req, res, next) => {
   if(req.user)
   {
       req.session.user_id = req.user.user_id;
-      res.redirect('/user');
+      req.session.user_role = req.user.user_role;
+      req.session.currentUser = req.user;
+      if(req.session.prevUrl)
+          {
+            res.redirect(`${req.session.prevUrl}`);
+            delete req.session.prevUrl;
+          }
+          else
+          {
+            res.redirect("/user");
+          }
   }
   else {
       const string = "Đã có lỗi sảy ra"
