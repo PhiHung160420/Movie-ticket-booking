@@ -14,6 +14,10 @@ const Movies = db.define("movies", {
   releaseDate: {
     type: DataTypes.DATEONLY,
   },
+  summary: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
   poster: {
     type: DataTypes.BLOB,
     allowNull: true,

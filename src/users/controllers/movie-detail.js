@@ -1,15 +1,40 @@
 const asyncHandler = require("express-async-handler");
 const Movies = require('../../models/movie');
+const Movie_images = require('../../models/movie_images');
 
 exports.getMovieDetail = asyncHandler(async (req, res) => {
-    const movieID = req.params.id;
-    const data = await Movies.findOne({
+    const {id} = req.params;
+
+    const movie = await Movies.findOne({
       where: {
-        id: movieID
+        id,
       }
     });
-    if(data.poster){
-      data.poster = Buffer.from(data.poster, 'binary').toString('base64');
+
+    if(movie)
+    {
+      movie.poster = Buffer.from(movie.poster, 'binary').toString('base64');
     }
-    res.render("users/movie-detail", { movie: data });
+
+    const listImages = await Movie_images.findAll({
+      where: {
+        movie_id: id
+      }
+    });
+
+    const lstMovieImg = [];
+
+    listImages.forEach(e => {
+        let image = Buffer.from(e.image, "binary").toString("base64");
+        lstMovieImg.push(image);
+    });
+
+    if(movie && lstMovieImg.length !== 0)
+    {
+      res.render("users/movie-detail", { movie, lstMovieImg });
+    }
+    else
+    {
+      res.render("users/404");
+    }
   })

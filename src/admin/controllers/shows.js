@@ -105,7 +105,7 @@ exports.postAdd = async (req, res, next) => {
             } 
             
             // ngày chiếu phải lớn hơn hoặc bằng ngày hiện tại
-            if( date < moment(moment()).format("YYYY-MM-DD") )
+            else if( date < moment(moment()).format("YYYY-MM-DD") )
             {
                   res.locals.toastMessage = {
                       title: "Thất Bại",
@@ -115,7 +115,7 @@ exports.postAdd = async (req, res, next) => {
             }
 
             // ngày chiếu phim phải lớn hơn hoặc bằng ngày ra mắt phim
-            if( date < moment(movie.releaseDate).format("YYYY-MM-DD") )
+            else if( date < moment(movie.releaseDate).format("YYYY-MM-DD") )
             {
                   res.locals.toastMessage = {
                       title: "Thất Bại",

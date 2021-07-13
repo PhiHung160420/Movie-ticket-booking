@@ -1,6 +1,7 @@
 const Theater = require('../../models/theater');
 const TheaterCluster = require('../../models/theater_clusters');
 const db = require("../../config/database/db");
+const { Op } = require("sequelize");
 
 //INDEX
 exports.getIndex = async (req, res, next) => {
@@ -12,9 +13,11 @@ exports.getIndex = async (req, res, next) => {
             }],
         });
         res.locals.TheaterList = theaterList;
+
         res.locals.lstTheaterCluster = await TheaterCluster.findAll({
             attributes: [[db.fn("DISTINCT", db.col("name")), "name"], "id"],
           });
+
         res.render("admin/theater/index");
     }
     else {
@@ -35,27 +38,52 @@ exports.getAdd = async (req, res, next) => {
 }
 
 exports.postAdd = async (req, res, next) => {
+    res.locals.lstTheaterCluster = await TheaterCluster.findAll({
+        attributes: [[db.fn("DISTINCT", db.col("name")), "name"], "id"],
+    });
+
     try {
         const { name,theater_cluster_ID,kind,horizontial_size,vertical_size} = req.body;
-
+       
         const found = await Theater.findOne({
             where: {
-                name: name
+                [Op.and]: [
+                    {
+                        name: name
+                    },
+                    {
+                        theater_cluster_id: theater_cluster_ID
+                    }
+                ]
             }
         });
-        if(found) throw new Error('Rạp đã tồn tại !');
 
-        //else
-        await Theater.create({
-            theater_cluster_id:theater_cluster_ID,
-            name: name,
-            kind:kind,
-            horizontial_size:horizontial_size,
-            vertical_size:vertical_size
-        });
-        req.session.toastMessage = { title: "Thành Công", msg: "Thêm rạp thành công!" };
-        res.redirect('/admin/theater');         
-        
+        if(found)
+        {
+            res.locals.toastMessage = { title: "Thất Bại", msg: "Rạp đã tồn tại trong cụm rạp này!" }; 
+            res.render("admin/theater/add");
+        }
+        else
+        {
+            const result = await Theater.create({
+                theater_cluster_id:theater_cluster_ID,
+                name: name,
+                kind:kind,
+                horizontial_size:horizontial_size,
+                vertical_size:vertical_size
+            });
+
+            if(result)
+            {
+                req.session.toastMessage = { title: "Thành Công", msg: "Thêm rạp thành công!" };
+                res.redirect('/admin/theater'); 
+            }
+            else
+            {
+                res.locals.toastMessage = { title: "Thất Bại", msg: "Đã có lỗi xảy ra, vui lòng kiểm tra lại dữ liệu!" }; 
+                res.render("admin/theater/add");
+            }
+        }  
     } catch(e) {
         res.locals.toastMessage = { title: "Thất Bại", msg: "Đã có lỗi xảy ra, vui lòng kiểm tra lại dữ liệu!" }; 
         res.render("admin/theater/add");      

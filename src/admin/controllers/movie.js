@@ -2,12 +2,13 @@ const Booking = require("../../models/booking");
 const Movie = require("../../models/movie");
 const Showtimes = require("../../models/showtimes");
 const Ticket = require("../../models/ticket");
+const Movie_images = require('../../models/movie_images');
 const db = require("../../config/database/db");
 const moment = require("moment");
 
 //INDEX
 exports.getIndex = async (req, res, next) => {
-     if(req.session.user_role == true) {
+    /* if(req.session.user_role == true) {
         const movieList = await Movie.findAll({
             order: [["id", "ASC"]],
         });
@@ -23,29 +24,53 @@ exports.getIndex = async (req, res, next) => {
     else
     {
         res.redirect("/user");
-    }
+    } */
+
+    const movieList = await Movie.findAll({
+        order: [["id", "ASC"]],
+    });
+
+    movieList.forEach((e) => {
+        e.poster = Buffer.from(e.poster, "binary").toString("base64");
+    });
+
+    res.render("admin/movie/index", {
+        movieList,
+    });
 };
 
 // UPLOAD
-var file = null;
+let listUpload = [];
 
 exports.postUpload = async (req, res, next) => {
-    res.send("success");
-    file = req.file;
+    if(req.files)
+    {
+        const files = req.files;
+        files.forEach(e => listUpload.push(e.buffer));
+        res.send(files);
+    }
+    else
+    {
+        const error = new Error('Please upload a file');
+        error.httpStatusCode = 400;
+        return next(error);
+    }
 };
 
 //ADD
 exports.getAdd = (req, res, next) => {
-    if (req.session.user_role == true) {
+    /* if (req.session.user_role == true) {
         res.render("admin/movie/add");
     } else {
         res.redirect("/user");
-    }
+    } */
+
+    res.render("admin/movie/add");
 };
 
 exports.postAdd = async (req, res, next) => {
     try {
-        const { name, releaseDate, duration, trailer} = req.body;
+        const { name, releaseDate, duration, summary, trailer} = req.body;
 
         //initial viewed
         const viewed = 0;
@@ -53,15 +78,15 @@ exports.postAdd = async (req, res, next) => {
         //initial liked
         const liked = 0;
 
-        const poster = file.buffer;
-
         const found = await Movie.findOne({
             where: {
                 name,
             },
         });
+
         if (found)
         {
+            listUpload.length = 0;
             res.locals.toastMessage = {
                 title: "Thất Bại",
                 msg: "Phim đã tồn tại",
@@ -72,25 +97,41 @@ exports.postAdd = async (req, res, next) => {
         {
             if(releaseDate < moment(moment()).format("YYYY-MM-DD"))
             {
-                res.locals.toastMessage = {
+                listUpload.length = 0;
+                res.locals.toastMessage = {              
                     title: "Thất Bại",
                     msg: "Ngày ra mắt phải lớn hơn ngày hiện tại",
                 };
                 res.render("admin/movie/add");
             }
+            else if(listUpload.length === 0)
+            {
+                res.locals.toastMessage = { title: "Thất Bại", msg: "Hãy chọn tối thiểu 1 hình ảnh cho bộ phim!" }; 
+                res.render("admin/movie/add");
+            }
             else
             {
-                const result = await Movie.create({
+                const movie = await Movie.create({
                     name,
                     releaseDate,
-                    poster,
+                    poster: listUpload[0],
                     duration,
+                    summary,
                     trailer,
                     viewed,
                     liked,
                 });
-                if(result)
+
+                listUpload.map( async (image) => {
+                    const movie_images = await Movie_images.create({
+                        movie_id: movie.id,
+                        image
+                    });
+                });
+
+                if(movie)
                 {
+                    listUpload.length = 0;
                     req.session.toastMessage = {
                         title: "Thành Công",
                         msg: "Thêm phim thành công!",
@@ -99,6 +140,7 @@ exports.postAdd = async (req, res, next) => {
                 }
                 else
                 {
+                    listUpload.length = 0;
                     res.locals.toastMessage = {
                         title: "Thất Bại",
                         msg: "Đã có lỗi xảy ra, vui lòng kiểm tra lại dữ liệu!",
@@ -109,7 +151,7 @@ exports.postAdd = async (req, res, next) => {
         }
         
     } catch (e) {
-        console.log(e);
+        listUpload.length = 0;
         res.locals.toastMessage = {
             title: "Thất Bại",
             msg: "Đã có lỗi xảy ra, vui lòng kiểm tra lại dữ liệu!",
@@ -120,7 +162,7 @@ exports.postAdd = async (req, res, next) => {
 
 //DETAIL
 exports.getDetail = async (req, res, next) => {
-    if (req.session.user_role == true) {
+    /* if (req.session.user_role == true) {
         try {
             const { id } = req.params;
 
@@ -134,6 +176,18 @@ exports.getDetail = async (req, res, next) => {
         }
     } else {
         res.redirect("/user");
+    } */
+
+    try {
+        const { id } = req.params;
+
+        const updateMovie = await Movie.findByPk(id);
+        if (!updateMovie) throw new Error("Phim không tồn tại !");
+
+        res.locals.Movie = updateMovie;
+        res.render("admin/movie/detail");
+    } catch (e) {
+        res.redirect("/admin/movie");
     }
 };
 
@@ -170,7 +224,7 @@ exports.postDetail = async (req, res, next) => {
 
 //DELETE
 exports.getDelete = async (req, res, next) => {
-    if (req.session.user_role == true) {
+    /* if (req.session.user_role == true) {
         try {
             const { id } = req.params;
 
@@ -192,5 +246,25 @@ exports.getDelete = async (req, res, next) => {
         }
     } else {
         res.redirect("/user");
+    } */
+
+    try {
+        const { id } = req.params;
+
+        const deleteMovie = await Movie.findByPk(id);
+        if (!deleteMovie) throw new Error("Phim không tồn tại !");
+
+        await deleteMovie.destroy();
+        req.session.toastMessage = {
+            title: "Thành Công",
+            msg: "Xóa phim thành công!",
+        };
+    } catch (e) {
+        req.session.toastMessage = {
+            title: "Thất Bại",
+            msg: "Không thể xoá do bộ phim đã được lưu vào dữ liệu!",
+        };
+    } finally {
+        res.redirect("/admin/movie");
     }
 };
