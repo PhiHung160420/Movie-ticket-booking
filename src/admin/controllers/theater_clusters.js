@@ -4,6 +4,7 @@ const Ticket = require('../../models/ticket');
 const Booking = require('../../models/booking');
 const Showtimes = require('../../models/showtimes');
 const Cluster_images = require('../../models/cluster_images');
+const Theater = require('../../models/theater');
 
 //INDEX
 exports.getIndex = async (req, res, next) => {
@@ -174,9 +175,20 @@ exports.getDelete = async (req, res, next) => {
 
             const deleteTheaterClusters = await TheaterClusters.findByPk(id);
 
+            const theater = await Theater.findOne({
+                where: {
+                    theater_cluster_id: id
+                }
+            });
+
             if(!deleteTheaterClusters)
             {
                 req.session.toastMessage = { title: "Thất Bại", msg: "Cụm rạp không tồn tại!" };
+                res.redirect("/admin/theater-clusters");
+            }
+            else if(theater)
+            {
+                req.session.toastMessage = { title: "Thất Bại", msg: "Không thể xoá do đã tồn tại rạp thuộc cụm rạp này!" };
                 res.redirect("/admin/theater-clusters");
             }
             else
