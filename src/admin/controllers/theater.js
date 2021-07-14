@@ -1,5 +1,6 @@
 const Theater = require('../../models/theater');
 const TheaterCluster = require('../../models/theater_clusters');
+const Showtimes = require('../../models/showtimes');
 const db = require("../../config/database/db");
 const { Op } = require("sequelize");
 
@@ -13,16 +14,16 @@ exports.getIndex = async (req, res, next) => {
             }],
         });
         res.locals.TheaterList = theaterList;
-
+    
         res.locals.lstTheaterCluster = await TheaterCluster.findAll({
             attributes: [[db.fn("DISTINCT", db.col("name")), "name"], "id"],
           });
-
+    
         res.render("admin/theater/index");
     }
     else {
         res.redirect("/user");
-    }
+    } 
 };
 exports.getAdd = async (req, res, next) => {
     if(req.session.user_role == true) {
@@ -142,21 +143,44 @@ exports.postDetail = async (req, res, next) => {
 //DELETE
 exports.getDelete = async (req, res, next) => {
     if(req.session.user_role == true) {
-        try {
+        try 
+        {
             const { id } = req.params;
 
             const deleteTheater = await Theater.findByPk(id);
-            if(!deleteTheater) throw new Error('Rạp không tồn tại !');
 
-            await deleteTheater.destroy();
-            req.session.toastMessage = { title: "Thành Công", msg: "Xóa rạp thành công!" };
-        } catch (e) {
-            res.session.toastMessage = { title: "Thất Bại", msg: "Đã có lỗi xảy ra, vui lòng kiểm tra lại dữ liệu!" };
-        } finally {
+            const found = await Showtimes.findOne({
+                where: {
+                    theater_id: id
+                }
+            });
+
+            if(!deleteTheater)
+            {
+                req.session.toastMessage = { title: "Thất bại", msg: "Không tồn tại rạp này!" };
+                res.redirect("/admin/theater");
+            }
+            else if(found)
+            {
+                req.session.toastMessage = { title: "Thất bại", msg: "Không thể xoá rạp này do tồn tại ràng buộc dữ liệu!" };
+                res.redirect("/admin/theater");
+            }
+            else
+            {
+                await deleteTheater.destroy();
+                req.session.toastMessage = { title: "Thành Công", msg: "Xóa rạp thành công!" };
+                res.redirect("/admin/theater");
+            }
+
+        } 
+        catch (e) 
+        {
+            req.session.toastMessage = { title: "Thất Bại", msg: "Đã có lỗi xảy ra, vui lòng kiểm tra lại dữ liệu!" };
             res.redirect("/admin/theater");
         } 
     }
-    else {
+    else 
+    {
         res.redirect("/user");
     }
 }

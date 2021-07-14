@@ -212,8 +212,10 @@
                         <div class="tab-area">
                             <div class="tab-item active">
                                 <div class="item">
-                                    <h5 class="sub-title">Tóm lượt nội dung</h5>
-                                    <p><%= movie.summary %></p>
+                                    <% if(movie.summary) { %>
+                                        <h5 class="sub-title">Tóm lượt nội dung</h5>
+                                        <p><%= movie.summary %></p>
+                                    <% } %>
                                 </div>
                                 <div class="item">
                                     <div class="header">

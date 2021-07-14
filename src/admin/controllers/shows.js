@@ -7,27 +7,28 @@ const Showtimes = require("../../models/showtimes");
 const Theater_clusters = require("../../models/theater_clusters");
 const Movies_schedule = require("../../models/movies_schedule");
 const Movies = require("../../models/movie");
+const Booking = require('../../models/booking');
 
 //INDEX
 exports.getIndex = async (req, res, next) => {
     if (req.session.user_role == true) {
         res.locals.showsList = await Showtimes.findAll({
-            include: [
-                {
-                    model: Theater,
-                    attributes: ["name"],
-                    include: [
-                        {
-                            model: Theater_clusters,
-                            attributes: ["name"],
-                        },
-                    ],
-                },
-                {
-                    model: Movies,
-                    attributes: ["name"]
-                }
-            ]
+        include: [
+            {
+                model: Theater,
+                attributes: ["name"],
+                include: [
+                    {
+                        model: Theater_clusters,
+                        attributes: ["name"],
+                    },
+                ],
+            },
+            {
+                model: Movies,
+                attributes: ["name"]
+            }
+        ]
         });
         res.render("admin/shows/index");
     } else {
@@ -42,7 +43,6 @@ exports.getAdd = async (req, res, next) => {
         res.locals.lstMovies = await Movie.findAll({
             attributes: [[db.fn("DISTINCT", db.col("name")), "name"], "id"],
         });
-
         //get list theater cluster
         res.locals.lstCluster = await Theater_clusters.findAll({
             attributes: [[db.fn("DISTINCT", db.col("name")), "name"], "id"],
@@ -198,16 +198,23 @@ exports.filterTheater = async (req, res) => {
 
 //GET DETAIL
 exports.getDetail = async (req, res, next) => {
-    try {
-        const { id } = req.params;
-
-        const updateShowtime = await Showtimes.findByPk(id);
-        if (!updateShowtime) throw new Error("Suất chiếu không tồn tại !");
-
-        res.locals.Showtimes = updateShowtime;
-        res.render("admin/shows/detail");
-    } catch (e) {
-        res.redirect("/admin/shows");
+    if (req.session.user_role == true)
+    {
+        try {
+            const { id } = req.params;
+    
+            const updateShowtime = await Showtimes.findByPk(id);
+            if (!updateShowtime) throw new Error("Suất chiếu không tồn tại !");
+    
+            res.locals.Showtimes = updateShowtime;
+            res.render("admin/shows/detail");
+        } catch (e) {
+            res.redirect("/admin/shows");
+        }
+    }
+    else
+    {
+        res.redirect("/user");
     }
 };
 
@@ -243,23 +250,57 @@ exports.postDetail = async (req, res, next) => {
 
 //DELETE
 exports.getDelete = async (req, res, next) => {
-    try {
-        const { id } = req.params;
-
-        const deleteShowtime = await Showtimes.findByPk(id);
-        if (!deleteShowtime) throw new Error("Suất chiếu không tồn tại !");
-
-        await deleteShowtime.destroy();
-        req.session.toastMessage = {
-            title: "Thành Công",
-            msg: "Xóa suất chiếu thành công!",
-        };
-    } catch (e) {
-        res.session.toastMessage = {
-            title: "Thất Bại",
-            msg: "Đã có lỗi xảy ra, vui lòng kiểm tra lại dữ liệu!",
-        };
-    } finally {
-        res.redirect("/admin/shows");
+    if (req.session.user_role == true)
+    {
+        try {
+            const { id } = req.params;
+    
+            const deleteShowtime = await Showtimes.findByPk(id);
+    
+            const found = await Booking.findOne({
+               where: {
+                   showtimes_id: id
+               } 
+            });
+    
+            if (!deleteShowtime)
+            {
+                req.session.toastMessage = {
+                    title: "Thất Bại",
+                    msg: "Xuất chiếu này không tồn tại!",
+                };
+                res.redirect("/admin/shows");
+            }
+            else if(found)
+            {
+                req.session.toastMessage = {
+                    title: "Thất Bại",
+                    msg: "Không thể xoá xuất chiếu này do ràng buộc dữ liệu!",
+                };
+                res.redirect("/admin/shows");
+            }
+            else
+            {
+                await deleteShowtime.destroy();
+                req.session.toastMessage = {
+                    title: "Thành Công",
+                    msg: "Xóa suất chiếu thành công!",
+                };
+                res.redirect("/admin/shows");
+            }
+    
+        } 
+        catch (e) 
+        {
+            req.session.toastMessage = {
+                title: "Thất Bại",
+                msg: "Đã có lỗi xảy ra, vui lòng kiểm tra lại dữ liệu!",
+            };
+            res.redirect("/admin/shows");
+        }
+    }
+    else
+    {
+        res.redirect("/user");
     }
 };

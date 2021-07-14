@@ -8,7 +8,7 @@ const moment = require("moment");
 
 //INDEX
 exports.getIndex = async (req, res, next) => {
-    /* if(req.session.user_role == true) {
+    if(req.session.user_role == true) {
         const movieList = await Movie.findAll({
             order: [["id", "ASC"]],
         });
@@ -16,7 +16,7 @@ exports.getIndex = async (req, res, next) => {
         movieList.forEach((e) => {
             e.poster = Buffer.from(e.poster, "binary").toString("base64");
         });
-
+    
         res.render("admin/movie/index", {
             movieList,
         });
@@ -24,19 +24,7 @@ exports.getIndex = async (req, res, next) => {
     else
     {
         res.redirect("/user");
-    } */
-
-    const movieList = await Movie.findAll({
-        order: [["id", "ASC"]],
-    });
-
-    movieList.forEach((e) => {
-        e.poster = Buffer.from(e.poster, "binary").toString("base64");
-    });
-
-    res.render("admin/movie/index", {
-        movieList,
-    });
+    }
 };
 
 // UPLOAD
@@ -59,13 +47,11 @@ exports.postUpload = async (req, res, next) => {
 
 //ADD
 exports.getAdd = (req, res, next) => {
-    /* if (req.session.user_role == true) {
+    if (req.session.user_role == true) {
         res.render("admin/movie/add");
     } else {
         res.redirect("/user");
-    } */
-
-    res.render("admin/movie/add");
+    }
 };
 
 exports.postAdd = async (req, res, next) => {
@@ -122,13 +108,17 @@ exports.postAdd = async (req, res, next) => {
                     liked,
                 });
 
-                listUpload.map( async (image) => {
-                    const movie_images = await Movie_images.create({
-                        movie_id: movie.id,
-                        image
+                if(listUpload.length > 1)
+                {
+                    listUpload.splice(0,1);
+                    listUpload.map( async (image) => {
+                        const movie_images = await Movie_images.create({
+                            movie_id: movie.id,
+                            image
+                        });
                     });
-                });
-
+                }
+                
                 if(movie)
                 {
                     listUpload.length = 0;
@@ -162,13 +152,13 @@ exports.postAdd = async (req, res, next) => {
 
 //DETAIL
 exports.getDetail = async (req, res, next) => {
-    /* if (req.session.user_role == true) {
+    if (req.session.user_role == true) {
         try {
             const { id } = req.params;
-
+    
             const updateMovie = await Movie.findByPk(id);
             if (!updateMovie) throw new Error("Phim không tồn tại !");
-
+    
             res.locals.Movie = updateMovie;
             res.render("admin/movie/detail");
         } catch (e) {
@@ -176,18 +166,6 @@ exports.getDetail = async (req, res, next) => {
         }
     } else {
         res.redirect("/user");
-    } */
-
-    try {
-        const { id } = req.params;
-
-        const updateMovie = await Movie.findByPk(id);
-        if (!updateMovie) throw new Error("Phim không tồn tại !");
-
-        res.locals.Movie = updateMovie;
-        res.render("admin/movie/detail");
-    } catch (e) {
-        res.redirect("/admin/movie");
     }
 };
 
@@ -224,13 +202,13 @@ exports.postDetail = async (req, res, next) => {
 
 //DELETE
 exports.getDelete = async (req, res, next) => {
-    /* if (req.session.user_role == true) {
+    if (req.session.user_role == true) {
         try {
             const { id } = req.params;
-
+    
             const deleteMovie = await Movie.findByPk(id);
             if (!deleteMovie) throw new Error("Phim không tồn tại !");
-
+    
             await deleteMovie.destroy();
             req.session.toastMessage = {
                 title: "Thành Công",
@@ -239,32 +217,12 @@ exports.getDelete = async (req, res, next) => {
         } catch (e) {
             req.session.toastMessage = {
                 title: "Thất Bại",
-                msg: "Không thể xoá do bộ phim đã được lưu vào dữ liệu!",
+                msg: "Không thể xoá do bộ phim này do ràng buộc dữ liệu!",
             };
         } finally {
             res.redirect("/admin/movie");
         }
     } else {
         res.redirect("/user");
-    } */
-
-    try {
-        const { id } = req.params;
-
-        const deleteMovie = await Movie.findByPk(id);
-        if (!deleteMovie) throw new Error("Phim không tồn tại !");
-
-        await deleteMovie.destroy();
-        req.session.toastMessage = {
-            title: "Thành Công",
-            msg: "Xóa phim thành công!",
-        };
-    } catch (e) {
-        req.session.toastMessage = {
-            title: "Thất Bại",
-            msg: "Không thể xoá do bộ phim đã được lưu vào dữ liệu!",
-        };
-    } finally {
-        res.redirect("/admin/movie");
     }
 };

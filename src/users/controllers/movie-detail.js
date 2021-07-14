@@ -22,14 +22,17 @@ exports.getMovieDetail = asyncHandler(async (req, res) => {
       }
     });
 
-    const lstMovieImg = [];
+    var lstMovieImg = [];
 
-    listImages.forEach(e => {
+    if(listImages.length !== 0)
+    {
+      listImages.forEach(e => {
         let image = Buffer.from(e.image, "binary").toString("base64");
         lstMovieImg.push(image);
-    });
-
-    if(movie && lstMovieImg.length !== 0)
+      });
+    }
+    
+    if(movie)
     {
       res.render("users/movie-detail", { movie, lstMovieImg });
     }
