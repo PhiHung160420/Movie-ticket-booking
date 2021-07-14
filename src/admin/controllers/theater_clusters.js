@@ -168,17 +168,27 @@ exports.postDetail = async (req, res, next) => {
 //DELETE
 exports.getDelete = async (req, res, next) => {
     if(req.session.user_role == true) {
-        try {
-        const { id } = req.params;
+        try 
+        {
+            const { id } = req.params;
 
-        const deleteTheaterClusters = await TheaterClusters.findByPk(id);
-        if(!deleteTheaterClusters) throw new Error('Theater Clusters doesn"t exist');
+            const deleteTheaterClusters = await TheaterClusters.findByPk(id);
 
-        await deleteTheaterClusters.destroy();
-        req.session.toastMessage = { title: "Thành Công", msg: "Xóa cụm rạp thành công!" };
-        } catch (e) {
-            res.session.toastMessage = { title: "Thất Bại", msg: "Đã có lỗi xảy ra, vui lòng kiểm tra lại dữ liệu!" };
-        } finally {
+            if(!deleteTheaterClusters)
+            {
+                req.session.toastMessage = { title: "Thất Bại", msg: "Cụm rạp không tồn tại!" };
+                res.redirect("/admin/theater-clusters");
+            }
+            else
+            {
+                await deleteTheaterClusters.destroy();
+                req.session.toastMessage = { title: "Thành Công", msg: "Xóa cụm rạp thành công!" };
+                res.redirect("/admin/theater-clusters");
+            }
+        } 
+        catch (e) 
+        {
+            req.session.toastMessage = { title: "Thất Bại", msg: "Không thể xoá cụm rạp này do tồn tại ràng buộc dữ liệu!" };
             res.redirect("/admin/theater-clusters");
         } 
     }

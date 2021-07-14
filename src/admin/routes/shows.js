@@ -15,5 +15,7 @@ router.post("/shows/add/filter-theater", ShowsController.filterTheater);
 router.get("/shows/detail/:id", ShowsController.getDetail);
 router.post("/shows/detail/:id",ShowsController.postDetail);
 
+// DELETE
 router.get("/shows/delete/:id", ShowsController.getDelete);
+
 module.exports = router;

@@ -101,9 +101,9 @@
                     <div class="duration-area">
                         <div class="item">
                             <i class="fas fa-calendar-alt"></i><span><%= moment(movie.releaseDate).format( 'DD-MM-YYYY')%></span>
-                        </div>
+                        </div>  
                         <div class="item">
-                            <i class="far fa-clock"></i><span><%= movie.duration %></span>
+                            <i class="far fa-clock"></i><span><%= movie.duration %> phút</span>
                         </div>
                     </div>
                     <ul class="social-share">
@@ -161,7 +161,7 @@
                     <p><a href="#0">Bình chọn</a></p>
                 </div>
             </div>
-            <a href="/user/movie-ticket-plan" class="custom-button">Đặt vé</a>
+            <!-- <a href="/user/movie-ticket-plan" class="custom-button">Đặt vé</a> -->
         </div>
     </div>
 </section>
@@ -191,36 +191,14 @@
                 <div class="movie-details">
                     <h3 class="title">Hình ảnh về bộ phim</h3>
                     <div class="details-photos owl-carousel">
+                        <% if(lstMovieImg.length !== 0){ %>
+                        <% lstMovieImg.forEach(movie => { %>
                         <div class="thumb">
-                            <a href="/user/images/movie/movie-details01.jpg" class="img-pop">
-                                <img src="/user/images/movie/movie-details01.jpg" alt="movie">
+                            <a href="data:image/png;base64,<%= movie %>" class="img-pop">
+                                <img src="data:image/png;base64,<%= movie %>" alt="movie">
                             </a>
                         </div>
-                        <div class="thumb">
-                            <a href="/user/images/movie/movie-details02.jpg" class="img-pop">
-                                <img src="/user/images/movie/movie-details02.jpg" alt="movie">
-                            </a>
-                        </div>
-                        <div class="thumb">
-                            <a href="/user/images/movie/movie-details03.jpg" class="img-pop">
-                                <img src="/user/images/movie/movie-details03.jpg" alt="movie">
-                            </a>
-                        </div>
-                        <div class="thumb">
-                            <a href="/user/images/movie/movie-details01.jpg" class="img-pop">
-                                <img src="/user/images/movie/movie-details01.jpg" alt="movie">
-                            </a>
-                        </div>
-                        <div class="thumb">
-                            <a href="/user/images/movie/movie-details02.jpg" class="img-pop">
-                                <img src="/user/images/movie/movie-details02.jpg" alt="movie">
-                            </a>
-                        </div>
-                        <div class="thumb">
-                            <a href="/user/images/movie/movie-details03.jpg" class="img-pop">
-                                <img src="/user/images/movie/movie-details03.jpg" alt="movie">
-                            </a>
-                        </div>
+                        <% }) } %>
                     </div>
                     <div class="tab summery-review">
                         <ul class="tab-menu">
@@ -234,10 +212,10 @@
                         <div class="tab-area">
                             <div class="tab-item active">
                                 <div class="item">
-                                    <h5 class="sub-title">Synopsis</h5>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vehicula eros sit amet est tincidunt aliquet. Fusce laoreet ligula ac ultrices eleifend. Donec hendrerit fringilla odio, ut feugiat mi convallis nec. Fusce
-                                        elit ex, blandit vitae mattis sit amet, iaculis ac elit. Ut diam mauris, viverra sit amet dictum vel, aliquam ac quam. Ut mi nisl, fringilla sit amet erat et, convallis porttitor ligula. Sed auctor, orci id luctus
-                                        venenatis, dui dolor euismod risus, et pharetra orci lectus quis sapien. Duis blandit ipsum ac consectetur scelerisque. </p>
+                                    <% if(movie.summary) { %>
+                                        <h5 class="sub-title">Tóm lượt nội dung</h5>
+                                        <p><%= movie.summary %></p>
+                                    <% } %>
                                 </div>
                                 <div class="item">
                                     <div class="header">
