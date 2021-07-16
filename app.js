@@ -62,7 +62,7 @@ const FACEBOOK_APP_SECRET = '69f3b6032555944d0337b80b486bf403';
 passport.use(new FacebookStrategy({
   clientID: FACEBOOK_APP_ID,
   clientSecret: FACEBOOK_APP_SECRET,
-  callbackURL: "https://ltw2-skycinema.herokuapp.com/user/sign-in/facebook/callback",
+  callbackURL: "/user/sign-in/facebook/callback",
   profileFields: ['id', 'emails', 'name', 'displayName']
 },
 function(accessToken, refreshToken, profile, done) {
