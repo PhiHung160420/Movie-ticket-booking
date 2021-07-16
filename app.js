@@ -62,7 +62,7 @@ const FACEBOOK_APP_SECRET = '69f3b6032555944d0337b80b486bf403';
 passport.use(new FacebookStrategy({
   clientID: FACEBOOK_APP_ID,
   clientSecret: FACEBOOK_APP_SECRET,
-  callbackURL: "http://localhost:3000/user/sign-in/facebook/callback",
+  callbackURL: "/user/sign-in/facebook/callback",
   profileFields: ['id', 'emails', 'name', 'displayName']
 },
 function(accessToken, refreshToken, profile, done) {
@@ -98,7 +98,7 @@ const GOOGLE_CLIENT_SECRET = 'mQ_NkMs6zH1VU1dunl-XUYlZ';
 passport.use(new GoogleStrategy({
   clientID: GOOGLE_CLIENT_ID,
   clientSecret: GOOGLE_CLIENT_SECRET,
-  callbackURL: "http://localhost:3000/user/sign-in/google/callback"
+  callbackURL: "/user/sign-in/google/callback"
 },function(accessToken, refreshToken, profile, done) {
   User.findOne({
       where: {
