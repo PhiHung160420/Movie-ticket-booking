@@ -10,7 +10,7 @@ const app = express();
 const expressLayouts = require("express-ejs-layouts");
 
 // cookie-session
-const cookieSession = require("cookie-session");
+const cookieSession = require("cookie-session")
 
 // session
 const session = require("express-session");
