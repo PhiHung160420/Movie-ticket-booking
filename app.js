@@ -161,9 +161,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/user", getMiddlewares);
 app.use("/user", authMiddlewares);
 app.use("/user", moment);
-app.use("/", getMiddlewares);
-app.use("/", authMiddlewares);
-app.use("/", moment);
 /* use middleware for user */
 
 /* use middleware for admin */
@@ -182,7 +179,6 @@ app.use("/admin", require(`${URL_ADMIN}/shows`));
 /* use router for admin */
 
 /* use router for user */
-app.use("/", require(`${URL_USER}/home`));
 app.use("/user", require(`${URL_USER}/home`));
 app.use("/user", require(`${URL_USER}/movie-checkout`));
 app.use("/user", require(`${URL_USER}/movie-booking-success`));
