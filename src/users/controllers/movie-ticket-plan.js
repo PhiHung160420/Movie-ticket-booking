@@ -65,7 +65,12 @@ exports.filterDate = asyncHandler(async (req, res) => {
         ]
     });
     let lstSendAjax = []
-    lstResult.forEach(item => lstSendAjax.push({schedule_date_frm: moment(item.schedule_date).format( 'DD-MM-YYYY'), schedule_date: item.schedule_date}));
+    lstResult.forEach(item => {
+        if(item.schedule_date >= moment(moment()).format("YYYY-MM-DD"))
+        {
+            lstSendAjax.push({schedule_date_frm: moment(item.schedule_date).format( 'DD-MM-YYYY'), schedule_date: item.schedule_date})
+        }
+    });
     return res.status(200).json(lstSendAjax);
 });
 
