@@ -6975,6 +6975,7 @@ input[type="submit"] {
     background: url(./img/ticket-bg04.png) #ffffff no-repeat center top;
     background-size: cover;
     border-radius: 20px;
+    height: 570px;
 }
 
 .ticket--item.disable {
