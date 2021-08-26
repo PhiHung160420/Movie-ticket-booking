@@ -3398,6 +3398,7 @@ input[type="submit"] {
     margin-bottom: 30px;
     overflow: hidden;
     border-radius: 7px 7px 5px 5px;
+
 }
 
 .sports-grid .movie-content,
@@ -3412,8 +3413,7 @@ input[type="submit"] {
     padding: 10px 0;
     text-transform: capitalize;
     border-bottom: 1px dashed #11326f;
-    height: 80px;
-    overflow: hidden;
+    height: 100px;
 }
 
 .sports-grid .movie-thumb,
@@ -3978,6 +3978,7 @@ input[type="submit"] {
     z-index: 1;
     outline: none;
     width: 10rem;
+    margin-top: -20px;
 }
 
 .ticket-search-form .btn-search-ajax {
@@ -6186,6 +6187,7 @@ input[type="submit"] {
     transition: all ease 0.3s;
     -webkit-transform: scale(1.03);
     transform: scale(1.03);
+    
 }
 
 .speaker-item .speaker-content .title {
@@ -6974,6 +6976,7 @@ input[type="submit"] {
     background: url(./img/ticket-bg04.png) #ffffff no-repeat center top;
     background-size: cover;
     border-radius: 20px;
+    height: 570px;
 }
 
 .ticket--item.disable {
@@ -7146,6 +7149,7 @@ input[type="submit"] {
     -webkit-transform: scale(1.02);
     transform: scale(1.02);
     margin-bottom: 35px;
+    border-radius: 50%;
 }
 
 .speaker-wrapper .speaker-content {
@@ -9840,7 +9844,6 @@ aside {
     text-transform: uppercase;
     border-radius: 25px;
     display: inline-block;
-    margin-top: -20px;
 }
 
 .custom-button:hover {
